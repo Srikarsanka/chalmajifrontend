@@ -1,0 +1,2248 @@
+/* ================================================================
+   CHALAMAJI AYODHARA — Custom Visual System (Pure CSS Grid & Flexbox)
+   Zero Bootstrap dependency
+   Color Palette: Warm Temple Cream (#FBF6EC), Terracotta Deep (#8C4A24), Saffron Accent (#C2571F), Gold Line (#C9A15A)
+   Typography: Cormorant Garamond (display) · Homemade Apple (script) · Manrope (body)
+   ================================================================ */
+
+/* ── TOKENS ─────────────────────────────────────────────────── */
+:host {
+  display: block;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.ayo-page {
+  --cream: #FBF6EC;
+  --cream-warm: #F5EDDD;
+  --ink: #2A211A;
+  --ink-soft: #5C4F41;
+  --saffron: #C2571F;
+  --terracotta: #8C4A24;
+  --terracotta-t: #F5EDDD;
+  --gold: #C9A15A;
+  --gold-glow: rgba(201, 161, 90, 0.25);
+
+  --font-display: 'Cormorant Garamond', serif;
+  --font-script: 'Lucida Calligraphy', 'Lucida Handwriting', 'Marck Script', 'Cinzel Decorative', 'Cormorant Garamond', cursive, serif;
+  --font-body: 'Manrope', sans-serif;
+
+  background: var(--cream);
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.65;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+/* ── RESETS ─────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color .3s;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+input,
+select,
+textarea {
+  font-family: inherit;
+  outline: none;
+}
+
+/* ── TYPOGRAPHY UTILITIES ──────────────────────────────────── */
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: var(--font-display);
+  color: var(--ink);
+  line-height: 1.1;
+  font-weight: 400;
+}
+
+h6 {
+  font-family: var(--font-body);
+  color: var(--ink);
+}
+
+p {
+  color: var(--ink-soft);
+}
+
+.ayo-display-title {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4.5vw, 56px);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.08;
+  color: var(--ink);
+}
+
+.ayo-display-title--xl {
+  font-size: clamp(48px, 6.5vw, 86px);
+  color: var(--terracotta-t);
+}
+
+.ayo-display-title--light {
+  color: #fff;
+}
+
+.ayo-accent {
+  color: var(--saffron) !important;
+}
+
+.ayo-script {
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: clamp(14px, 1.4vw, 19px);
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+}
+
+/* Word-reveal animation wrappers */
+.word-reveal .word-wrap {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.word-reveal .word {
+  display: inline-block;
+}
+
+/* ── LAYOUT UTILITIES ──────────────────────────────────────── */
+.ayo-container {
+  width: 100%;
+  max-width: 1320px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 4vw, 60px);
+}
+
+.reveal {
+  position: relative;
+  overflow: hidden;
+}
+
+.reveal img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Gold-Framed Images */
+.ayo-framed-img {
+  position: relative;
+  border: 1.5px solid var(--gold);
+  padding: 10px;
+}
+
+.ayo-framed-img>.reveal img {
+  border: 5px solid var(--gold);
+}
+
+/* ── BUTTONS ───────────────────────────────────────────────── */
+.ayo-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 32px;
+  background: var(--cream);
+  color: var(--ink);
+  border: 1.5px solid var(--ink);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all .35s ease;
+}
+
+.ayo-btn:hover {
+  background: var(--saffron);
+  color: #fff;
+  border-color: var(--saffron);
+  box-shadow: 0 8px 24px rgba(194, 87, 31, 0.25);
+}
+
+.ayo-btn--full {
+  width: 100%;
+  justify-content: center;
+}
+
+.ayo-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  border: none;
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-style: italic;
+  font-weight: 600;
+  color: var(--saffron);
+  padding: 8px 0;
+  cursor: pointer;
+  transition: all .3s;
+}
+
+.ayo-cta img {
+  width: 30px;
+  transition: transform .3s;
+}
+
+.ayo-cta:hover {
+  color: var(--ink);
+}
+
+.ayo-cta:hover img {
+  transform: translateX(6px);
+}
+
+.ayo-cta:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── FORM FIELDS ───────────────────────────────────────────── */
+.ayo-field {
+  margin-bottom: 16px;
+}
+
+.ayo-field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.ayo-field input,
+.ayo-field select {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid rgba(140, 74, 36, .3);
+  border-radius: 0;
+  padding: 10px 0;
+  font-size: 14px;
+  color: var(--ink);
+  transition: border-color .3s;
+}
+
+.ayo-field input:focus,
+.ayo-field select:focus {
+  border-bottom-color: var(--saffron);
+}
+
+.ayo-field input::placeholder {
+  color: var(--gold);
+  font-size: 12px;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.ayo-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--ink-soft);
+  line-height: 1.4;
+  margin-bottom: 20px;
+}
+
+.ayo-consent input {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.ayo-thanks {
+  text-align: center;
+  padding: 24px 0;
+}
+
+.ayo-thanks h5 {
+  font-size: 22px;
+  margin-bottom: 8px;
+  color: var(--saffron);
+}
+
+
+/* ================================================================
+   HEADER / NAVBAR
+   ================================================================ */
+.ayo-header {
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  background: var(--cream);
+  border-bottom: 1.5px solid var(--gold);
+  box-shadow: 0 2px 16px rgba(42, 33, 26, .06);
+}
+
+.ayo-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1320px;
+  margin-inline: auto;
+  padding: 0 clamp(20px, 4vw, 60px);
+  height: 72px;
+  gap: 24px;
+}
+
+.ayo-nav__brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.ayo-nav__brand-title {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: var(--ink);
+  line-height: 1;
+}
+
+.ayo-nav__brand-sub {
+  font-family: var(--font-body);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--saffron);
+  margin-top: 4px;
+}
+
+.ayo-nav__call {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+  text-align: right;
+}
+
+.ayo-nav__call:hover {
+  color: var(--saffron);
+}
+
+.ayo-nav__menu {
+  position: relative;
+}
+
+.ayo-nav__menu-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  border: none;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  padding: 18px 0;
+}
+
+.ayo-nav__bars {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 22px;
+}
+
+.ayo-nav__bars span {
+  display: block;
+  height: 1.5px;
+  background: var(--ink);
+  border-radius: 2px;
+  transition: all .3s;
+}
+
+.ayo-nav__dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  background: var(--cream-warm);
+  min-width: 220px;
+  z-index: 1000;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, .12);
+  display: none;
+  flex-direction: column;
+  border-top: 2px solid var(--gold);
+}
+
+.ayo-nav__dropdown.open {
+  display: flex;
+}
+
+.ayo-nav__dropdown a {
+  padding: 14px 20px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  border-bottom: 1px solid rgba(201, 161, 90, .2);
+  cursor: pointer;
+  transition: color .2s, padding-left .2s, background .2s;
+}
+
+.ayo-nav__dropdown a:hover {
+  color: var(--saffron);
+  padding-left: 28px;
+  background: rgba(255, 255, 255, .5);
+}
+
+@media (max-width: 768px) {
+  .ayo-nav__call {
+    display: none;
+  }
+
+  .ayo-nav__brand-title {
+    font-size: 20px;
+  }
+}
+
+
+/* ================================================================
+   SECTION 01 — HERO (Temple Theme Wallpaper & Layered Visual System)
+   3-Column: Warm Sandalwood Form Left · High Z-Index Meera Center · Framed Card Right
+   ================================================================ */
+.ayo-hero {
+  position: relative;
+  background-color: #F6EFE3;
+  background-image: url('/assets/images/ayodhara/temple-pattern-bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center bottom;
+  padding-top: 60px;
+  padding-bottom: 0;
+  overflow: hidden;
+}
+
+.ayo-hero__grid {
+  max-width: 1320px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 4vw, 60px);
+  display: grid;
+  grid-template-columns: 1fr 1.05fr 1fr;
+  gap: 36px;
+  align-items: end;
+  position: relative;
+}
+
+/* Col 1: Left Form (Warm Temple Sandalwood Panel with Full Bleed) */
+.ayo-hero__form-col {
+  position: relative;
+  padding-bottom: 50px;
+  z-index: 5;
+}
+
+.ayo-form-card {
+  position: relative;
+  padding: 44px 36px 36px 0;
+  background: transparent;
+  border: none;
+}
+
+.ayo-form-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  left: -100vw;
+  right: 0;
+  background: linear-gradient(135deg, #F0E6D8 0%, #E7D8C4 100%);
+  border-right: 2px solid var(--gold);
+  box-shadow: 10px 0 35px rgba(42, 33, 26, 0.06);
+  z-index: -1;
+}
+
+.ayo-form-card h4 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 27px;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 4px;
+  line-height: 1.2;
+}
+
+.ayo-form-card>p {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  margin-bottom: 28px;
+}
+
+.ayo-req {
+  color: var(--saffron);
+  font-weight: 700;
+}
+
+.ayo-hero .ayo-field {
+  margin-bottom: 18px;
+}
+
+.ayo-hero .ayo-field label {
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+
+.ayo-hero .ayo-field input {
+  border-bottom: 1px solid rgba(92, 79, 65, 0.35);
+  font-size: 13.5px;
+  color: var(--ink);
+  padding: 8px 0;
+  background: transparent;
+}
+
+.ayo-hero .ayo-field input::placeholder {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #A89886;
+  font-weight: 400;
+}
+
+.ayo-form-btn-wrap {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+}
+
+.ayo-inline-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  border: none;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 19px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  cursor: pointer;
+  padding: 6px 0;
+  transition: all .3s;
+}
+
+.ayo-inline-cta img {
+  width: 32px;
+  transition: transform .3s;
+}
+
+.ayo-inline-cta:hover {
+  color: var(--ink);
+}
+
+.ayo-inline-cta:hover img {
+  transform: translateX(6px);
+}
+
+.ayo-inline-cta:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Col 2: Meera (High Z-Index Transparent Cutout Layered in Front) */
+.ayo-hero__meera-col {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  position: relative;
+  z-index: 15;
+  /* Sits prominently above background and adjacent panels */
+}
+
+.ayo-hero__meera-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 375px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  z-index: 15;
+}
+
+.ayo-hero__meera-img {
+  width: 100%;
+  max-height: 580px;
+  object-fit: contain;
+  display: block;
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  filter: drop-shadow(0 15px 35px rgba(42, 33, 26, 0.16));
+  position: relative;
+  z-index: 15;
+}
+
+/* Col 3: Framed Welcome Card */
+.ayo-hero__card-col {
+  padding-bottom: 50px;
+  position: relative;
+  z-index: 5;
+}
+
+.ayo-welcome-card {
+  position: relative;
+  background: #E8DED1;
+  padding: 46px 36px 38px;
+  text-align: center;
+  border: 1px solid var(--gold);
+}
+
+.ayo-welcome-card__border-lr::before {
+  content: '';
+  position: absolute;
+  left: 14px;
+  top: 18px;
+  bottom: 18px;
+  border-left: 1px solid var(--gold);
+}
+
+.ayo-welcome-card__border-lr::after {
+  content: '';
+  position: absolute;
+  right: 14px;
+  top: 18px;
+  bottom: 18px;
+  border-right: 1px solid var(--gold);
+}
+
+.ayo-welcome-card__border-tb::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: 18px;
+  right: 18px;
+  border-top: 1px solid var(--gold);
+}
+
+.ayo-welcome-card__border-tb::after {
+  content: '';
+  position: absolute;
+  bottom: 14px;
+  left: 18px;
+  right: 18px;
+  border-bottom: 1px solid var(--gold);
+}
+
+.ayo-welcome-card__icon {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  margin: 0 auto 16px;
+}
+
+.ayo-welcome-card h6.ayo-script {
+  font-family: var(--font-script);
+  font-size: 22px;
+  color: var(--ink);
+  line-height: 1.15;
+  margin-bottom: 4px;
+}
+
+.ayo-welcome-card__sub {
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--ink);
+  display: block;
+  margin-bottom: 24px;
+  letter-spacing: 0.02em;
+}
+
+.ayo-welcome-card__body p {
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  margin-bottom: 16px;
+}
+
+.ayo-welcome-card__stamp {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--terracotta);
+  text-transform: lowercase;
+  display: block;
+  margin-top: 24px;
+}
+
+@media (max-width: 1024px) {
+  .ayo-hero__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ayo-hero__card-col {
+    grid-column: 1 / -1;
+  }
+
+  .ayo-form-card {
+    padding-left: 20px;
+  }
+
+  .ayo-form-card::before {
+    left: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .ayo-hero__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ================================================================
+   SECTION 02 — WELCOME / LOCATION (2-Column: 1fr 1.2fr)
+   ================================================================ */
+.ayo-welcome {
+  padding-block: clamp(60px, 8vw, 100px);
+  border-bottom: 1.5px solid var(--gold);
+}
+
+.ayo-welcome__grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: clamp(32px, 5vw, 80px);
+  align-items: end;
+}
+
+.ayo-welcome__left {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+.ayo-welcome__quote {
+  font-size: clamp(26px, 2.8vw, 36px);
+  color: var(--ink);
+  text-align: right;
+  line-height: 1.45;
+}
+
+.ayo-welcome__meera {
+  text-align: right;
+}
+
+.ayo-welcome__meera img {
+  max-width: 270px;
+  width: 100%;
+  border: none !important;
+  box-shadow: none !important;
+  mix-blend-mode: multiply;
+  filter: contrast(1.08) brightness(1.02);
+  background: transparent;
+}
+
+.ayo-welcome__city {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--saffron);
+  text-align: right;
+  display: block;
+}
+
+.ayo-welcome__right {
+  position: relative;
+}
+
+.ayo-framed-img__birds {
+  position: absolute;
+  top: -30px;
+  left: -20%;
+  width: 200px;
+  object-fit: contain;
+  z-index: 2;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .ayo-welcome__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ayo-welcome__left {
+    align-items: flex-start;
+  }
+
+  .ayo-welcome__quote {
+    text-align: left;
+  }
+
+  .ayo-welcome__city {
+    text-align: left;
+  }
+}
+
+
+/* ================================================================
+   SECTION 03 — SANCTUARY STATS (3-Column: 1fr 1fr 1fr)
+   ================================================================ */
+.ayo-stats {
+  padding-block: clamp(60px, 8vw, 100px);
+}
+
+.ayo-stats__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: clamp(32px, 4vw, 64px);
+  align-items: center;
+}
+
+.ayo-stats__heading-col {
+  text-align: center;
+}
+
+.ayo-stats__icon {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin: 0 auto 20px;
+}
+
+.ayo-stats__list-col {
+  text-align: center;
+}
+
+.ayo-stat-list li {
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-style: italic;
+  color: var(--ink);
+  line-height: 1.2;
+  margin-bottom: 26px;
+}
+
+.ayo-stat-list li span {
+  display: block;
+  font-size: 34px;
+  font-style: normal;
+  font-weight: 700;
+  color: var(--saffron);
+  margin-bottom: 2px;
+}
+
+.ayo-stats__desc-col {
+  text-align: center;
+}
+
+.ayo-stats__desc-col h5.ayo-script {
+  font-size: 21px;
+  color: var(--saffron);
+  margin-bottom: 8px;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.ayo-stats__curve {
+  width: 110px;
+  object-fit: contain;
+  margin: 8px auto 14px;
+}
+
+.ayo-stats__desc-col p {
+  font-size: 14.5px;
+  line-height: 1.75;
+  max-width: 320px;
+  margin-inline: auto;
+}
+
+@media (max-width: 900px) {
+  .ayo-stats__grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+}
+
+
+/* ================================================================
+   SECTION 04 — BIG-STAT FACADE (--terracotta background)
+   3-Column: 1.6fr 1fr 1fr
+   ================================================================ */
+.ayo-facade {
+  position: relative;
+  background: var(--terracotta);
+  padding-block: clamp(60px, 8vw, 100px) 0;
+  overflow: hidden;
+}
+
+.ayo-facade * {
+  color: var(--terracotta-t);
+}
+
+.ayo-facade__shapes {
+  pointer-events: none;
+}
+
+.ayo-facade__meera {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 240px;
+  height: 240px;
+  object-fit: cover;
+  border-radius: 50% 50% 0 0;
+  border: 3px solid var(--gold);
+  z-index: 2;
+}
+
+.ayo-facade__curve {
+  position: absolute;
+  bottom: -60px;
+  left: -80px;
+  width: 480px;
+  object-fit: contain;
+  z-index: 1;
+}
+
+.ayo-facade__grid {
+  max-width: 1320px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 4vw, 60px);
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr;
+  gap: clamp(24px, 4vw, 56px);
+  align-items: center;
+}
+
+.ayo-facade__photo-col {
+  position: relative;
+}
+
+.ayo-facade__photo-col .ayo-framed-img {
+  border-color: var(--gold);
+  margin-bottom: 50px;
+}
+
+.ayo-facade__birds {
+  position: absolute;
+  top: 0;
+  right: -18%;
+  width: 150px;
+  object-fit: contain;
+  z-index: 3;
+}
+
+.ayo-facade__stat-col {
+  text-align: center;
+  padding-block: 30px;
+}
+
+.ayo-facade__stat-col .ayo-display-title--xl {
+  font-size: clamp(48px, 6vw, 84px);
+  color: var(--terracotta-t);
+  margin-bottom: 16px;
+}
+
+.ayo-facade__stat-col .ayo-script {
+  font-size: 19px;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 12px;
+  line-height: 1.25;
+}
+
+.ayo-facade__stat-col p {
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.ayo-facade__quote-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  padding-block: 30px;
+}
+
+.ayo-facade__overlay-text {
+  text-align: right;
+}
+
+.ayo-facade__overlay-text p {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.ayo-facade__overlay-text .ayo-script {
+  font-size: 18px;
+  color: var(--gold);
+  line-height: 1.25;
+}
+
+.ayo-facade__tree {
+  width: clamp(200px, 26vw, 320px);
+  object-fit: contain;
+  position: relative;
+  right: -30px;
+  bottom: -50px;
+}
+
+@media (max-width: 1024px) {
+  .ayo-facade__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ayo-facade__quote-col {
+    align-items: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .ayo-facade__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ayo-facade__meera,
+  .ayo-facade__curve {
+    display: none;
+  }
+}
+
+
+/* ================================================================
+   SECTION 05 — AMENITIES (2-Column: 1fr 1.6fr)
+   ================================================================ */
+.ayo-amenities {
+  position: relative;
+  padding-block: clamp(60px, 8vw, 100px);
+  overflow: hidden;
+}
+
+.ayo-amenities__star {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  pointer-events: none;
+  opacity: .5;
+}
+
+.ayo-amenities__star--l {
+  top: 20px;
+  left: -30px;
+  transform: scaleX(-1);
+}
+
+.ayo-amenities__star--r {
+  bottom: 20px;
+  right: -30px;
+}
+
+.ayo-amenities__grid {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: clamp(32px, 5vw, 72px);
+  align-items: start;
+}
+
+.ayo-amenities__left {
+  text-align: center;
+}
+
+.ayo-amenities__line {
+  width: 130px;
+  height: 44px;
+  object-fit: contain;
+  margin: 14px auto 28px;
+}
+
+.ayo-amenity-list {
+  text-align: center;
+}
+
+.ayo-amenity-list li {
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(201, 161, 90, .2);
+  padding-bottom: 16px;
+}
+
+.ayo-amenity-list li:last-child {
+  border-bottom: none;
+}
+
+.ayo-amenity-list li h5 {
+  font-size: 21px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.ayo-amenity-list li p {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+
+.ayo-amenities__quote {
+  font-size: clamp(16px, 1.6vw, 22px);
+  color: var(--saffron);
+  display: block;
+  margin-top: 24px;
+  transform: rotate(-2deg);
+  text-align: center;
+  line-height: 1.35;
+}
+
+.ayo-download-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 20px;
+  margin-top: 32px;
+}
+
+.ayo-download-row__text p {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.ayo-download-row__thumb {
+  width: 150px;
+  border: 1.5px solid var(--gold);
+  padding: 6px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+@media (max-width: 860px) {
+  .ayo-amenities__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ayo-download-row {
+    justify-content: center;
+  }
+}
+
+
+/* ================================================================
+   SECTION 06 — FULL-BLEED BANNER
+   ================================================================ */
+.ayo-banner {
+  position: relative;
+  overflow: hidden;
+}
+
+.ayo-banner__bg {
+  width: 100%;
+  max-height: 560px;
+  object-fit: cover;
+  display: block;
+  filter: brightness(.52);
+}
+
+.ayo-banner__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  text-align: center;
+  padding: 40px;
+}
+
+.ayo-banner__overlay .ayo-display-title--light {
+  font-size: clamp(32px, 5vw, 60px);
+  text-shadow: 0 2px 20px rgba(0, 0, 0, .45);
+}
+
+.ayo-banner__script {
+  font-size: clamp(18px, 2vw, 26px);
+  color: var(--gold);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, .45);
+  line-height: 1.3;
+}
+
+
+/* ================================================================
+   SECTION 07 — TABBED EXPLORER (Compact 100vh Max-Height)
+   ================================================================ */
+.ayo-explorer {
+  position: relative;
+  overflow: hidden;
+}
+
+.ayo-explorer__content {
+  background-image: url('/assets/images/ayodhara/shapes/flat-bg.svg');
+  background-size: cover;
+  background-position: center;
+  min-height: auto;
+}
+
+.ayo-tab-pane {
+  padding-block: clamp(16px, 2.5vh, 28px);
+}
+
+.ayo-tab-intro {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 16px;
+}
+
+.ayo-tab-intro h3 {
+  font-size: clamp(22px, 2.4vw, 30px);
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.ayo-tab-intro p {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+
+/* Interactive Map Showcase (Compact) */
+.ayo-location-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 1.25fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.ayo-location-map-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ayo-map-container {
+  position: relative;
+  cursor: pointer;
+  border: 2px solid var(--gold);
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .06);
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.ayo-map-container:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, .1);
+}
+
+.ayo-explorer__map {
+  width: 100%;
+  height: auto;
+  max-height: clamp(240px, 42vh, 360px);
+  object-fit: contain;
+  display: block;
+  margin-inline: auto;
+  transition: transform .4s ease;
+}
+.ayo-map-container:hover .ayo-explorer__map {
+  transform: scale(1.02);
+}
+
+.ayo-map-overlay-badge {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(42, 33, 26, 0.88);
+  color: #fff;
+  padding: 4px 10px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 16px;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(201, 161, 90, 0.4);
+}
+
+.ayo-map-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ayo-btn--sm {
+  padding: 8px 14px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+}
+
+.ayo-btn--outline {
+  background: var(--cream-warm);
+  color: var(--ink);
+  border: 1.5px solid var(--gold);
+}
+.ayo-btn--outline:hover {
+  background: var(--gold);
+  color: #fff;
+}
+
+/* Right: Proximity Matrix */
+.ayo-location-matrix-wrap {
+  background: var(--cream);
+  border: 1.5px solid var(--gold);
+  padding: 16px 18px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+}
+
+.ayo-matrix-header {
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(201, 161, 90, 0.3);
+}
+.ayo-matrix-header h5 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+.ayo-matrix-sub {
+  font-size: 11px;
+  color: var(--ink-soft);
+}
+
+/* Distance Matrix Grid (Compact scrollable) */
+.ayo-distance-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  max-height: clamp(220px, 38vh, 320px);
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.ayo-distance-card {
+  background: var(--cream-warm);
+  border: 1px solid rgba(201, 161, 90, 0.35);
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transition: all .25s ease;
+}
+.ayo-distance-card:hover {
+  transform: translateY(-1px);
+  border-color: var(--saffron);
+  box-shadow: 0 4px 12px rgba(194, 87, 31, 0.1);
+}
+
+.ayo-distance-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.ayo-distance-card__cat {
+  font-size: 8.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--saffron);
+  background: rgba(194, 87, 31, 0.08);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+
+.ayo-distance-card__time {
+  font-size: 10px;
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+.ayo-distance-card__name {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+.ayo-distance-card__val {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--saffron);
+  line-height: 1;
+}
+
+@media (max-width: 992px) {
+  .ayo-location-layout {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 540px) {
+  .ayo-distance-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ────────────────────────────────────────────────────────────────
+   PLOT DETAILS: 2-DIV SPLIT (Compact 100vh Max Height)
+   ──────────────────────────────────────────────────────────────── */
+.ayo-plot-split {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr;
+  gap: 20px;
+  align-items: start;
+}
+
+/* LEFT DIV: Selected Plot Showcase */
+.ayo-plot-split__left {
+  position: relative;
+}
+
+.ayo-selected-card {
+  background: var(--cream);
+  border: 1.5px solid var(--gold);
+  padding: 20px 22px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.ayo-selected-card__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--saffron);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  margin-bottom: 10px;
+}
+
+.ayo-selected-card__header {
+  margin-bottom: 12px;
+  border-bottom: 1.5px solid rgba(201, 161, 90, 0.35);
+  padding-bottom: 8px;
+}
+
+.ayo-selected-card__sub {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  display: block;
+}
+
+.ayo-selected-card__title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.03em;
+  line-height: 1.1;
+}
+
+/* Specs 2x2 Grid (Compact) */
+.ayo-selected-card__specs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.ayo-spec-pill {
+  background: var(--cream-warm);
+  border: 1px solid rgba(201, 161, 90, 0.35);
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ayo-spec-pill__lbl {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 2px;
+}
+
+.ayo-spec-pill__val {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+.ayo-spec-pill__val small {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
+.ayo-spec-pill__sub {
+  font-size: 9.5px;
+  color: var(--ink-soft);
+  margin-top: 1px;
+}
+
+/* Mini Master Plan locator inside showcase */
+.ayo-selected-card__locator {
+  margin-bottom: 14px;
+}
+
+.ayo-locator-img-wrap {
+  position: relative;
+  border: 1px solid var(--gold);
+  cursor: pointer;
+  overflow: hidden;
+  max-height: 95px;
+}
+
+.ayo-locator-img-wrap img {
+  width: 100%;
+  height: 95px;
+  object-fit: cover;
+  transition: transform .4s ease;
+}
+
+.ayo-locator-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(42, 33, 26, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity .3s;
+}
+
+.ayo-locator-img-wrap:hover img {
+  transform: scale(1.04);
+}
+
+.ayo-locator-img-wrap:hover .ayo-locator-overlay {
+  opacity: 1;
+}
+
+/* RIGHT DIV: Filterable Plot Directory Table (Compact Height) */
+.ayo-plot-split__right {
+  position: relative;
+}
+
+.ayo-table-card {
+  background: var(--cream);
+  border: 1.5px solid var(--gold);
+  padding: 18px 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+.ayo-table-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1.5px solid rgba(201, 161, 90, 0.35);
+}
+
+.ayo-search {
+  position: relative;
+  flex: 1;
+  min-width: 160px;
+}
+
+.ayo-search i {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gold);
+  font-size: 12px;
+}
+
+.ayo-search input {
+  width: 100%;
+  padding: 7px 10px 7px 32px;
+  border: 1px solid var(--gold);
+  background: transparent;
+  font-size: 12.5px;
+  color: var(--ink);
+}
+
+.ayo-filter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ayo-filter label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+}
+
+.ayo-filter select {
+  padding: 6px 10px;
+  border: 1px solid var(--gold);
+  background: transparent;
+  font-size: 12.5px;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.ayo-count {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--saffron);
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.ayo-table-wrap {
+  overflow-x: auto;
+  max-height: clamp(230px, 38vh, 320px);
+  overflow-y: auto;
+  border: 1px solid rgba(201, 161, 90, 0.2);
+}
+
+.ayo-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ayo-table th {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  text-align: left;
+  padding: 8px 12px;
+  border-bottom: 1.5px solid var(--gold);
+  background: var(--cream-warm);
+  letter-spacing: 0.03em;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.ayo-table th.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.ayo-table th.sortable:hover {
+  color: var(--saffron);
+}
+
+.ayo-table td {
+  padding: 8px 12px;
+  font-size: 13px;
+  border-bottom: 1px solid rgba(201, 161, 90, .2);
+  color: var(--ink-soft);
+  vertical-align: middle;
+}
+
+.ayo-table tbody tr {
+  cursor: pointer;
+  transition: all .2s ease;
+}
+
+.ayo-table tbody tr:hover {
+  background: rgba(245, 237, 221, 0.7);
+}
+
+.ayo-table tbody tr.active-row {
+  background: var(--cream-warm);
+  border-left: 3px solid var(--saffron);
+}
+
+.ayo-table tbody tr.active-row td {
+  color: var(--ink);
+}
+
+.ayo-plot-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ayo-plot-badge i {
+  color: var(--saffron);
+  font-size: 13px;
+}
+
+.ayo-facing-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.ayo-table-view-btn {
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--ink);
+  padding: 6px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all .25s;
+}
+
+.ayo-table-view-btn:hover,
+.active-row .ayo-table-view-btn {
+  background: var(--saffron);
+  color: #fff;
+  border-color: var(--saffron);
+}
+
+@media (max-width: 992px) {
+  .ayo-plot-split {
+    grid-template-columns: 1fr;
+  }
+
+  .ayo-plot-split__left {
+    position: static;
+  }
+}
+
+/* Approvals Tab Cards */
+.ayo-spec-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.ayo-spec-card {
+  background: var(--cream);
+  border: 1.5px solid var(--gold);
+  padding: 28px;
+}
+
+.ayo-spec-card__icon {
+  font-size: 30px;
+  color: var(--saffron);
+  display: block;
+  margin-bottom: 14px;
+}
+
+.ayo-spec-card h4 {
+  font-size: 24px;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.ayo-spec-card__code {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: var(--saffron);
+  margin-bottom: 10px;
+}
+
+.ayo-spec-card p {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+/* Tab Strip */
+.ayo-tab-strip {
+  background: var(--cream-warm);
+  border-top: 1.5px solid var(--gold);
+  padding-block: 0;
+}
+
+.ayo-tab-strip__inner {
+  max-width: 1320px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 4vw, 60px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.ayo-tabs {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+}
+
+.ayo-tabs button {
+  background: transparent;
+  border: none;
+  padding: 22px 20px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  position: relative;
+  white-space: nowrap;
+  transition: color .3s;
+}
+
+.ayo-tabs button.active {
+  color: var(--saffron);
+}
+
+.ayo-tabs button.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 40px;
+  background: url('/assets/images/ayodhara/shapes/tab-active-line.svg') no-repeat center/contain;
+}
+
+.ayo-tab-arrows {
+  display: flex;
+  gap: 16px;
+}
+
+.ayo-tab-arrows button {
+  background: transparent;
+  border: none;
+  padding: 4px;
+}
+
+.ayo-tab-arrows button img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .ayo-distance-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ayo-spec-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ayo-tabs button {
+    font-size: 11px;
+    padding: 16px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ayo-distance-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ================================================================
+   SECTION 08 — CLOSING / CONTACT (2-Column: 1.1fr 1fr)
+   ================================================================ */
+.ayo-contact {
+  padding-block: clamp(60px, 8vw, 100px) 0;
+  background: transparent;
+  background-image: none;
+  overflow: hidden;
+}
+
+.ayo-contact__grid {
+  max-width: 1320px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 4vw, 60px);
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: clamp(32px, 5vw, 72px);
+  align-items: end;
+}
+
+.ayo-contact__left {
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+  position: relative;
+}
+
+/* Temple Arch */
+.ayo-arch {
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+}
+
+.ayo-arch__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  text-align: center;
+  padding: 80px 36px 36px;
+  background: var(--terracotta);
+  border: 4px solid var(--gold);
+  border-radius: 160px 160px 0 0;
+  width: 300px;
+  min-height: 520px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .15);
+}
+
+.ayo-arch__inner p {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--terracotta-t);
+  line-height: 1.65;
+}
+
+.ayo-arch__inner img {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+}
+
+.ayo-arch__inner span {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+  text-transform: uppercase;
+  display: block;
+}
+
+/* Meera Farewell (Transparent Cutout Rendering) */
+.ayo-farewell {
+  position: relative;
+  left: -40px;
+  z-index: 1;
+}
+
+.ayo-farewell img {
+  width: 290px;
+  height: auto;
+  object-fit: contain;
+  border: none !important;
+  box-shadow: none !important;
+  mix-blend-mode: multiply;
+  filter: contrast(1.08) brightness(1.02);
+  background: transparent;
+}
+
+.ayo-farewell p.ayo-script {
+  position: absolute;
+  top: 10px;
+  right: -58px;
+  font-size: 15px;
+  color: var(--ink);
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* Contact Form */
+.ayo-contact__right {
+  padding-bottom: 70px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ayo-form-card--contact {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 20px 20px 20px 48px;
+  width: 100%;
+  max-width: 520px;
+  margin-left: auto;
+}
+
+.ayo-contact-hr {
+  border: none;
+  height: 4px;
+  background: linear-gradient(90deg, #7A1F1D 0%, #8C4A24 35%, #C2571F 70%, #E67E22 100%);
+  margin: 0 0 20px 8px;
+  width: 140px;
+  border-radius: 3px;
+  box-shadow: 0 2px 8px rgba(194, 87, 31, 0.25);
+}
+
+.ayo-form-card--contact h4 {
+  font-family: var(--font-script);
+  font-size: clamp(20px, 2vw, 25px);
+  text-align: left;
+  margin-bottom: 6px;
+  line-height: 1.2;
+  padding-left: 8px;
+}
+
+.ayo-form-card--contact>p {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  text-align: left;
+  margin-bottom: 26px;
+  padding-left: 8px;
+}
+
+.ayo-form-card--contact .ayo-field {
+  padding-left: 8px;
+  margin-bottom: 20px;
+}
+
+.ayo-form-card--contact .ayo-consent {
+  padding-left: 8px;
+  margin-bottom: 24px;
+}
+
+.ayo-form-card--contact .ayo-cta {
+  margin-left: 8px;
+}
+
+@media (max-width: 1024px) {
+  .ayo-contact__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ayo-contact__left {
+    justify-content: center;
+  }
+
+  .ayo-farewell {
+    left: -20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .ayo-arch__inner {
+    width: 240px;
+    min-height: 420px;
+    padding: 60px 24px 24px;
+  }
+
+  .ayo-farewell img {
+    width: 220px;
+  }
+
+  .ayo-farewell {
+    left: -10px;
+  }
+}
+
+
+/* ================================================================
+   SECTION 09 — FOOTER
+   ================================================================ */
+.ayo-footer {
+  background: var(--cream);
+  border-top: 1.5px solid var(--gold);
+  padding-block: 60px 30px;
+}
+
+.ayo-footer__rera {
+  text-align: center;
+  padding-bottom: 40px;
+  margin-bottom: 40px;
+  border-bottom: 1px solid rgba(201, 161, 90, .3);
+}
+
+.ayo-footer__rera strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 20px;
+  color: var(--saffron);
+  margin-bottom: 10px;
+}
+
+.ayo-footer__rera p {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+.ayo-footer__main {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  padding-bottom: 40px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid rgba(201, 161, 90, .3);
+  flex-wrap: wrap;
+}
+
+.ayo-footer__brand {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: .15em;
+  color: var(--ink);
+  display: block;
+}
+
+.ayo-footer__brand-sub {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  color: var(--saffron);
+  display: block;
+  margin-bottom: 16px;
+}
+
+.ayo-footer__brand-col p {
+  font-size: 15px;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+
+.ayo-footer__brand-col a:hover {
+  color: var(--saffron);
+}
+
+.ayo-footer__social {
+  display: flex;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.ayo-footer__social a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--gold);
+  color: var(--ink-soft);
+  font-size: 14px;
+  transition: background .3s, color .3s;
+}
+
+.ayo-footer__social a:hover {
+  background: var(--saffron);
+  color: #fff;
+  border-color: var(--saffron);
+}
+
+.ayo-footer__addr-col p {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.75;
+  margin-bottom: 10px;
+}
+
+.ayo-footer__copy {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.ayo-footer__copy p {
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.ayo-footer__copy a:hover {
+  color: var(--saffron);
+}
+
+
+/* ================================================================
+   BROCHURE MODAL
+   ================================================================ */
+.ayo-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .6);
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.ayo-modal {
+  background: var(--cream);
+  border: 1.5px solid var(--gold);
+  width: 100%;
+  max-width: 480px;
+  padding: 40px;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .3);
+}
+
+.ayo-modal__close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+
+/* ================================================================
+   SCROLLBAR
+   ================================================================ */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gold);
+  border-radius: 4px;
+}

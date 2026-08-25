@@ -1,0 +1,50 @@
+<section class="testimonials-section py-100" [class.visible]="isVisible">
+  <div class="container">
+    <div class="testimonials-layout">
+      <div class="testimonials-left">
+        <div class="section-title">
+          <p class="sub-title">Testimonials</p>
+          <h2 class="main-title">What Our<br><span>Clients Say</span></h2>
+        </div>
+        <div class="testimonial-nav">
+          <button class="nav-btn" (click)="prevTestimonial()" aria-label="Previous">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <button class="nav-btn" (click)="nextTestimonial()" aria-label="Next">
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="testimonials-right">
+        <div class="testimonial-slider">
+          <div class="testimonial-item" *ngFor="let testimonial of testimonials; let i = index"
+               [class.active]="i === currentIndex">
+            <div class="quote-icon">
+              <i class="fa-solid fa-quote-left"></i>
+            </div>
+            <p class="testimonial-text">{{ testimonial.text }}</p>
+            <div class="testimonial-stars">
+              <i class="fa-solid fa-star" *ngFor="let star of [1,2,3,4,5]; let s = index"
+                 [class.filled]="s < testimonial.rating"></i>
+            </div>
+            <div class="testimonial-author">
+              <div class="author-avatar">
+                {{ testimonial.name.charAt(0) }}
+              </div>
+              <div class="author-info">
+                <h5 class="author-name">{{ testimonial.name }}</h5>
+                <p class="author-designation">{{ testimonial.designation }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-dots">
+          <span class="dot" *ngFor="let t of testimonials; let i = index"
+                [class.active]="i === currentIndex"
+                (click)="goToTestimonial(i)"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

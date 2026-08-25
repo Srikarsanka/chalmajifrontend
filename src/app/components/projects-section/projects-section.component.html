@@ -1,0 +1,66 @@
+<section class="projects-section" id="projects" [class.visible]="isVisible">
+
+  <!-- Header: Title + Filter Tabs -->
+  <div class="projects-header">
+    <h2 class="projects-title"><em>OUR PROJECTS</em></h2>
+    <div class="filter-tabs">
+      <button *ngFor="let filter of filters" class="filter-tab" [class.active]="activeFilter === filter.value"
+        (click)="setFilter(filter.value)">
+        {{ filter.label }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Carousel -->
+  <div class="carousel-wrapper" *ngIf="filteredProjects.length > 0">
+    <div class="carousel-track">
+      <div *ngFor="let project of filteredProjects; let i = index" class="carousel-slide"
+        [class.center]="getSlidePosition(i) === 'center'" [class.left]="getSlidePosition(i) === 'left'"
+        [class.right]="getSlidePosition(i) === 'right'" [class.far-left]="getSlidePosition(i) === 'far-left'"
+        [class.far-right]="getSlidePosition(i) === 'far-right'">
+        <a [routerLink]="['/projects', project.id]" class="slide-inner">
+          <div class="slide-image">
+            <img *ngIf="project.mainImage" [src]="project.mainImage" [alt]="project.name" class="slide-img-real">
+            <div *ngIf="!project.mainImage" class="slide-img-placeholder">
+              <i class="fa-solid fa-city"></i>
+            </div>
+            <div class="slide-overlay"></div>
+          </div>
+          <div class="slide-info">
+            <span class="slide-name">{{ project.name }}</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty state -->
+  <div class="carousel-empty" *ngIf="filteredProjects.length === 0">
+    <p>No projects found in this category.</p>
+  </div>
+
+  <!-- Bottom Controls -->
+  <div class="carousel-controls">
+    <button class="nav-arrow prev" (click)="prev()" aria-label="Previous slide">
+      <i class="fa-solid fa-arrow-left"></i>
+    </button>
+
+    <div class="progress-container">
+      <div class="slide-progress">
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width.%]="progressPercentage"></div>
+        </div>
+      </div>
+      <div class="slide-counter">
+        <span class="counter-current">{{ currentSlideNumber }}</span>
+        <span class="counter-sep">out of</span>
+        <span class="counter-total">{{ totalSlides }}</span>
+      </div>
+    </div>
+
+    <button class="nav-arrow next" (click)="next()" aria-label="Next slide">
+      <i class="fa-solid fa-arrow-right"></i>
+    </button>
+  </div>
+
+</section>

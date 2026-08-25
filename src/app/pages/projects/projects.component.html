@@ -1,0 +1,136 @@
+<!-- Page Banner -->
+<!-- <section class="page-banner">
+  <div class="banner-overlay"></div>
+  <div class="banner-content">
+    <p class="banner-script">Portfolio</p>
+    <h1 class="banner-title">Our Projects</h1>
+    <div class="breadcrumb">
+      <a routerLink="/">Home</a>
+      <span>/</span>
+      <span class="current">Projects</span>
+    </div>
+  </div>
+</section> -->
+
+<!-- Projects Content -->
+
+<app-projects-header (filterChange)="projectsSection.setFilter($event)"></app-projects-header>
+
+<!-- Editorial Showcase Section with Background Swatch Image -->
+<section class="facade-banner">
+  <div class="facade-editorial-canvas">
+    <div class="facade-editorial-grid">
+
+      <!-- Column 1: FAÇADE -->
+      <div class="editorial-column col-left">
+        <div class="column-header">
+          <div class="eyebrow-accent-line"></div>
+          <span class="column-eyebrow">FAÇADE</span>
+        </div>
+        <div class="column-body">
+          <h2 class="editorial-display-heading">
+            Perched Between<br>
+            the Hills and<br>
+            the Sea
+          </h2>
+          <p class="editorial-accent-tag">at Signature.</p>
+        </div>
+      </div>
+
+      <!-- Column 2: ARCH / SIGNATURE EMBLEM -->
+      <div class="editorial-column col-center">
+        <div class="center-emblem-container">
+          <div class="emblem-artwork-wrap">
+            <img
+              src="https://res.cloudinary.com/tney5nvf/image/upload/v1787562736/281fee4e-7b83-46cd-b6ee-ed055cf50e77.png"
+              alt="Songs of the Sun Signature Motif" class="emblem-artwork-img">
+          </div>
+        </div>
+      </div>
+
+      <!-- Column 3: A LANDMARK -->
+      <div class="editorial-column col-right">
+        <div class="column-header center">
+          <div class="eyebrow-accent-line"></div>
+          <span class="column-eyebrow">THE SIGNATURE</span>
+        </div>
+        <div class="column-body center">
+          <h3 class="editorial-sub-heading">
+            for the Visakhapatnam Skyline
+          </h3>
+          <p class="editorial-narrative">
+            Perched where Vizag’s hills roll gracefully toward the sea, Signature stands as a timeless architectural
+            statement on the coastal horizon.
+          </p>
+          <div class="editorial-cta-wrap">
+            <a [routerLink]="['/projects', 'chalamaji-signature']" class="luxury-editorial-btn">
+              More about the project
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<br><br><br>
+<section class="Our-Approach">
+  <div class="approach-container">
+    <div class="approach-split-grid">
+      <!-- Left Column: Bold Display Quote & Tag -->
+      <div class="approach-left">
+        <div class="approach-eyebrow-wrap">
+          <span class="approach-eyebrow">OUR APPROACH</span>
+          <div class="approach-eyebrow-line"></div>
+        </div>
+        <h2 class="approach-quote">
+          “Built for the coast.<br>
+          <em>Crafted for eternity.</em>”
+        </h2>
+        <span class="approach-ethos-tag">— CHALAMAJI </span>
+      </div>
+
+      <!-- Vertical Divider -->
+      <div class="approach-divider"></div>
+
+      <!-- Right Column: Architectural Manifesto & Pillars -->
+      <div class="approach-right">
+        <p class="approach-narrative-lead">
+          From the foundation stone to the crown terrace, our developments reflect an obsession with spatial honesty,
+          quiet luxury, and structural elegance.
+        </p>
+        <p class="approach-narrative-body">
+          We sculpt sanctuaries that honor both the natural contours of Visakhapatnam and the families who dwell within
+          them. By orchestrating sunlight, ocean breezes, and enduring natural materials, every address becomes a
+          generational masterpiece.
+        </p>
+        <div class="approach-signature-row">
+          <div class="signature-badge">
+            <span class="badge-num">100%</span>
+            <span class="badge-label">Vastu & Light Aligned</span>
+          </div>
+          <div class="signature-badge-divider"></div>
+          <div class="signature-badge">
+            <span class="badge-num">0</span>
+            <span class="badge-label">Common Wall Sharing</span>
+          </div>
+          <div class="signature-badge-divider"></div>
+          <div class="signature-badge">
+            <span class="badge-num">35+</span>
+            <span class="badge-label">Years of Engineering</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-projects-section #projectsSection></app-projects-section>
+
+<!-- Back to Home Navigation -->
+<div class="back-home-wrap">
+  <a routerLink="/" class="back-home-btn">
+    <span class="btn-arrow-left"><i class="fa-solid fa-arrow-left-long"></i></span>
+    <span class="btn-text">Back to Home</span>
+  </a>
+</div>

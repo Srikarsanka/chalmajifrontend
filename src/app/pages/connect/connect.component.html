@@ -1,0 +1,620 @@
+<!-- =========================================================
+     CHALAMAJI INFRA — PRIVATE CONCIERGE & EXECUTIVE DIALOGUE
+     ========================================================= -->
+
+<div class="connect-page-wrapper" [class.is-ready]="isVisible">
+
+  <!-- =========================================================
+       HERO BANNER: EXECUTIVE CONCIERGE GALLERY
+       ========================================================= -->
+  <section class="connect-hero" [style.backgroundImage]="'url(' + heroImageUrl + ')'">
+    <div class="hero-backdrop-scrim"></div>
+    <div class="hero-radial-glow"></div>
+
+    <div class="container hero-content-container">
+      
+      <!-- Geodetic Coordinate Badge -->
+      <div class="hero-top-badge">
+        <span class="badge-dot"></span>
+        <span class="badge-text">EXECUTIVE CONCIERGE · 17.7214° N, 83.3150° E</span>
+        <span class="badge-sep">/</span>
+        <span class="badge-sub">VISAKHAPATNAM HQ</span>
+      </div>
+
+      <div class="hero-title-wrap">
+        <p class="hero-script-lead">Direct Dialogue &amp; Private Consultations</p>
+        <h1 class="hero-main-title">
+          Connect With<br>
+          <span class="title-serif-italic">Chalamaji Infra.</span>
+        </h1>
+      </div>
+
+      <p class="hero-description">
+        Whether you are seeking your signature coastal residence, securing generational plotted wealth at Ayodhara, or initiating joint developments—our executive leadership desk welcomes your inquiry.
+      </p>
+    </div>
+
+    <!-- Fine Grid Bottom Accent Line -->
+    <div class="hero-bottom-rule"></div>
+  </section>
+
+  <!-- =========================================================
+       INQUIRY TRACK SELECTOR BAR
+       ========================================================= -->
+  <section class="tracks-selector-section">
+    <div class="container">
+      <div class="tracks-header">
+        <span class="tracks-eyebrow">SELECT YOUR INQUIRY DOMAIN</span>
+        <h3 class="tracks-title">How can we assist you today?</h3>
+      </div>
+
+      <div class="tracks-buttons-grid" role="tablist" aria-label="Inquiry Categories">
+        <button
+          *ngFor="let track of inquiryTracks"
+          type="button"
+          class="track-card-btn"
+          [class.active]="activeTrackId === track.id"
+          (click)="selectTrack(track.id)"
+          role="tab"
+          [attr.aria-selected]="activeTrackId === track.id"
+        >
+          <div class="track-icon-wrap">
+            <i class="fa-solid" [ngClass]="track.icon"></i>
+          </div>
+          <div class="track-text-block">
+            <span class="track-label">{{ track.label }}</span>
+            <span class="track-tagline">{{ track.tagline }}</span>
+          </div>
+          <div class="track-check-indicator" *ngIf="activeTrackId === track.id">
+            <i class="fa-solid fa-check"></i>
+          </div>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       MAIN INTERACTION GRID (LEFT: HQ DOSSIER | RIGHT: LUXURY FORM)
+       ========================================================= -->
+  <section class="connect-main-section" id="consultation-form-block">
+    <div class="container">
+      <div class="main-interaction-grid">
+
+        <!-- LEFT COLUMN: CORPORATE HEADQUARTERS & DIRECT ACTIONS -->
+        <aside class="concierge-dossier-column">
+          
+          <div class="dossier-card">
+            
+            <!-- Dossier Header -->
+            <div class="dossier-header">
+              <div class="dossier-monogram">CI</div>
+              <div class="dossier-header-text">
+                <h4 class="dossier-title">Corporate Headquarters</h4>
+                <span class="dossier-sub">Pandurangapuram · Visakhapatnam</span>
+              </div>
+            </div>
+
+            <!-- Instant One-Click WhatsApp Hotline -->
+            <div class="whatsapp-direct-box">
+              <div class="wa-left">
+                <div class="wa-icon-pulse">
+                  <i class="fa-brands fa-whatsapp"></i>
+                  <span class="live-dot"></span>
+                </div>
+                <div class="wa-info">
+                  <span class="wa-label">INSTANT WHATSAPP DESK</span>
+                  <span class="wa-status">Online &amp; Active</span>
+                </div>
+              </div>
+              <a
+                href="https://wa.me/918599936363?text=Hello%20Chalamaji%20Infra,%20I%20would%20like%20to%20inquire%20about%20your%20projects."
+                target="_blank"
+                rel="noopener noreferrer"
+                class="wa-action-btn"
+              >
+                <span>Chat Now</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </a>
+            </div>
+
+            <!-- Contact Channels List -->
+            <div class="dossier-channels-list">
+              
+              <!-- Address Block -->
+              <div class="channel-item">
+                <div class="channel-icon">
+                  <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <div class="channel-body">
+                  <span class="channel-label">OFFICE LOCATION</span>
+                  <address class="channel-address">
+                    Door No. 7-5-18, Plot No. 37,<br>
+                    Pandurangapuram,<br>
+                    Visakhapatnam, AP - 530003
+                  </address>
+                  <div class="channel-actions">
+                    <button type="button" class="btn-text-action" (click)="copyAddress()">
+                      <i class="fa-regular fa-copy"></i> Copy Address
+                    </button>
+                    <a
+                      href="https://maps.google.com/?q=Pandurangapuram+Visakhapatnam+Chalamaji"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="btn-text-action"
+                    >
+                      <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Maps
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Phone Call Channels -->
+              <div class="channel-item">
+                <div class="channel-icon">
+                  <i class="fa-solid fa-phone-volume"></i>
+                </div>
+                <div class="channel-body">
+                  <span class="channel-label">DIRECT CONCIERGE LINES</span>
+                  <div class="phone-links-group">
+                    <a href="tel:+918599936363" class="phone-link">+91 85999 36363 <span class="phone-tag">Priority</span></a>
+                    <a href="tel:+919876543210" class="phone-link">+91 98765 43210 <span class="phone-tag">Office</span></a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Official Email -->
+              <div class="channel-item">
+                <div class="channel-icon">
+                  <i class="fa-solid fa-envelope-open-text"></i>
+                </div>
+                <div class="channel-body">
+                  <span class="channel-label">EXECUTIVE CORRESPONDENCE</span>
+                  <a href="mailto:info@chalamaji.com" class="email-link">info&#64;chalamaji.com</a>
+                </div>
+              </div>
+
+              <!-- VIP Lounge Hours -->
+              <div class="channel-item">
+                <div class="channel-icon">
+                  <i class="fa-solid fa-clock"></i>
+                </div>
+                <div class="channel-body">
+                  <span class="channel-label">GALLERY &amp; LOUNGE TIMINGS</span>
+                  <p class="timing-text">
+                    <strong>Monday – Saturday:</strong> 9:00 AM – 6:30 PM<br>
+                    <strong>Sunday:</strong> Private appointments by prior booking
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Corporate Trust Seal Footer -->
+            <div class="dossier-trust-footer">
+              <div class="trust-pill">
+                <i class="fa-solid fa-certificate"></i>
+                <span>CIN: U45200AP2014PTC094736</span>
+              </div>
+              <div class="trust-pill">
+                <i class="fa-solid fa-landmark-flag"></i>
+                <span>100% AP RERA Registered</span>
+              </div>
+            </div>
+
+          </div>
+
+        </aside>
+
+        <!-- RIGHT COLUMN: BESPOKE CONSULTATION FORM -->
+        <main class="concierge-form-column">
+          <div class="form-container-card">
+
+            <!-- NORMAL FORM STATE -->
+            <div *ngIf="!isSubmitted">
+              
+              <div class="form-card-header">
+                <div class="active-track-pill">
+                  <i class="fa-solid fa-sliders"></i>
+                  <span>TRACK: <strong>{{ activeTrackId | uppercase }}</strong></span>
+                </div>
+                <h3 class="form-card-title">Schedule a Private Consultation</h3>
+                <p class="form-card-subtitle">
+                  Complete the dossier details below. An executive relationship manager will initiate contact within 2 hours.
+                </p>
+              </div>
+
+              <form class="bespoke-form" (ngSubmit)="onSubmit()" #consultForm="ngForm">
+                
+                <!-- Row 1: Full Name & Phone -->
+                <div class="form-split-row">
+                  <div class="form-field-group">
+                    <label for="c-name">Full Name <span class="req-star">*</span></label>
+                    <div class="input-with-icon">
+                      <i class="fa-regular fa-user field-icon"></i>
+                      <input
+                        type="text"
+                        id="c-name"
+                        name="name"
+                        [(ngModel)]="formData.name"
+                        required
+                        placeholder="e.g. Mattapalli Siddhartha"
+                        class="luxury-input"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="form-field-group">
+                    <label for="c-phone">Phone Number <span class="req-star">*</span></label>
+                    <div class="input-with-icon">
+                      <i class="fa-solid fa-phone field-icon"></i>
+                      <input
+                        type="tel"
+                        id="c-phone"
+                        name="phone"
+                        [(ngModel)]="formData.phone"
+                        required
+                        placeholder="e.g. +91 98480 12345"
+                        class="luxury-input"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Row 2: Email & Project of Interest -->
+                <div class="form-split-row">
+                  <div class="form-field-group">
+                    <label for="c-email">Email Address <span class="req-star">*</span></label>
+                    <div class="input-with-icon">
+                      <i class="fa-regular fa-envelope field-icon"></i>
+                      <input
+                        type="email"
+                        id="c-email"
+                        name="email"
+                        [(ngModel)]="formData.email"
+                        required
+                        placeholder="e.g. name@domain.com"
+                        class="luxury-input"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="form-field-group">
+                    <label for="c-project">Interested Development</label>
+                    <div class="input-with-icon select-wrap">
+                      <i class="fa-solid fa-map-pin field-icon"></i>
+                      <select
+                        id="c-project"
+                        name="project"
+                        [(ngModel)]="formData.project"
+                        class="luxury-input luxury-select"
+                      >
+                        <option value="">Select Project / Scope</option>
+                        <optgroup label="Residential &amp; Villas">
+                          <option value="the-address">The Address IT Hub &amp; Suites (Madhurawada)</option>
+                          <option value="chalamaji-landmark">Chalamaji Landmark Villas (Madhurawada)</option>
+                          <option value="the-orchid">The Orchid Coastal Tower (Yendada)</option>
+                          <option value="signature">Chalamaji Signature</option>
+                        </optgroup>
+                        <optgroup label="Plotted Enclaves">
+                          <option value="ayodhara">Ayodhara Plotted Enclave (Vizag)</option>
+                          <option value="port-master-layout">Port Employees Master Layout</option>
+                        </optgroup>
+                        <optgroup label="Commercial &amp; Joint Ventures">
+                          <option value="integral">Integral Mixed-Use Hub (14 Acres)</option>
+                          <option value="jv-land">Land Development &amp; Joint Venture</option>
+                          <option value="civil-infra">Civil &amp; Water Infrastructure (Nutech)</option>
+                        </optgroup>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Row 3: Site Visit Date & Preferred Contact Method -->
+                <div class="form-split-row">
+                  <div class="form-field-group">
+                    <label for="c-date">Preferred Site Visit Date <span class="optional-tag">(Optional)</span></label>
+                    <div class="input-with-icon">
+                      <i class="fa-regular fa-calendar field-icon"></i>
+                      <input
+                        type="date"
+                        id="c-date"
+                        name="siteVisitDate"
+                        [(ngModel)]="formData.siteVisitDate"
+                        class="luxury-input"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="form-field-group">
+                    <label>Preferred Contact Mode</label>
+                    <div class="contact-mode-chips">
+                      <label class="mode-chip" [class.active]="formData.contactMethod === 'whatsapp'">
+                        <input
+                          type="radio"
+                          name="contactMethod"
+                          value="whatsapp"
+                          [(ngModel)]="formData.contactMethod"
+                        />
+                        <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                      </label>
+                      <label class="mode-chip" [class.active]="formData.contactMethod === 'phone'">
+                        <input
+                          type="radio"
+                          name="contactMethod"
+                          value="phone"
+                          [(ngModel)]="formData.contactMethod"
+                        />
+                        <i class="fa-solid fa-phone"></i> Call
+                      </label>
+                      <label class="mode-chip" [class.active]="formData.contactMethod === 'email'">
+                        <input
+                          type="radio"
+                          name="contactMethod"
+                          value="email"
+                          [(ngModel)]="formData.contactMethod"
+                        />
+                        <i class="fa-regular fa-envelope"></i> Email
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Row 4: Specific Message -->
+                <div class="form-field-group">
+                  <label for="c-message">Specific Requirements / Message</label>
+                  <textarea
+                    id="c-message"
+                    name="message"
+                    rows="4"
+                    [(ngModel)]="formData.message"
+                    placeholder="Provide details about your desired unit size, budget, timeline, or specific questions..."
+                    class="luxury-input luxury-textarea"
+                  ></textarea>
+                </div>
+
+                <!-- Submit Action Block -->
+                <div class="form-submit-row">
+                  <button
+                    type="submit"
+                    class="luxury-submit-btn"
+                    [disabled]="!consultForm.valid || isSubmitting"
+                  >
+                    <span *ngIf="!isSubmitting" class="btn-inner">
+                      <span>Transmit Consultation Request</span>
+                      <i class="fa-solid fa-arrow-right"></i>
+                    </span>
+                    <span *ngIf="isSubmitting" class="btn-inner">
+                      <i class="fa-solid fa-circle-notch fa-spin"></i>
+                      <span>Transmitting Dossier...</span>
+                    </span>
+                  </button>
+
+                  <div class="privacy-note">
+                    <i class="fa-solid fa-lock"></i>
+                    <span>Your privacy is paramount. Zero spam guarantee.</span>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+
+            <!-- SUCCESS CONFIRMATION STATE -->
+            <div *ngIf="isSubmitted" class="submission-confirmation-card">
+              <div class="conf-seal-wrap">
+                <div class="conf-seal">
+                  <i class="fa-solid fa-check"></i>
+                </div>
+              </div>
+
+              <span class="conf-eyebrow">CONSULTATION DOSSIER TRANSMITTED</span>
+              <h3 class="conf-heading">Thank You, {{ formData.name }}.</h3>
+              <p class="conf-desc">
+                Your consultation request has been routed to our Senior Relationship Desk. A representative will contact you via <strong>{{ formData.contactMethod | uppercase }}</strong> shortly.
+              </p>
+
+              <div class="conf-dossier-box">
+                <div class="conf-row">
+                  <span class="c-label">DOSSIER REF:</span>
+                  <strong class="c-val ref-code">{{ referenceCode }}</strong>
+                </div>
+                <div class="conf-row" *ngIf="formData.project">
+                  <span class="c-label">SCOPE / PROJECT:</span>
+                  <span class="c-val">{{ formData.project | uppercase }}</span>
+                </div>
+                <div class="conf-row" *ngIf="formData.siteVisitDate">
+                  <span class="c-label">VISIT DATE:</span>
+                  <span class="c-val">{{ formData.siteVisitDate }}</span>
+                </div>
+                <div class="conf-row">
+                  <span class="c-label">STATUS:</span>
+                  <span class="c-val status-badge"><i class="fa-solid fa-circle-check"></i> PENDING CONCIERGE ALLOCATION</span>
+                </div>
+              </div>
+
+              <div class="conf-actions-group">
+                <a
+                  [href]="'https://wa.me/918599936363?text=Hello%20Chalamaji,%20I%20have%20submitted%20consultation%20request%20' + referenceCode"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="conf-wa-btn"
+                >
+                  <i class="fa-brands fa-whatsapp"></i>
+                  <span>Track Live via WhatsApp</span>
+                </a>
+                <button type="button" class="conf-reset-btn" (click)="resetForm()">
+                  <span>Submit Another Inquiry</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </main>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       INTERACTIVE WAYFINDING & PROXIMITY HUB
+       ========================================================= -->
+  <section class="wayfinding-section">
+    <div class="container">
+      
+      <div class="wayfinding-header text-center">
+        <span class="section-eyebrow">HEADQUARTERS &amp; ACCESS CORRIDOR</span>
+        <h2 class="section-main-title">
+          Visit Our Pandurangapuram<br>
+          <span class="title-serif-italic">Client Consultation Gallery.</span>
+        </h2>
+        <p class="section-subtitle">
+          Located in the prestigious Waltair Uplands / Pandurangapuram district, just moments from the serene shores of RK Beach.
+        </p>
+      </div>
+
+      <!-- Map & Landmark Proximity Split -->
+      <div class="wayfinding-split-grid">
+        
+        <!-- Interactive Google Map Frame -->
+        <div class="map-frame-card">
+          <iframe
+            title="Chalamaji Infra Headquarters Location"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3799.8229864273574!2d83.3150244!3d17.7214154!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a3943343bc407b9%3A0x64f891b2c453c072!2sPandurangapuram%2C%20Visakhapatnam%2C%20Andhra%20Pradesh!5e0!3m2!1sen!2sin!4v1718000000000!5m2!1sen!2sin"
+            width="100%"
+            height="100%"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            class="styled-map-iframe"
+          ></iframe>
+          
+          <div class="map-overlay-badge">
+            <i class="fa-solid fa-location-dot"></i>
+            <span>CHALAMAJI HQ · WALTAIR SECTOR</span>
+          </div>
+        </div>
+
+        <!-- Proximity Landmark Metrics Grid -->
+        <div class="proximity-cards-col">
+          
+          <div class="prox-card">
+            <div class="prox-icon-box"><i class="fa-solid fa-water"></i></div>
+            <div class="prox-text">
+              <div class="prox-time-row">
+                <span class="prox-name">RK Beach Promenade</span>
+                <span class="prox-badge">2 MINS</span>
+              </div>
+              <p class="prox-dist">800 Meters · Scenic Coastal Boulevard</p>
+            </div>
+          </div>
+
+          <div class="prox-card">
+            <div class="prox-icon-box"><i class="fa-solid fa-tree-city"></i></div>
+            <div class="prox-text">
+              <div class="prox-time-row">
+                <span class="prox-name">Siripuram Business Hub</span>
+                <span class="prox-badge">4 MINS</span>
+              </div>
+              <p class="prox-dist">1.8 Kilometers · Central Commercial District</p>
+            </div>
+          </div>
+
+          <div class="prox-card">
+            <div class="prox-icon-box"><i class="fa-solid fa-hotel"></i></div>
+            <div class="prox-text">
+              <div class="prox-time-row">
+                <span class="prox-name">Novotel Varun Beach</span>
+                <span class="prox-badge">3 MINS</span>
+              </div>
+              <p class="prox-dist">1.2 Kilometers · Luxury Hospitality</p>
+            </div>
+          </div>
+
+          <div class="prox-card">
+            <div class="prox-icon-box"><i class="fa-solid fa-plane-departure"></i></div>
+            <div class="prox-text">
+              <div class="prox-time-row">
+                <span class="prox-name">Visakhapatnam Int'l Airport</span>
+                <span class="prox-badge">25 MINS</span>
+              </div>
+              <p class="prox-dist">14 Kilometers · Direct Highway Transit</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================
+       FREQUENTLY ASKED QUESTIONS (CONCIERGE ACCORDION)
+       ========================================================= -->
+  <section class="concierge-faq-section">
+    <div class="container">
+      
+      <div class="faq-header text-center">
+        <span class="section-eyebrow">FREQUENT INQUIRIES</span>
+        <h2 class="section-main-title">
+          Client Advisory &amp; FAQ.<br>
+          <span class="title-serif-italic">Clarity on every milestone.</span>
+        </h2>
+      </div>
+
+      <div class="faq-accordion-container">
+        <div
+          *ngFor="let faq of faqList; let fIdx = index"
+          class="faq-accordion-item"
+          [class.is-expanded]="activeFaqIndex === fIdx"
+        >
+          <button
+            type="button"
+            class="faq-question-btn"
+            (click)="toggleFaq(fIdx)"
+            [attr.aria-expanded]="activeFaqIndex === fIdx"
+          >
+            <div class="faq-q-left">
+              <span class="faq-cat-tag">{{ faq.category }}</span>
+              <span class="faq-q-text">{{ faq.question }}</span>
+            </div>
+            <div class="faq-toggle-icon">
+              <i class="fa-solid" [ngClass]="activeFaqIndex === fIdx ? 'fa-minus' : 'fa-plus'"></i>
+            </div>
+          </button>
+
+          <div class="faq-answer-panel" *ngIf="activeFaqIndex === fIdx">
+            <p class="faq-answer-text">{{ faq.answer }}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================
+       CLOSING WAYFINDING & ACTION BAR
+       ========================================================= -->
+  <section class="connect-closing-bar">
+    <div class="container">
+      <div class="closing-inner-wrap">
+        <div class="closing-left">
+          <span class="closing-eyebrow">CHALAMAJI INFRA PROJECTS</span>
+          <h4 class="closing-title">Explore Our Living Portfolio</h4>
+          <p class="closing-desc">Discover our ongoing coastal high-rises and plotted sanctuaries across Visakhapatnam.</p>
+        </div>
+        <div class="closing-right">
+          <a routerLink="/projects" class="closing-nav-btn primary">
+            <span>View All Projects</span>
+            <i class="fa-solid fa-arrow-right-long"></i>
+          </a>
+          <a routerLink="/ayodhara" class="closing-nav-btn secondary">
+            <span>Discover Ayodhara</span>
+            <i class="fa-solid fa-compass"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>

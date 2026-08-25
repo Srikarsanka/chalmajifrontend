@@ -1,0 +1,15 @@
+<section class="stats-section" [class.visible]="isVisible">
+  <div class="stats-overlay"></div>
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item" *ngFor="let stat of stats; let i = index"
+           [style.animation-delay]="(i * 0.15) + 's'">
+        <div class="stat-number">
+          {{ stat.value | number:'1.0-0' }}<span class="stat-suffix">{{ stat.suffix }}</span>
+        </div>
+        <div class="stat-divider"></div>
+        <p class="stat-label">{{ stat.label }}</p>
+      </div>
+    </div>
+  </div>
+</section>
