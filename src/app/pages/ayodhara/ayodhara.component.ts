@@ -13,6 +13,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AYODHARA_PLOTS, AYODHARA_SPECS, AyodharaPlot } from '../../data/ayodhara-plots.data';
+import { InquiryService, InquiryPayload } from '../../services/inquiry.service';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -114,6 +115,7 @@ export class AyodharaComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private el: ElementRef,
     private cdr: ChangeDetectorRef,
+    private inquiryService: InquiryService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
@@ -230,6 +232,22 @@ export class AyodharaComponent implements OnInit, AfterViewInit, OnDestroy {
   submitBrochureDownload(): void {
     if (this.brochureForm.name && this.brochureForm.phone && this.brochureForm.consent) {
       this.brochureSubmitted = true;
+
+      // Send inquiry to backend with projectName 'Ayodhara'
+      const payload: InquiryPayload = {
+        name: this.brochureForm.name,
+        phone: this.brochureForm.phone,
+        email: this.brochureForm.email,
+        projectName: 'Ayodhara',
+        inquiryType: 'Brochure Download',
+        sourcePage: '/ayodhara'
+      };
+
+      this.inquiryService.submitInquiry(payload).subscribe({
+        next: (res) => console.log('Brochure inquiry saved:', res),
+        error: (err) => console.error('Failed to save brochure inquiry:', err)
+      });
+
       if (this.isBrowser) {
         // Trigger download of the brochure
         const link = document.createElement('a');
@@ -294,6 +312,21 @@ export class AyodharaComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.heroInquiry.name && this.heroInquiry.phone && this.heroInquiry.consent) {
       this.heroSubmitted = true;
       this.cdr.detectChanges();
+
+      const payload: InquiryPayload = {
+        name: this.heroInquiry.name,
+        phone: this.heroInquiry.phone,
+        email: this.heroInquiry.email,
+        projectName: 'Ayodhara',
+        inquiryType: 'Hero Form',
+        preferredFacing: this.heroInquiry.preferredFacing,
+        sourcePage: '/ayodhara'
+      };
+
+      this.inquiryService.submitInquiry(payload).subscribe({
+        next: (res) => console.log('Hero inquiry saved:', res),
+        error: (err) => console.error('Failed to save hero inquiry:', err)
+      });
     }
   }
 
@@ -301,6 +334,20 @@ export class AyodharaComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.contactInquiry.name && this.contactInquiry.phone && this.contactInquiry.consent) {
       this.contactSubmitted = true;
       this.cdr.detectChanges();
+
+      const payload: InquiryPayload = {
+        name: this.contactInquiry.name,
+        phone: this.contactInquiry.phone,
+        email: this.contactInquiry.email,
+        projectName: 'Ayodhara',
+        inquiryType: 'Consultation Form',
+        sourcePage: '/ayodhara'
+      };
+
+      this.inquiryService.submitInquiry(payload).subscribe({
+        next: (res) => console.log('Contact inquiry saved:', res),
+        error: (err) => console.error('Failed to save contact inquiry:', err)
+      });
     }
   }
 

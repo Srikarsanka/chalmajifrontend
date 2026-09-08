@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { PROJECTS, Project } from '../../data/projects.data';
+import { InquiryService, InquiryPayload } from '../../services/inquiry.service';
 
 @Component({
   selector: 'app-project-detail',
@@ -29,7 +30,8 @@ export class ProjectDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private inquiryService: InquiryService
   ) {}
 
   ngOnInit(): void {
@@ -101,6 +103,22 @@ export class ProjectDetailComponent implements OnInit {
   submitInquiry(): void {
     if (this.inquiry.name && this.inquiry.phone) {
       this.inquirySubmitted = true;
+
+      const payload: InquiryPayload = {
+        name: this.inquiry.name,
+        phone: this.inquiry.phone,
+        email: this.inquiry.email,
+        message: this.inquiry.message,
+        projectName: this.project?.name || 'Project Detail',
+        inquiryType: 'Project Detail Inquiry',
+        sourcePage: `/projects/${this.project?.id || ''}`
+      };
+
+      this.inquiryService.submitInquiry(payload).subscribe({
+        next: (res) => console.log('Project inquiry saved successfully:', res),
+        error: (err) => console.error('Failed to save project inquiry:', err)
+      });
+
       setTimeout(() => {
         this.inquiry = { name: '', phone: '', email: '', message: '' };
         this.cdr.detectChanges();
