@@ -1,5 +1,5 @@
 export const environment = {
-  production: false,
-  apiUrl: 'http://localhost:5001/api',
+  production: true,
+  apiUrl: 'https://chalamajiback.onrender.com/api',
   whatsappBusinessNumber: '8639157722'
 };
