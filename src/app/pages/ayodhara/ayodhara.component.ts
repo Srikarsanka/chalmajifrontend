@@ -14,6 +14,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AYODHARA_PLOTS, AYODHARA_SPECS, AyodharaPlot } from '../../data/ayodhara-plots.data';
 import { InquiryService, InquiryPayload } from '../../services/inquiry.service';
+import { ProjectService } from '../../services/project.service';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -96,6 +97,7 @@ export class AyodharaComponent implements OnInit, AfterViewInit, OnDestroy {
     email: '',
     phone: '',
     preferredFacing: '',
+    enquiredPlotNo: null as number | null,
     consent: true
   };
   heroSubmitted: boolean = false;
@@ -116,6 +118,7 @@ export class AyodharaComponent implements OnInit, AfterViewInit, OnDestroy {
     private el: ElementRef,
     private cdr: ChangeDetectorRef,
     private inquiryService: InquiryService,
+    private projectService: ProjectService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
@@ -125,6 +128,45 @@ export class AyodharaComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.isBrowser) {
       window.scrollTo(0, 0);
     }
+    this.loadLivePlots();
+  }
+
+  /**
+   * Fetch the latest real-time plot details (including 'Available', 'Booked', 'Sold' status)
+   * directly from the MongoDB backend database.
+   */
+  loadLivePlots(): void {
+    this.projectService.getProjectById('ayodhara-plotting').subscribe({
+      next: (project) => {
+        if (project && project.plots && project.plots.length > 0) {
+          this.plots = project.plots;
+          // Keep selected plot synchronized with live DB data
+          const currentPlotNo = this.selectedPlot?.plotNo || 1;
+          const liveMatch = this.plots.find((p) => p.plotNo === currentPlotNo);
+          if (liveMatch) {
+            this.selectedPlot = liveMatch;
+          } else {
+            this.selectedPlot = this.plots[0];
+          }
+          this.cdr.detectChanges();
+        }
+      },
+      error: (err) => {
+        console.warn('⚠️ Could not load live plots from DB, using fallback:', err.message);
+      }
+    });
+  }
+
+  /**
+   * Triggers enquiry for a specific plot, binds facing and plot number to the hero form,
+   * and smoothly scrolls up to the hero section for the user to complete details.
+   */
+  enquireForPlot(plot: AyodharaPlot): void {
+    this.selectedPlot = plot;
+    this.heroInquiry.preferredFacing = plot.facing;
+    this.heroInquiry.enquiredPlotNo = plot.plotNo;
+    this.scrollToSection('hero');
+    this.cdr.detectChanges();
   }
 
   ngAfterViewInit(): void {
@@ -313,19 +355,51 @@ export class AyodharaComponent implements OnInit, AfterViewInit, OnDestroy {
       this.heroSubmitted = true;
       this.cdr.detectChanges();
 
+      const hasPlot = !!this.heroInquiry.enquiredPlotNo;
+      const remarks = hasPlot
+        ? `Plot ${this.heroInquiry.enquiredPlotNo} enquiry of Ayodhara project`
+        : 'General Ayodhara Hero Form Inquiry';
+
       const payload: InquiryPayload = {
         name: this.heroInquiry.name,
         phone: this.heroInquiry.phone,
         email: this.heroInquiry.email,
         projectName: 'Ayodhara',
-        inquiryType: 'Hero Form',
+        inquiryType: hasPlot ? 'Ayodhara Plot Booking Inquiry' : 'Hero Form',
+        plotNo: this.heroInquiry.enquiredPlotNo || undefined,
         preferredFacing: this.heroInquiry.preferredFacing,
+        remarks: remarks,
         sourcePage: '/ayodhara'
       };
 
       this.inquiryService.submitInquiry(payload).subscribe({
-        next: (res) => console.log('Hero inquiry saved:', res),
-        error: (err) => console.error('Failed to save hero inquiry:', err)
+        next: (res) => {
+          console.log('Hero inquiry saved:', res);
+          this.inquiryService.redirectToWhatsApp({
+            name: payload.name,
+            phone: payload.phone,
+            email: payload.email,
+            projectName: 'Ayodhara',
+            inquiryType: payload.inquiryType,
+            plotNo: payload.plotNo,
+            extentSqYds: hasPlot && this.selectedPlot ? this.selectedPlot.extentSqYds : undefined,
+            preferredFacing: this.heroInquiry.preferredFacing,
+            remarks: remarks
+          });
+        },
+        error: (err) => {
+          console.error('Failed to save hero inquiry:', err);
+          this.inquiryService.redirectToWhatsApp({
+            name: payload.name,
+            phone: payload.phone,
+            email: payload.email,
+            projectName: 'Ayodhara',
+            inquiryType: payload.inquiryType,
+            plotNo: payload.plotNo,
+            preferredFacing: this.heroInquiry.preferredFacing,
+            remarks: remarks
+          });
+        }
       });
     }
   }
@@ -345,7 +419,16 @@ export class AyodharaComponent implements OnInit, AfterViewInit, OnDestroy {
       };
 
       this.inquiryService.submitInquiry(payload).subscribe({
-        next: (res) => console.log('Contact inquiry saved:', res),
+        next: (res) => {
+          console.log('Contact inquiry saved:', res);
+          this.inquiryService.redirectToWhatsApp({
+            name: payload.name,
+            phone: payload.phone,
+            email: payload.email,
+            projectName: 'Ayodhara',
+            inquiryType: 'Consultation Form'
+          });
+        },
         error: (err) => console.error('Failed to save contact inquiry:', err)
       });
     }

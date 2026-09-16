@@ -1,8 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { PROJECTS, Project } from '../../data/projects.data';
-
+import { ProjectService, Project } from '../../services/project.service';
 
 interface FilterTab {
   label: string;
@@ -18,8 +17,8 @@ interface FilterTab {
 })
 export class ProjectsSectionComponent implements OnInit {
   isVisible = false;
-  projects: Project[] = PROJECTS;
-  filteredProjects: Project[] = PROJECTS;
+  projects: Project[] = [];
+  filteredProjects: Project[] = [];
   currentIndex = 0;
   activeFilter = 'all';
 
@@ -31,9 +30,14 @@ export class ProjectsSectionComponent implements OnInit {
     { label: 'Residential', value: 'residential' }
   ];
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(
+    private projectService: ProjectService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
+    this.loadProjects();
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach(entry => {
@@ -48,6 +52,17 @@ export class ProjectsSectionComponent implements OnInit {
     setTimeout(() => {
       const el = document.querySelector('.projects-section');
       if (el) observer.observe(el);
+    });
+  }
+
+  loadProjects() {
+    this.projectService.getProjects().subscribe({
+      next: (data) => {
+        this.projects = data;
+        this.setFilter(this.activeFilter);
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error('Failed to load projects from MongoDB:', err)
     });
   }
 

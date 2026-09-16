@@ -30,7 +30,7 @@ export const PROJECTS: Project[] = [
       'assets/images/projects/signature-3.jpg'
     ],
     amenities: ['Swimming Pool', 'Gymnasium', 'Clubhouse', '24/7 Security', 'Landscaped Gardens', 'Power Backup'],
-    mainImage: 'assets/images/projects/signature-main.jpg'
+    mainImage: 'https://res.cloudinary.com/djha4r2ys/image/upload/v1789407538/69e8968e-b89c-469d-b52b-0548a47d65f9.png'
   },
   {
     id: 'ayodhara-plotting',

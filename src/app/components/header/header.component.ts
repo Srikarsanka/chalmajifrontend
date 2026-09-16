@@ -2,7 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { PROJECTS, Project } from '../../data/projects.data';
+import { ProjectService, Project } from '../../services/project.service';
 
 @Component({
   selector: 'app-header',
@@ -16,17 +16,30 @@ export class HeaderComponent implements OnInit {
   isMenuOpen = false;
   logoVisible = true;
   isAboutPage = false;
-  ongoingProjects: Project[] = PROJECTS.filter(p => p.status === 'Ongoing');
+  ongoingProjects: Project[] = [];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private projectService: ProjectService
+  ) {}
 
   ngOnInit(): void {
+    this.loadOngoingProjects();
     this.checkIfAboutPage(this.router.url);
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: any) => {
         this.checkIfAboutPage(event.urlAfterRedirects || event.url);
       });
+  }
+
+  loadOngoingProjects(): void {
+    this.projectService.getProjects(undefined, 'Ongoing').subscribe({
+      next: (projects) => {
+        this.ongoingProjects = projects;
+      },
+      error: (err) => console.error('Failed to load ongoing projects for header:', err)
+    });
   }
 
   private checkIfAboutPage(url: string): void {

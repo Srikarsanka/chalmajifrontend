@@ -1,296 +1,639 @@
-<div class="project-detail-page" *ngIf="project">
-  <!-- Page Banner -->
-  <section class="project-hero" [style.backgroundImage]="project?.mainImage ? 'url(' + project.mainImage + ')' : ''"
-    [style.backgroundSize]="'cover'" [style.backgroundPosition]="'center'">
-    <div class="hero-bg-overlay"></div>
-    <div class="container hero-container">
-      <div class="breadcrumb">
-        <a routerLink="/">Home</a>
-        <i class="fa-solid fa-chevron-right breadcrumb-sep"></i>
-        <a routerLink="/projects">Projects</a>
-        <i class="fa-solid fa-chevron-right breadcrumb-sep"></i>
-        <span class="current">{{ project.name }}</span>
-      </div>
+<div class="luxe-project-page" *ngIf="project">
 
-      <div class="hero-content">
-        <div class="hero-badges">
-          <span class="badge-type">{{ project.type }}</span>
-          <span class="badge-status" [class.completed]="project.status === 'Completed'">
-            <i class="fa-solid fa-circle-dot"></i> {{ project.status }}
+  <!-- ==========================================
+       1. CINEMATIC FULL-WIDTH HERO
+       ========================================== -->
+  <section class="luxe-hero">
+    <!-- Background Media with Parallax/Scale -->
+    <div class="hero-media-wrapper">
+      <img
+        *ngIf="project.mainImage"
+        [src]="project.mainImage"
+        [alt]="project.name"
+        class="hero-media-img" />
+      <div *ngIf="!project.mainImage" class="hero-media-fallback"></div>
+      <div class="hero-vignette-overlay"></div>
+    </div>
+
+    <!-- Hero Content Container -->
+    <div class="hero-inner-container">
+      <!-- Breadcrumb -->
+      <nav class="luxe-breadcrumb" aria-label="Breadcrumb">
+        <a routerLink="/">Home</a>
+        <span class="bc-sep">/</span>
+        <a routerLink="/projects">Portfolio</a>
+        <span class="bc-sep">/</span>
+        <span class="bc-active">{{ project.name }}</span>
+      </nav>
+
+      <!-- Hero Header Stack -->
+      <div class="hero-header-stack">
+        <div class="hero-meta-strip">
+          <span class="luxe-pill status-pill" [class.completed]="project.status === 'Completed'">
+            <span class="pulse-dot" *ngIf="project.status !== 'Completed'"></span>
+            {{ project.status | uppercase }}
           </span>
-          <span *ngIf="project.reraNumber" class="badge-rera">
-            <i class="fa-solid fa-shield-check"></i> RERA: {{ project.reraNumber }}
+
+          <span class="luxe-pill type-pill">
+            {{ project.type }}
+          </span>
+
+          <span class="luxe-pill rera-pill" *ngIf="project.reraNumber">
+            <i class="fa-solid fa-shield-halved"></i>
+            RERA REGISTERED
           </span>
         </div>
 
-        <h1 class="hero-title">{{ project.name }}</h1>
+        <h1 class="hero-project-title">{{ project.name }}</h1>
 
-        <p class="hero-location">
-          <i class="fa-solid fa-location-dot"></i> {{ project.location }}
+        <p class="hero-location-row">
+          <i class="fa-solid fa-location-dot"></i>
+          <span>{{ project.location }}</span>
+        </p>
+
+        <!-- Primary Hero Actions -->
+        <div class="hero-cta-group">
+          <button (click)="scrollToEnquiry()" class="hero-primary-btn">
+            <span>Schedule Private Tour</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+
+          <button
+            (click)="openBrochureModal()"
+            class="hero-secondary-btn">
+            <i class="fa-regular fa-file-pdf"></i>
+            <span>Download Brochure</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll Cue -->
+    <div class="hero-scroll-cue" (click)="scrollToEnquiry()">
+      <span class="cue-label">SCROLL TO DISCOVER</span>
+      <div class="cue-line"></div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       2. FLOATING ARCHITECTURAL METADATA BAR
+       ========================================== -->
+  <section class="luxe-spec-bar-wrapper">
+    <div class="luxe-spec-bar">
+      <div class="spec-cell">
+        <span class="spec-label">Development Status</span>
+        <strong class="spec-value highlight-status">
+          <span class="mini-bullet"></span>
+          {{ project.status }}
+        </strong>
+      </div>
+
+      <div class="spec-cell">
+        <span class="spec-label">Property Category</span>
+        <strong class="spec-value">{{ project.category | titlecase }}</strong>
+      </div>
+
+      <div class="spec-cell">
+        <span class="spec-label">Architecture / Type</span>
+        <strong class="spec-value">{{ project.type }}</strong>
+      </div>
+
+      <div class="spec-cell">
+        <span class="spec-label">Prime Locality</span>
+        <strong class="spec-value">{{ project.location.split(',')[0] }}</strong>
+      </div>
+
+      <div class="spec-cell rera-cell" *ngIf="project.reraNumber">
+        <span class="spec-label">AP RERA ID</span>
+        <strong class="spec-value rera-value">
+          <i class="fa-solid fa-certificate"></i>
+          {{ project.reraNumber }}
+        </strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       3. EDITORIAL OVERVIEW & ARCHITECTURAL VISION
+       ========================================== -->
+  <section class="luxe-overview-section" id="overview-section">
+    <div class="section-container">
+      <div class="overview-grid">
+        <!-- Left: Column Title & Lead Quote -->
+        <div class="overview-col-left">
+          <div class="eyebrow-accent">
+            <span class="eyebrow-line"></span>
+            <span class="eyebrow-text">THE MONOGRAPH</span>
+          </div>
+          <h2 class="overview-display-heading">
+            Architectural Vision &amp; Enduring Craft
+          </h2>
+
+          <div class="overview-lead-quote-box" *ngIf="project.description">
+            <p class="overview-lead-paragraph">
+              “{{ project.description }}”
+            </p>
+          </div>
+
+          <!-- RERA & Compliance Trust Card (If Available) -->
+          <div class="compliance-trust-panel" *ngIf="project.reraNumber">
+            <div class="compliance-icon-wrap">
+              <i class="fa-solid fa-shield-check"></i>
+            </div>
+            <div class="compliance-text-content">
+              <span class="comp-badge-title">Government Regulatory Approval</span>
+              <p class="comp-reg-number">AP RERA: <strong>{{ project.reraNumber }}</strong></p>
+              <p class="comp-narrative">
+                Officially sanctioned by the Andhra Pradesh Real Estate Regulatory Authority.
+                Featuring verified land titles, sanctioned structural drawings, and guaranteed transparent governance.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Detailed Narrative & Core Attributes -->
+        <div class="overview-col-right">
+          <p class="overview-full-narrative" *ngIf="project.fullDescription">
+            {{ project.fullDescription }}
+          </p>
+
+          <div class="architectural-pillars-grid">
+            <div class="pillar-card">
+              <span class="pillar-number">01</span>
+              <h4 class="pillar-title">Prime Coastal Axis</h4>
+              <p class="pillar-desc">
+                Rooted strategically within {{ project.location }}, balancing immediate transit arterial links with secluded tranquility.
+              </p>
+            </div>
+
+            <div class="pillar-card">
+              <span class="pillar-number">02</span>
+              <h4 class="pillar-title">Spatial Honesty</h4>
+              <p class="pillar-desc">
+                Maximized natural daylight, cross-ventilation, and uncompromised structural integrity engineered for generations.
+              </p>
+            </div>
+
+            <div class="pillar-card">
+              <span class="pillar-number">03</span>
+              <h4 class="pillar-title">Timeless Aesthetics</h4>
+              <p class="pillar-desc">
+                Clean architectural geometry, natural tactile finishes, and bespoke details tailored for discerning lifestyles.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       4. CURATED AMENITIES & PRIVILEGES
+       ========================================== -->
+  <section class="luxe-amenities-section" *ngIf="project.amenities && project.amenities.length > 0">
+    <div class="section-container">
+      <div class="section-header-centered">
+        <div class="eyebrow-accent center">
+          <span class="eyebrow-line"></span>
+          <span class="eyebrow-text">CURATED PRIVILEGES</span>
+          <span class="eyebrow-line"></span>
+        </div>
+        <h2 class="section-display-title">Designed Around Everyday Living</h2>
+        <p class="section-intro-subtitle">
+          Every amenity is thoughtfully integrated to nurture wellness, social connection, and effortless luxury.
         </p>
       </div>
-    </div>
-  </section>
 
-  <!-- Key Stats / Highlights Ribbon -->
-  <section class="stats-ribbon">
-    <div class="container">
-      <div class="ribbon-grid">
-        <div class="ribbon-item">
-          <span class="ribbon-label">Development Status</span>
-          <strong class="ribbon-val">{{ project.status }}</strong>
-        </div>
-        <div class="ribbon-item" *ngIf="project.reraNumber">
-          <span class="ribbon-label">AP RERA Registration</span>
-          <strong class="ribbon-val rera-highlight">{{ project.reraNumber }}</strong>
-        </div>
-        <div class="ribbon-item">
-          <span class="ribbon-label">Property Category</span>
-          <strong class="ribbon-val">{{ project.category | titlecase }}</strong>
-        </div>
-        <div class="ribbon-item">
-          <span class="ribbon-label">Location Prime</span>
-          <strong class="ribbon-val">{{ project.location.split(',')[0] }}</strong>
+      <div class="amenities-luxury-grid">
+        <div class="luxury-amenity-card" *ngFor="let item of project.amenities">
+          <div class="amenity-icon-halo">
+            <i class="fa-solid" [ngClass]="getAmenityIcon(item)"></i>
+          </div>
+          <span class="amenity-display-name">{{ item }}</span>
+          <div class="amenity-card-line"></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Main Content Layout -->
-  <section class="project-body-section py-100">
-    <div class="container">
-      <div class="project-layout-grid">
-        <!-- Left Column: Details, Layouts, Amenities, Gallery -->
-        <div class="project-main-content">
-          <!-- Overview Card -->
-          <div class="content-block">
-            <div class="block-header">
-              <span class="block-subtitle">Architecture & Design</span>
-              <h2 class="block-title">Project Overview</h2>
-            </div>
-            <p class="project-narrative-lead">{{ project.description }}</p>
-            <p class="project-narrative-full">{{ project.fullDescription }}</p>
+  <!-- ==========================================
+       5. EDITORIAL GALLERY SHOWCASE
+       ========================================== -->
+  <section class="luxe-gallery-section" *ngIf="project.gallery && project.gallery.length > 0">
+    <div class="section-container">
+      <div class="gallery-header-row">
+        <div>
+          <div class="eyebrow-accent">
+            <span class="eyebrow-line"></span>
+            <span class="eyebrow-text">VISUAL PERSPECTIVES</span>
           </div>
+          <h2 class="section-display-title">Curated Architectural Portfolio</h2>
+        </div>
+        <div class="gallery-counter-pill">
+          <span>{{ project.gallery.length }} Perspectives</span>
+        </div>
+      </div>
 
-
-
-          <!-- Specifications / Key Facts -->
-          <div class="content-block">
-            <div class="block-header">
-              <span class="block-subtitle">Confidence & Legality</span>
-              <h2 class="block-title">RERA & Compliance</h2>
-            </div>
-            <div class="compliance-card">
-              <div class="compliance-icon">
-                <i class="fa-solid fa-certificate"></i>
-              </div>
-              <div class="compliance-info">
-                <h4>Government Registered Project</h4>
-                <p *ngIf="project.reraNumber">
-                  Registered under Andhra Pradesh Real Estate Regulatory Authority with
-                  Registration No: <strong>{{ project.reraNumber }}</strong>. Complete transparency, approved plans, and
-                  legally clear title.
-                </p>
-                <p *ngIf="!project.reraNumber">
-                  Built to the highest standards of municipal compliance and approved architectural frameworks in
-                  Visakhapatnam.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Amenities Section -->
-          <div class="content-block">
-            <div class="block-header">
-              <span class="block-subtitle">Lifestyle Conveniences</span>
-              <h2 class="block-title">Curated Amenities</h2>
-            </div>
-            <div class="amenities-grid">
-              <div class="amenity-card" *ngFor="let item of project.amenities">
-                <div class="amenity-icon-wrap">
-                  <i class="fa-solid" [ngClass]="getAmenityIcon(item)"></i>
-                </div>
-                <span class="amenity-name">{{ item }}</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Gallery Section -->
-          <div class="content-block">
-            <div class="block-header">
-              <span class="block-subtitle">Visual Experience</span>
-              <h2 class="block-title">Project Gallery</h2>
-            </div>
-            <div class="gallery-grid">
-              <div class="gallery-item" *ngFor="let img of project.gallery; let idx = index"
-                (click)="openLightbox(img, idx)">
-                <img *ngIf="img" [src]="img" [alt]="project.name + ' - Perspective ' + (idx + 1)" class="gallery-img"
-                  style="width: 100%; height: 200px; object-fit: cover; display: block;">
-                <div *ngIf="!img" class="gallery-placeholder">
-                  <i class="fa-solid fa-building-user"></i>
-                  <span>{{ project.name }} - Perspective {{ idx + 1 }}</span>
-                </div>
-                <div class="gallery-hover-overlay">
-                  <i class="fa-solid fa-expand"></i>
-                  <span>Click to View</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Location Advantage -->
-          <div class="content-block">
-            <div class="block-header">
-              <span class="block-subtitle">Strategic Address</span>
-              <h2 class="block-title">Neighborhood Advantage</h2>
-            </div>
-            <div class="location-advantage-box">
-              <div class="location-point">
-                <i class="fa-solid fa-plane-departure"></i>
-                <div>
-                  <strong>Airport & Transit</strong>
-                  <p>Swift connectivity to Visakhapatnam International Airport & Railway Terminals.</p>
-                </div>
-              </div>
-              <div class="location-point">
-                <i class="fa-solid fa-graduation-cap"></i>
-                <div>
-                  <strong>Schools & Universities</strong>
-                  <p>Surrounded by top educational institutions and international schools.</p>
-                </div>
-              </div>
-              <div class="location-point">
-                <i class="fa-solid fa-hospital"></i>
-                <div>
-                  <strong>Healthcare & Wellness</strong>
-                  <p>Minutes away from super-specialty hospitals and healthcare centers.</p>
-                </div>
-              </div>
-              <div class="location-point">
-                <i class="fa-solid fa-cart-shopping"></i>
-                <div>
-                  <strong>Shopping & Leisure</strong>
-                  <p>Close proximity to prime retail hubs, beaches, and dining destinations.</p>
-                </div>
+      <!-- Asymmetric Editorial Gallery Grid -->
+      <div class="editorial-gallery-grid">
+        <div
+          *ngFor="let img of project.gallery; let idx = index"
+          class="editorial-gallery-card"
+          [class.card-featured]="idx === 0"
+          [class.card-tall]="idx === 1"
+          (click)="openLightbox(img, idx)">
+          <div class="gallery-image-wrap">
+            <img [src]="img" [alt]="project.name + ' - Perspective ' + (idx + 1)" class="gallery-photo" />
+            <div class="gallery-hover-scrim">
+              <span class="perspective-tag">Perspective 0{{ idx + 1 }}</span>
+              <div class="expand-icon-wrap">
+                <i class="fa-solid fa-expand"></i>
               </div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
 
-        <!-- Right Column: Sticky Contact Card -->
-        <div class="project-sidebar">
-          <div class="sticky-inquiry-card">
-            <div class="card-top-header">
-              <span class="inquire-tag">Exclusive Inquiries</span>
-              <h3 class="inquire-heading">Schedule a Site Visit</h3>
-              <p class="inquire-desc">Get the official brochure, floor plans, and pricing breakdown for {{ project.name
-                }}.</p>
+  <!-- ==========================================
+       6. DEDICATED BROCHURE CTA BANNER
+       ========================================== -->
+  <section class="luxe-brochure-banner" *ngIf="project.brochureUrl">
+    <div class="section-container">
+      <div class="brochure-panel-inner">
+        <div class="brochure-left-copy">
+          <div class="eyebrow-accent light">
+            <span class="eyebrow-line"></span>
+            <span class="eyebrow-text">THE COMPLETE MONOGRAPH</span>
+          </div>
+          <h3 class="brochure-heading">Download the Official Project Folio</h3>
+          <p class="brochure-desc">
+            Explore comprehensive master layout drawings, floor plans, material schedules, and unit demarcations for {{ project.name }}.
+          </p>
+        </div>
+        <div class="brochure-right-action">
+          <button
+            type="button"
+            (click)="openBrochureModal()"
+            class="brochure-download-btn">
+            <i class="fa-solid fa-arrow-down-to-bracket"></i>
+            <span>DOWNLOAD BROCHURE</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       7. PRIVATE CONSULTATION & SITE VISIT ENQUIRY
+       ========================================== -->
+  <section class="luxe-enquiry-section" id="enquiry-section">
+    <div class="section-container">
+      <div class="enquiry-split-grid">
+
+        <!-- Left: Private Advisory Information -->
+        <div class="enquiry-advisory-col">
+          <div class="eyebrow-accent">
+            <span class="eyebrow-line"></span>
+            <span class="eyebrow-text">PRIVATE CLIENT ADVISORY</span>
+          </div>
+          <h2 class="enquiry-display-title">
+            Begin Your Journey at {{ project.name }}
+          </h2>
+          <p class="enquiry-lead-text">
+            Our private client property advisors offer tailored consultations, on-site walkthroughs, and detailed pricing dossiers for {{ project.name }}.
+          </p>
+
+          <div class="advisory-benefits-stack">
+            <div class="benefit-item">
+              <div class="benefit-bullet"><i class="fa-solid fa-check"></i></div>
+              <div>
+                <strong>Personalized Site Tour</strong>
+                <p>Guided walkthrough of layout demarcations, orientations, and neighborhood surroundings.</p>
+              </div>
             </div>
 
-            <form (ngSubmit)="submitInquiry()" #form="ngForm" class="inquiry-form" *ngIf="!inquirySubmitted">
-              <div class="form-group">
-                <label>Your Full Name *</label>
-                <input type="text" [(ngModel)]="inquiry.name" name="name" placeholder="e.g. Rahul Sharma" required>
+            <div class="benefit-item">
+              <div class="benefit-bullet"><i class="fa-solid fa-check"></i></div>
+              <div>
+                <strong>Verified Documentation</strong>
+                <p>Transparent review of AP RERA filings, title deeds, and sanction drawings.</p>
+              </div>
+            </div>
+
+            <div class="benefit-item">
+              <div class="benefit-bullet"><i class="fa-solid fa-check"></i></div>
+              <div>
+                <strong>Priority Pricing &amp; Allocations</strong>
+                <p>Direct developer consultation without intermediaries or hidden charges.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Direct Concierge Helpdesk -->
+          <div class="concierge-box">
+            <div class="concierge-label">DIRECT PROPERTY DESK</div>
+            <div class="concierge-links">
+              <a href="tel:+918599936363" class="concierge-phone">
+                <i class="fa-solid fa-phone"></i>
+                +91 85999 36363
+              </a>
+              <a href="mailto:info@chalamaji.com" class="concierge-email">
+                <i class="fa-solid fa-envelope"></i>
+                info&#64;chalamaji.com
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Sleek Private Enquiry Form Card -->
+        <div class="enquiry-card-wrapper">
+          <div class="luxury-form-card">
+            <div class="form-header">
+              <span class="form-tag">CONFIDENTIAL INQUIRY</span>
+              <h3 class="form-title">Schedule a Private Consultation</h3>
+              <p class="form-subtitle">
+                Enter your details to receive the official dossier and coordinate your visit for {{ project.name }}.
+              </p>
+            </div>
+
+            <!-- Active Form -->
+            <form (ngSubmit)="submitInquiry()" #form="ngForm" class="luxe-form-body" *ngIf="!inquirySubmitted">
+              <div class="input-field-group">
+                <label for="cname">FULL NAME <span class="req">*</span></label>
+                <div class="input-wrapper">
+                  <i class="fa-regular fa-user field-icon"></i>
+                  <input
+                    type="text"
+                    id="cname"
+                    [(ngModel)]="inquiry.name"
+                    name="name"
+                    required
+                    placeholder="e.g. Seshagiri Rao"
+                    autocomplete="name" />
+                </div>
               </div>
 
-              <div class="form-group">
-                <label>Mobile Number *</label>
-                <input type="tel" [(ngModel)]="inquiry.phone" name="phone" placeholder="+91 98765 43210" required>
+              <div class="input-field-group">
+                <label for="cphone">PHONE NUMBER <span class="req">*</span></label>
+                <div class="input-wrapper">
+                  <i class="fa-solid fa-phone field-icon"></i>
+                  <input
+                    type="tel"
+                    id="cphone"
+                    [(ngModel)]="inquiry.phone"
+                    name="phone"
+                    required
+                    placeholder="+91 98765 43210"
+                    autocomplete="tel" />
+                </div>
               </div>
 
-              <div class="form-group">
-                <label>Email Address</label>
-                <input type="email" [(ngModel)]="inquiry.email" name="email" placeholder="rahul@example.com">
+              <div class="input-field-group">
+                <label for="cemail">EMAIL ADDRESS</label>
+                <div class="input-wrapper">
+                  <i class="fa-regular fa-envelope field-icon"></i>
+                  <input
+                    type="email"
+                    id="cemail"
+                    [(ngModel)]="inquiry.email"
+                    name="email"
+                    placeholder="name@example.com"
+                    autocomplete="email" />
+                </div>
               </div>
 
-              <div class="form-group">
-                <label>Preferred Date or Notes</label>
-                <textarea [(ngModel)]="inquiry.message" name="message" rows="3"
-                  placeholder="Interested in 3 BHK / Villa pricing..."></textarea>
+              <div class="input-field-group">
+                <label for="cmessage">PREFERRED VISIT TIMING OR NOTES</label>
+                <div class="input-wrapper textarea-wrap">
+                  <i class="fa-regular fa-calendar-check field-icon textarea-icon"></i>
+                  <textarea
+                    id="cmessage"
+                    [(ngModel)]="inquiry.message"
+                    name="message"
+                    rows="3"
+                    placeholder="e.g. Interested in Saturday site visit or specific unit pricing..."></textarea>
+                </div>
               </div>
 
-              <button type="submit" class="submit-inquiry-btn" [disabled]="!inquiry.name || !inquiry.phone">
-                <span>Request Details & Visit</span>
-                <i class="fa-solid fa-arrow-right"></i>
+              <button
+                type="submit"
+                class="luxe-submit-button"
+                [disabled]="!inquiry.name || !inquiry.phone || isSubmitting">
+                <span *ngIf="!isSubmitting">REQUEST CONSULTATION &amp; VISIT</span>
+                <span *ngIf="isSubmitting"><i class="fa-solid fa-spinner fa-spin"></i> CONNECTING...</span>
+                <i class="fa-solid fa-arrow-right" *ngIf="!isSubmitting"></i>
               </button>
+
+              <p class="form-privacy-note">
+                <i class="fa-solid fa-lock"></i>
+                Your contact details are strictly confidential and shared only with our senior advisory team.
+              </p>
             </form>
 
-            <div class="inquiry-success-message" *ngIf="inquirySubmitted">
-              <i class="fa-solid fa-circle-check success-icon"></i>
-              <h4>Thank you, {{ inquiry.name }}!</h4>
-              <p>Your inquiry for <strong>{{ project.name }}</strong> has been received. Our sales advisory team will
-                connect with you promptly.</p>
-            </div>
-
-            <div class="sidebar-direct-contact">
-              <div class="direct-phone">
-                <span class="label">Direct Sales Helpline</span>
-                <a href="tel:+919876543210" class="phone-number">
-                  <i class="fa-solid fa-phone"></i> +91 98765 43210
-                </a>
+            <!-- Success Confirmation State -->
+            <div class="form-success-card" *ngIf="inquirySubmitted">
+              <div class="success-icon-halo">
+                <i class="fa-solid fa-circle-check"></i>
               </div>
-              <div class="direct-email">
-                <a href="mailto:info@chalamaji.com" class="email-link">
-                  <i class="fa-solid fa-envelope"></i> info&#64;chalamaji.com
-                </a>
-              </div>
+              <h4>Thank You, {{ inquiry.name }}</h4>
+              <p class="success-message">
+                Your consultation request for <strong>{{ project.name }}</strong> has been confirmed.
+                Our senior client advisor will connect with you immediately via phone and WhatsApp.
+              </p>
             </div>
           </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       8. OTHER ICONIC DEVELOPMENTS
+       ========================================== -->
+  <section class="luxe-related-section" *ngIf="relatedProjects && relatedProjects.length > 0">
+    <div class="section-container">
+      <div class="related-header-row">
+        <div>
+          <div class="eyebrow-accent">
+            <span class="eyebrow-line"></span>
+            <span class="eyebrow-text">PORTFOLIO</span>
+          </div>
+          <h2 class="section-display-title">Other Iconic Developments</h2>
+        </div>
+        <a routerLink="/projects" class="view-all-portfolio-link">
+          <span>View All Projects</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+
+      <div class="related-cards-grid">
+        <div class="related-project-card" *ngFor="let other of relatedProjects">
+          <a [routerLink]="['/projects', other.id || other.projectId]" class="related-card-anchor">
+            <div class="related-card-media">
+              <img
+                *ngIf="other.mainImage"
+                [src]="other.mainImage"
+                [alt]="other.name"
+                class="related-img" />
+              <div *ngIf="!other.mainImage" class="related-fallback">
+                <i class="fa-solid fa-city"></i>
+              </div>
+              <span class="related-status-tag" [class.completed]="other.status === 'Completed'">
+                {{ other.status }}
+              </span>
+            </div>
+
+            <div class="related-card-content">
+              <span class="related-card-type">{{ other.type }}</span>
+              <h3 class="related-card-title">{{ other.name }}</h3>
+              <p class="related-card-location">
+                <i class="fa-solid fa-location-dot"></i>
+                {{ other.location }}
+              </p>
+              <div class="related-cta-row">
+                <span class="view-monograph-text">Explore Address</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </div>
+            </div>
+          </a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Related / Other Projects -->
-  <section class="other-projects-section py-100">
-    <div class="container">
-      <div class="section-title text-center">
-        <p class="sub-title">Discover More</p>
-        <h2 class="main-title">Other Iconic <span>Developments</span></h2>
-      </div>
+  <!-- ==========================================
+       9. LIGHTBOX MODAL
+       ========================================== -->
+  <div
+    class="luxe-lightbox-modal"
+    *ngIf="selectedImage"
+    (click)="closeLightbox()">
+    <div class="lightbox-overlay-backdrop"></div>
 
-      <div class="other-projects-grid">
-        <div class="other-project-card" *ngFor="let other of relatedProjects">
-          <div class="other-card-img">
-            <img *ngIf="other.mainImage" [src]="other.mainImage" [alt]="other.name"
-              style="width: 100%; height: 100%; object-fit: cover; display: block;">
-            <div *ngIf="!other.mainImage" class="other-img-placeholder">
-              <i class="fa-solid fa-city"></i>
-            </div>
-            <span class="other-badge">{{ other.status }}</span>
-          </div>
-          <div class="other-card-info">
-            <span class="other-type">{{ other.type }}</span>
-            <h4>{{ other.name }}</h4>
-            <p class="other-loc"><i class="fa-solid fa-location-dot"></i> {{ other.location }}</p>
-            <a [routerLink]="['/projects', other.id]" class="view-project-link">
-              View Details <i class="fa-solid fa-arrow-right"></i>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Lightbox Modal -->
-  <div class="lightbox-modal" *ngIf="selectedImage" (click)="closeLightbox()">
-    <div class="lightbox-content" (click)="$event.stopPropagation()">
-      <button class="lightbox-close" (click)="closeLightbox()" aria-label="Close">
+    <div class="lightbox-content-box" (click)="$event.stopPropagation()">
+      <button class="lightbox-close-btn" (click)="closeLightbox()" aria-label="Close Lightbox">
         <i class="fa-solid fa-xmark"></i>
       </button>
-      <div class="lightbox-display">
-        <img *ngIf="selectedImage" [src]="selectedImage" [alt]="project.name"
-          style="width: 100%; max-height: 70vh; object-fit: contain; margin-bottom: 20px;">
-        <div *ngIf="!selectedImage" class="lightbox-placeholder">
-          <i class="fa-solid fa-city"></i>
-          <h3>{{ project.name }}</h3>
-          <p>Perspective {{ activeGalleryIndex + 1 }} of {{ project.gallery.length }}</p>
-        </div>
+
+      <div class="lightbox-stage">
+        <img [src]="selectedImage" [alt]="project.name" class="lightbox-active-img" />
       </div>
-      <div class="lightbox-controls">
-        <button class="lightbox-btn" (click)="prevImage()"><i class="fa-solid fa-chevron-left"></i> Previous</button>
-        <button class="lightbox-btn" (click)="nextImage()">Next <i class="fa-solid fa-chevron-right"></i></button>
+
+      <div class="lightbox-footer-bar">
+        <span class="lightbox-caption">
+          {{ project.name }} &mdash; Perspective {{ activeGalleryIndex + 1 }} of {{ project.gallery.length }}
+        </span>
+        <div class="lightbox-nav-buttons">
+          <button class="lbox-btn" (click)="prevImage($event)" aria-label="Previous Perspective">
+            <i class="fa-solid fa-chevron-left"></i>
+            <span>Prev</span>
+          </button>
+          <button class="lbox-btn" (click)="nextImage($event)" aria-label="Next Perspective">
+            <span>Next</span>
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
       </div>
     </div>
   </div>
+
+  <!-- ==========================================
+       10. BROCHURE DOWNLOAD POPUP MODAL
+       ========================================== -->
+  <div class="brochure-modal-backdrop" *ngIf="isBrochureModalOpen" (click)="closeBrochureModal()">
+    <div class="brochure-modal-card" (click)="$event.stopPropagation()">
+      <button class="modal-close-btn" (click)="closeBrochureModal()" aria-label="Close Modal">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="modal-header-block">
+        <span class="modal-badge">OFFICIAL BROCHURE &amp; SPECIFICATIONS</span>
+        <h3 class="modal-title">Download {{ project.name }} Brochure</h3>
+        <p class="modal-sub">
+          Please provide your details below to download the official project brochure and architectural folio for {{ project.name }}.
+        </p>
+      </div>
+
+      <!-- Form -->
+      <form (ngSubmit)="submitBrochureDownload()" #bForm="ngForm" class="modal-form-body" *ngIf="!brochureSubmitted">
+        <div class="modal-input-group">
+          <label for="bname">YOUR FULL NAME <span class="req">*</span></label>
+          <div class="modal-input-wrap">
+            <i class="fa-regular fa-user m-icon"></i>
+            <input
+              type="text"
+              id="bname"
+              [(ngModel)]="brochureForm.name"
+              name="bname"
+              required
+              placeholder="e.g. Seshagiri Rao"
+              autocomplete="name" />
+          </div>
+        </div>
+
+        <div class="modal-input-group">
+          <label for="bphone">PHONE NUMBER <span class="req">*</span></label>
+          <div class="modal-input-wrap">
+            <i class="fa-solid fa-phone m-icon"></i>
+            <input
+              type="tel"
+              id="bphone"
+              [(ngModel)]="brochureForm.phone"
+              name="bphone"
+              required
+              placeholder="+91 98765 43210"
+              autocomplete="tel" />
+          </div>
+        </div>
+
+        <div class="modal-input-group">
+          <label for="bemail">EMAIL ADDRESS</label>
+          <div class="modal-input-wrap">
+            <i class="fa-regular fa-envelope m-icon"></i>
+            <input
+              type="email"
+              id="bemail"
+              [(ngModel)]="brochureForm.email"
+              name="bemail"
+              placeholder="name@example.com"
+              autocomplete="email" />
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="modal-download-btn"
+          [disabled]="!brochureForm.name || !brochureForm.phone || isBrochureSubmitting">
+          <span *ngIf="!isBrochureSubmitting">
+            <i class="fa-solid fa-arrow-down-to-bracket"></i>
+            DOWNLOAD OFFICIAL BROCHURE
+          </span>
+          <span *ngIf="isBrochureSubmitting">
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            RECORDING &amp; DOWNLOADING...
+          </span>
+        </button>
+
+        <p class="modal-disclaimer">
+          <i class="fa-solid fa-shield-halved"></i>
+          Your inquiry is logged securely in our CRM portal. Download initiates immediately.
+        </p>
+      </form>
+
+      <!-- Success State -->
+      <div class="modal-success-state" *ngIf="brochureSubmitted">
+        <div class="modal-success-icon">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <h4>Brochure Downloaded!</h4>
+        <p>
+          Thank you, <strong>{{ brochureForm.name }}</strong>! The official brochure for <strong>{{ project.name }}</strong> is now downloading to your device.
+        </p>
+      </div>
+    </div>
+  </div>
+
 </div>

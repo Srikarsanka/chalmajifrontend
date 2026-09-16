@@ -363,6 +363,13 @@
                   <div class="ayo-selected-card__header">
                     <span class="ayo-selected-card__sub">Selected Unit</span>
                     <h4 class="ayo-selected-card__title">PLOT #{{ selectedPlot.plotNo }}</h4>
+                    <span class="ayo-status-badge"
+                      [class.ayo-status--available]="!selectedPlot.status || selectedPlot.status === 'Available'"
+                      [class.ayo-status--booked]="selectedPlot.status === 'Booked' || selectedPlot.status === 'Reserved'"
+                      [class.ayo-status--sold]="selectedPlot.status === 'Sold'">
+                      <i class="fa-solid" [class.fa-circle-check]="!selectedPlot.status || selectedPlot.status === 'Available'" [class.fa-circle-xmark]="selectedPlot.status === 'Booked' || selectedPlot.status === 'Reserved' || selectedPlot.status === 'Sold'"></i>
+                      {{ selectedPlot.status || 'Available' }}
+                    </span>
                   </div>
 
                   <!-- Spec Matrix Grid -->
@@ -400,9 +407,12 @@
                   </div>
 
                   <!-- Action Button -->
-                  <button type="button" class="ayo-btn ayo-btn--full" (click)="heroInquiry.preferredFacing = selectedPlot.facing; scrollToSection('hero')">
+                  <button *ngIf="!selectedPlot.status || selectedPlot.status === 'Available'" type="button" class="ayo-btn ayo-btn--full" (click)="enquireForPlot(selectedPlot)">
                     Enquire for Plot {{ selectedPlot.plotNo }} <img src="assets/images/ayodhara/shapes/right-arrow.svg" width="20" alt="→" />
                   </button>
+                  <div *ngIf="selectedPlot.status === 'Booked' || selectedPlot.status === 'Reserved' || selectedPlot.status === 'Sold'" class="ayo-btn ayo-btn--full ayo-btn--disabled">
+                    <i class="fa-solid fa-lock me-1"></i> Plot {{ selectedPlot.plotNo }} is {{ selectedPlot.status }}
+                  </div>
                 </div>
               </div>
 
@@ -440,6 +450,7 @@
                             Site Extent <i class="fa-solid" [class.fa-sort-up]="sortBy==='extentSqYds'&&sortAscending" [class.fa-sort-down]="sortBy==='extentSqYds'&&!sortAscending" [class.fa-sort]="sortBy!=='extentSqYds'"></i>
                           </th>
                           <th>Facing Direction</th>
+                          <th>Status</th>
                           <th>Select &amp; View</th>
                         </tr>
                       </thead>
@@ -456,13 +467,21 @@
                             <span class="ayo-facing-tag"><i class="fa-regular fa-compass"></i> {{ plot.facing }}</span>
                           </td>
                           <td>
+                            <span class="ayo-status-pill"
+                              [class.ayo-status--available]="!plot.status || plot.status === 'Available'"
+                              [class.ayo-status--booked]="plot.status === 'Booked' || plot.status === 'Reserved'"
+                              [class.ayo-status--sold]="plot.status === 'Sold'">
+                              {{ plot.status || 'Available' }}
+                            </span>
+                          </td>
+                          <td>
                             <button type="button" class="ayo-table-view-btn" (click)="selectPlot(plot); $event.stopPropagation()">
                               {{ plot.plotNo === selectedPlot.plotNo ? 'Selected' : 'View Details' }}
                             </button>
                           </td>
                         </tr>
                         <tr *ngIf="filteredPlots.length === 0">
-                          <td colspan="4" style="text-align:center;padding:32px;color:var(--ink-soft);">No plots found matching the filter.</td>
+                          <td colspan="5" style="text-align:center;padding:32px;color:var(--ink-soft);">No plots found matching the filter.</td>
                         </tr>
                       </tbody>
                     </table>

@@ -2232,6 +2232,59 @@ p {
 
 
 /* ================================================================
+   PLOT STATUS BADGES & PILLS
+   ================================================================ */
+.ayo-status-badge,
+.ayo-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+  line-height: 1;
+}
+
+.ayo-status-badge {
+  margin-top: 8px;
+  font-size: 13px;
+  padding: 6px 16px;
+}
+
+.ayo-status--available {
+  background: rgba(34, 139, 34, 0.12);
+  color: #1b7a1b;
+  border: 1px solid rgba(34, 139, 34, 0.3);
+}
+
+.ayo-status--booked {
+  background: rgba(218, 165, 32, 0.12);
+  color: #b8860b;
+  border: 1px solid rgba(218, 165, 32, 0.3);
+}
+
+.ayo-status--sold {
+  background: rgba(200, 40, 40, 0.12);
+  color: #b22222;
+  border: 1px solid rgba(200, 40, 40, 0.3);
+}
+
+.ayo-btn--disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* ================================================================
    SCROLLBAR
    ================================================================ */
 ::-webkit-scrollbar {

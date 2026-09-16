@@ -58,14 +58,21 @@ export class ConnectSectionComponent implements OnInit {
     this.inquiryService.submitInquiry(payload).subscribe({
       next: (res) => {
         console.log('Connect section inquiry saved:', res);
+        this.inquiryService.redirectToWhatsApp({
+          name: payload.name,
+          phone: payload.phone,
+          email: payload.email,
+          projectName: payload.projectName,
+          inquiryType: payload.inquiryType,
+          message: payload.message
+        });
         alert('Thank you for your inquiry! We will get back to you soon.');
         this.formData = { name: '', email: '', phone: '', message: '' };
         this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Failed to submit connect section inquiry:', err);
-        alert('Thank you for your inquiry! We will get back to you soon.');
-        this.formData = { name: '', email: '', phone: '', message: '' };
+        alert('Unable to submit your inquiry at this moment. Please check your connection or reach us directly at +91 85999 36363.');
         this.cdr.detectChanges();
       }
     });

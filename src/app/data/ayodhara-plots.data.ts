@@ -2,6 +2,8 @@ export interface AyodharaPlot {
   plotNo: number;
   extentSqYds: number;
   facing: string;
+  status?: string;
+  type?: string;
 }
 
 export const AYODHARA_PLOTS: AyodharaPlot[] = [

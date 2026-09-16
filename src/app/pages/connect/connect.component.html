@@ -39,41 +39,6 @@
   </section>
 
   <!-- =========================================================
-       INQUIRY TRACK SELECTOR BAR
-       ========================================================= -->
-  <section class="tracks-selector-section">
-    <div class="container">
-      <div class="tracks-header">
-        <span class="tracks-eyebrow">SELECT YOUR INQUIRY DOMAIN</span>
-        <h3 class="tracks-title">How can we assist you today?</h3>
-      </div>
-
-      <div class="tracks-buttons-grid" role="tablist" aria-label="Inquiry Categories">
-        <button
-          *ngFor="let track of inquiryTracks"
-          type="button"
-          class="track-card-btn"
-          [class.active]="activeTrackId === track.id"
-          (click)="selectTrack(track.id)"
-          role="tab"
-          [attr.aria-selected]="activeTrackId === track.id"
-        >
-          <div class="track-icon-wrap">
-            <i class="fa-solid" [ngClass]="track.icon"></i>
-          </div>
-          <div class="track-text-block">
-            <span class="track-label">{{ track.label }}</span>
-            <span class="track-tagline">{{ track.tagline }}</span>
-          </div>
-          <div class="track-check-indicator" *ngIf="activeTrackId === track.id">
-            <i class="fa-solid fa-check"></i>
-          </div>
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================================================
        MAIN INTERACTION GRID (LEFT: HQ DOSSIER | RIGHT: LUXURY FORM)
        ========================================================= -->
   <section class="connect-main-section" id="consultation-form-block">
@@ -213,13 +178,9 @@
             <div *ngIf="!isSubmitted">
               
               <div class="form-card-header">
-                <div class="active-track-pill">
-                  <i class="fa-solid fa-sliders"></i>
-                  <span>TRACK: <strong>{{ activeTrackId | uppercase }}</strong></span>
-                </div>
-                <h3 class="form-card-title">Schedule a Private Consultation</h3>
+                <h3 class="form-card-title">Connect With Us</h3>
                 <p class="form-card-subtitle">
-                  Complete the dossier details below. An executive relationship manager will initiate contact within 2 hours.
+                  Have a project in mind or want to explore our developments? Share your details and we'll get back to you promptly.
                 </p>
               </div>
 
@@ -260,116 +221,40 @@
                   </div>
                 </div>
 
-                <!-- Row 2: Email & Project of Interest -->
-                <div class="form-split-row">
-                  <div class="form-field-group">
-                    <label for="c-email">Email Address <span class="req-star">*</span></label>
-                    <div class="input-with-icon">
-                      <i class="fa-regular fa-envelope field-icon"></i>
-                      <input
-                        type="email"
-                        id="c-email"
-                        name="email"
-                        [(ngModel)]="formData.email"
-                        required
-                        placeholder="e.g. name@domain.com"
-                        class="luxury-input"
-                      />
-                    </div>
-                  </div>
-
-                  <div class="form-field-group">
-                    <label for="c-project">Interested Development</label>
-                    <div class="input-with-icon select-wrap">
-                      <i class="fa-solid fa-map-pin field-icon"></i>
-                      <select
-                        id="c-project"
-                        name="project"
-                        [(ngModel)]="formData.project"
-                        class="luxury-input luxury-select"
-                      >
-                        <option value="">Select Project / Scope</option>
-                        <optgroup label="Residential &amp; Villas">
-                          <option value="the-address">The Address IT Hub &amp; Suites (Madhurawada)</option>
-                          <option value="chalamaji-landmark">Chalamaji Landmark Villas (Madhurawada)</option>
-                          <option value="the-orchid">The Orchid Coastal Tower (Yendada)</option>
-                          <option value="signature">Chalamaji Signature</option>
-                        </optgroup>
-                        <optgroup label="Plotted Enclaves">
-                          <option value="ayodhara">Ayodhara Plotted Enclave (Vizag)</option>
-                          <option value="port-master-layout">Port Employees Master Layout</option>
-                        </optgroup>
-                        <optgroup label="Commercial &amp; Joint Ventures">
-                          <option value="integral">Integral Mixed-Use Hub (14 Acres)</option>
-                          <option value="jv-land">Land Development &amp; Joint Venture</option>
-                          <option value="civil-infra">Civil &amp; Water Infrastructure (Nutech)</option>
-                        </optgroup>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Row 3: Site Visit Date & Preferred Contact Method -->
-                <div class="form-split-row">
-                  <div class="form-field-group">
-                    <label for="c-date">Preferred Site Visit Date <span class="optional-tag">(Optional)</span></label>
-                    <div class="input-with-icon">
-                      <i class="fa-regular fa-calendar field-icon"></i>
-                      <input
-                        type="date"
-                        id="c-date"
-                        name="siteVisitDate"
-                        [(ngModel)]="formData.siteVisitDate"
-                        class="luxury-input"
-                      />
-                    </div>
-                  </div>
-
-                  <div class="form-field-group">
-                    <label>Preferred Contact Mode</label>
-                    <div class="contact-mode-chips">
-                      <label class="mode-chip" [class.active]="formData.contactMethod === 'whatsapp'">
-                        <input
-                          type="radio"
-                          name="contactMethod"
-                          value="whatsapp"
-                          [(ngModel)]="formData.contactMethod"
-                        />
-                        <i class="fa-brands fa-whatsapp"></i> WhatsApp
-                      </label>
-                      <label class="mode-chip" [class.active]="formData.contactMethod === 'phone'">
-                        <input
-                          type="radio"
-                          name="contactMethod"
-                          value="phone"
-                          [(ngModel)]="formData.contactMethod"
-                        />
-                        <i class="fa-solid fa-phone"></i> Call
-                      </label>
-                      <label class="mode-chip" [class.active]="formData.contactMethod === 'email'">
-                        <input
-                          type="radio"
-                          name="contactMethod"
-                          value="email"
-                          [(ngModel)]="formData.contactMethod"
-                        />
-                        <i class="fa-regular fa-envelope"></i> Email
-                      </label>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Row 4: Specific Message -->
+                <!-- Row 2: Email -->
                 <div class="form-field-group">
-                  <label for="c-message">Specific Requirements / Message</label>
+                  <label for="c-email">Email Address <span class="req-star">*</span></label>
+                  <div class="input-with-icon">
+                    <i class="fa-regular fa-envelope field-icon"></i>
+                    <input
+                      type="email"
+                      id="c-email"
+                      name="email"
+                      [(ngModel)]="formData.email"
+                      required
+                      placeholder="e.g. name@domain.com"
+                      class="luxury-input"
+                    />
+                  </div>
+                </div>
+
+                <!-- Row 3: Message -->
+                <div class="form-field-group">
+                  <label for="c-message">Your Message</label>
                   <textarea
                     id="c-message"
                     name="message"
                     rows="4"
                     [(ngModel)]="formData.message"
-                    placeholder="Provide details about your desired unit size, budget, timeline, or specific questions..."
+                    placeholder="Your message or requirement..."
                     class="luxury-input luxury-textarea"
                   ></textarea>
+                </div>
+
+                <!-- Error Notice -->
+                <div *ngIf="submitError" class="form-error-banner" style="background: rgba(220, 53, 69, 0.15); border: 1px solid rgba(220, 53, 69, 0.4); color: #ff6b6b; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; font-size: 14px;">
+                  <i class="fa-solid fa-circle-exclamation" style="font-size: 18px;"></i>
+                  <span>{{ submitError }}</span>
                 </div>
 
                 <!-- Submit Action Block -->
@@ -380,12 +265,12 @@
                     [disabled]="!consultForm.valid || isSubmitting"
                   >
                     <span *ngIf="!isSubmitting" class="btn-inner">
-                      <span>Transmit Consultation Request</span>
+                      <span>Send Message</span>
                       <i class="fa-solid fa-arrow-right"></i>
                     </span>
                     <span *ngIf="isSubmitting" class="btn-inner">
                       <i class="fa-solid fa-circle-notch fa-spin"></i>
-                      <span>Transmitting Dossier...</span>
+                      <span>Transmitting Inquiry...</span>
                     </span>
                   </button>
 
@@ -406,40 +291,32 @@
                 </div>
               </div>
 
-              <span class="conf-eyebrow">CONSULTATION DOSSIER TRANSMITTED</span>
+              <span class="conf-eyebrow">INQUIRY TRANSMITTED</span>
               <h3 class="conf-heading">Thank You, {{ formData.name }}.</h3>
               <p class="conf-desc">
-                Your consultation request has been routed to our Senior Relationship Desk. A representative will contact you via <strong>{{ formData.contactMethod | uppercase }}</strong> shortly.
+                Your inquiry has been received. Our team will connect with you shortly.
               </p>
 
               <div class="conf-dossier-box">
                 <div class="conf-row">
-                  <span class="c-label">DOSSIER REF:</span>
+                  <span class="c-label">REFERENCE CODE:</span>
                   <strong class="c-val ref-code">{{ referenceCode }}</strong>
-                </div>
-                <div class="conf-row" *ngIf="formData.project">
-                  <span class="c-label">SCOPE / PROJECT:</span>
-                  <span class="c-val">{{ formData.project | uppercase }}</span>
-                </div>
-                <div class="conf-row" *ngIf="formData.siteVisitDate">
-                  <span class="c-label">VISIT DATE:</span>
-                  <span class="c-val">{{ formData.siteVisitDate }}</span>
                 </div>
                 <div class="conf-row">
                   <span class="c-label">STATUS:</span>
-                  <span class="c-val status-badge"><i class="fa-solid fa-circle-check"></i> PENDING CONCIERGE ALLOCATION</span>
+                  <span class="c-val status-badge"><i class="fa-solid fa-circle-check"></i> RECEIVED</span>
                 </div>
               </div>
 
               <div class="conf-actions-group">
                 <a
-                  [href]="'https://wa.me/918599936363?text=Hello%20Chalamaji,%20I%20have%20submitted%20consultation%20request%20' + referenceCode"
+                  [href]="'https://wa.me/918599936363?text=Hello%20Chalamaji,%20I%20have%20submitted%20inquiry%20' + referenceCode"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="conf-wa-btn"
                 >
                   <i class="fa-brands fa-whatsapp"></i>
-                  <span>Track Live via WhatsApp</span>
+                  <span>Connect via WhatsApp</span>
                 </a>
                 <button type="button" class="conf-reset-btn" (click)="resetForm()">
                   <span>Submit Another Inquiry</span>

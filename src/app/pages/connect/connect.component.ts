@@ -2,14 +2,7 @@ import { Component, OnInit, ChangeDetectorRef, Inject, PLATFORM_ID } from '@angu
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { InquiryService, InquiryPayload } from '../../services/inquiry.service';
-
-export interface InquiryTrack {
-  id: string;
-  label: string;
-  icon: string;
-  tagline: string;
-}
+import { InquiryService, ConnectInquiryPayload } from '../../services/inquiry.service';
 
 export interface FaqItem {
   question: string;
@@ -30,53 +23,14 @@ export class ConnectComponent implements OnInit {
   isVisible = false;
   isSubmitting = false;
   isSubmitted = false;
+  submitError: string | null = null;
   referenceCode = '';
   activeFaqIndex: number | null = 0;
-
-  // Selected Inquiry Track
-  activeTrackId = 'residential';
-
-  inquiryTracks: InquiryTrack[] = [
-    {
-      id: 'residential',
-      label: 'Luxury Residential',
-      icon: 'fa-building',
-      tagline: 'The Address · Landmark · The Orchid'
-    },
-    {
-      id: 'plotted',
-      label: 'Ayodhara Plots',
-      icon: 'fa-layer-group',
-      tagline: 'Sanctuary Plotted Wealth in Vizag'
-    },
-    {
-      id: 'commercial',
-      label: 'Commercial & Mixed-Use',
-      icon: 'fa-city',
-      tagline: 'Integral 14-Acre Highway Hub'
-    },
-    {
-      id: 'infrastructure',
-      label: 'Civil & Infra Contracting',
-      icon: 'fa-water',
-      tagline: 'Nutech Engineers Water & Dam Works'
-    },
-    {
-      id: 'general',
-      label: 'Joint Ventures & Land',
-      icon: 'fa-handshake',
-      tagline: 'Landowner Partnerships & Dialogue'
-    }
-  ];
 
   formData = {
     name: '',
     email: '',
     phone: '',
-    track: 'residential',
-    project: '',
-    contactMethod: 'whatsapp',
-    siteVisitDate: '',
     message: ''
   };
 
@@ -85,7 +39,7 @@ export class ConnectComponent implements OnInit {
       category: 'SITE VISITS',
       question: 'Can I schedule a guided private site inspection for Ayodhara or The Address?',
       answer:
-        'Yes. Our executive concierge team arranges private, chauffeured site visits from Monday to Sunday. You can pick your preferred date in the form above, or connect directly through our WhatsApp hotline to reserve your inspection slot.'
+        'Yes. Our executive concierge team arranges private, chauffeured site visits from Monday to Sunday. You can share your preferred details in the form above or connect directly through our WhatsApp hotline to reserve your inspection slot.'
     },
     {
       category: 'STATUTORY & LEGAL',
@@ -103,7 +57,7 @@ export class ConnectComponent implements OnInit {
       category: 'JOINT VENTURES',
       question: 'How do I initiate a Joint Venture (JV) or land development proposal with Chalamaji?',
       answer:
-        'Landowners and institutional partners with prime parcels in Visakhapatnam and coastal Andhra Pradesh can select the "Joint Ventures & Land" track in the consultation form to connect directly with our Executive Director desk.'
+        'Landowners and institutional partners with prime parcels in Visakhapatnam and coastal Andhra Pradesh can submit an inquiry through the form above to connect directly with our Executive Director desk.'
     }
   ];
 
@@ -123,21 +77,6 @@ export class ConnectComponent implements OnInit {
     }, 150);
   }
 
-  selectTrack(trackId: string): void {
-    this.activeTrackId = trackId;
-    this.formData.track = trackId;
-    
-    // Auto-select relevant project context
-    if (trackId === 'plotted') {
-      this.formData.project = 'ayodhara';
-    } else if (trackId === 'commercial') {
-      this.formData.project = 'integral';
-    } else if (trackId === 'residential' && !this.formData.project) {
-      this.formData.project = 'the-address';
-    }
-    this.cdr.detectChanges();
-  }
-
   toggleFaq(index: number): void {
     if (this.activeFaqIndex === index) {
       this.activeFaqIndex = null;
@@ -148,44 +87,44 @@ export class ConnectComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (!this.formData.name || !this.formData.phone) {
+    if (!this.formData.name || !this.formData.phone || !this.formData.email) {
       return;
     }
 
     this.isSubmitting = true;
+    this.submitError = null;
     this.cdr.detectChanges();
 
     // Generate unique dossier reference code
     const randomNum = Math.floor(1000 + Math.random() * 9000);
     this.referenceCode = `CI-REQ-${new Date().getFullYear()}-${randomNum}`;
 
-    const projectMap: Record<string, string> = {
-      'ayodhara': 'Ayodhara',
-      'the-address': 'The Address',
-      'integral': 'Integral 14-Acre Highway Hub',
-      'the-orchid': 'The Orchid',
-      'landmark': 'Landmark'
-    };
-    const resolvedProject = projectMap[this.formData.project] || this.formData.project || this.activeTrackId || 'General Consultation';
-
-    const payload: InquiryPayload = {
+    const payload: ConnectInquiryPayload = {
       name: this.formData.name,
       phone: this.formData.phone,
       email: this.formData.email,
-      projectName: resolvedProject,
-      inquiryType: 'Bespoke Consultation',
-      contactMethod: this.formData.contactMethod,
-      siteVisitDate: this.formData.siteVisitDate,
       message: this.formData.message,
-      sourcePage: '/connect'
+      sourcePage: 'Main Website',
+      referenceCode: this.referenceCode
     };
 
-    this.inquiryService.submitInquiry(payload).subscribe({
+    this.inquiryService.submitConnectInquiry(payload).subscribe({
       next: (res) => {
-        console.log('Connect form saved to backend:', res);
+        console.log('Connect form saved to connectInquiries collection:', res);
         this.isSubmitting = false;
         this.isSubmitted = true;
+        this.submitError = null;
         this.cdr.detectChanges();
+
+        // Trigger WhatsApp redirection in a new tab
+        this.inquiryService.redirectToWhatsApp({
+          referenceCode: this.referenceCode,
+          name: this.formData.name,
+          phone: this.formData.phone,
+          email: this.formData.email,
+          message: this.formData.message,
+          inquiryType: 'Connect Inquiry'
+        });
 
         if (isPlatformBrowser(this.platformId)) {
           const formElem = document.getElementById('consultation-form-block');
@@ -196,9 +135,9 @@ export class ConnectComponent implements OnInit {
       },
       error: (err) => {
         console.error('Failed to submit connect form:', err);
-        // Ensure UI displays confirmation even on offline/fallback mode
         this.isSubmitting = false;
-        this.isSubmitted = true;
+        this.isSubmitted = false;
+        this.submitError = 'We were unable to transmit your inquiry. Please check your network connection or reach our senior desk directly at +91 85999 36363.';
         this.cdr.detectChanges();
       }
     });
@@ -206,14 +145,11 @@ export class ConnectComponent implements OnInit {
 
   resetForm(): void {
     this.isSubmitted = false;
+    this.submitError = null;
     this.formData = {
       name: '',
       email: '',
       phone: '',
-      track: this.activeTrackId,
-      project: '',
-      contactMethod: 'whatsapp',
-      siteVisitDate: '',
       message: ''
     };
     this.cdr.detectChanges();
