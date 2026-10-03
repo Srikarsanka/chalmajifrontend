@@ -7,10 +7,10 @@
           <h2 class="main-title">What Our<br><span>Clients Say</span></h2>
         </div>
         <div class="testimonial-nav">
-          <button class="nav-btn" (click)="prevTestimonial()" aria-label="Previous">
+          <button class="nav-btn" (click)="prevTestimonial()" aria-label="Previous Testimonial">
             <i class="fa-solid fa-arrow-left"></i>
           </button>
-          <button class="nav-btn" (click)="nextTestimonial()" aria-label="Next">
+          <button class="nav-btn" (click)="nextTestimonial()" aria-label="Next Testimonial">
             <i class="fa-solid fa-arrow-right"></i>
           </button>
         </div>
@@ -33,7 +33,7 @@
                 {{ testimonial.name.charAt(0) }}
               </div>
               <div class="author-info">
-                <h5 class="author-name">{{ testimonial.name }}</h5>
+                <h3 class="author-name">{{ testimonial.name }}</h3>
                 <p class="author-designation">{{ testimonial.designation }}</p>
               </div>
             </div>

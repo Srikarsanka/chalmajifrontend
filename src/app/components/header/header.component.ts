@@ -17,6 +17,8 @@ export class HeaderComponent implements OnInit {
   logoVisible = true;
   isAboutPage = false;
   isAdminPage = false;
+  isLightPage = false;
+  isProjectsPage = false;
   ongoingProjects: Project[] = [];
 
   constructor(
@@ -44,8 +46,11 @@ export class HeaderComponent implements OnInit {
   }
 
   private checkRoute(url: string): void {
+    const cleanUrl = url || '';
     this.isAboutPage = false;
-    this.isAdminPage = (url || '').startsWith('/admin');
+    this.isAdminPage = cleanUrl.startsWith('/admin');
+    this.isProjectsPage = cleanUrl.startsWith('/projects');
+    this.isLightPage = cleanUrl.startsWith('/connect') || cleanUrl.startsWith('/projects') || cleanUrl.startsWith('/about');
   }
 
   @HostListener('window:scroll')

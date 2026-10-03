@@ -1,12 +1,27 @@
-<section class="stats-section" [class.visible]="isVisible">
+<section class="stats-section" [class.visible]="isVisible" aria-label="Company Statistics">
   <div class="stats-overlay"></div>
   <div class="container">
     <div class="stats-grid">
       <div class="stat-item" *ngFor="let stat of stats; let i = index"
-           [style.animation-delay]="(i * 0.15) + 's'">
-        <div class="stat-number">
-          {{ stat.value | number:'1.0-0' }}<span class="stat-suffix">{{ stat.suffix }}</span>
+           [style.transition-delay]="(i * 120) + 'ms'">
+        
+        <div class="stat-number" [attr.aria-label]="stat.target + stat.suffix">
+          <!-- Scrolling Digit Reels -->
+          <div class="digit-reels" aria-hidden="true">
+            <div class="digit-col" *ngFor="let digit of stat.digits; let dIdx = index">
+              <div class="digit-strip"
+                   [style.transform]="isVisible ? getDigitOffset(digit) : 'translateY(0%)'"
+                   [style.transition-duration]="dIdx === 0 ? '1.7s' : '2.1s'"
+                   [style.transition-delay]="(i * 120 + dIdx * 90) + 'ms'">
+                <span class="digit-cell" *ngFor="let n of digitList">{{ n }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Suffix -->
+          <span class="stat-suffix">{{ stat.suffix }}</span>
         </div>
+
         <div class="stat-divider"></div>
         <p class="stat-label">{{ stat.label }}</p>
       </div>

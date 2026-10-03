@@ -98,6 +98,16 @@
           Customer Leads
           <span class="count-pill">{{ allInquiriesCombined.length }}</span>
         </button>
+
+        <button
+          type="button"
+          class="tab-btn"
+          [class.active]="activeTab === 'stats'"
+          (click)="activeTab = 'stats'"
+        >
+          <span class="tab-icon">📊</span>
+          Stats & Milestones
+        </button>
       </nav>
     </div>
 
@@ -824,6 +834,260 @@
         </table>
       </div>
     </section>
+  </main>
+
+  <!-- ================= TAB 4: STATS & MILESTONES ================= -->
+  <main *ngIf="activeTab === 'stats'" class="admin-main stats-admin-view">
+    <!-- Header Banner -->
+    <div class="stats-admin-header">
+      <div class="stats-title-block">
+        <span class="stats-kicker">HOMEPAGE SHOWCASE</span>
+        <h2>Company Milestones & Statistics</h2>
+        <p class="stats-desc">
+          Update the key numbers displayed on the live website. Years of experience can automatically increment each calendar year based on your founding year.
+        </p>
+      </div>
+
+      <div class="stats-actions">
+        <button
+          type="button"
+          class="admin-btn primary-btn save-stats-btn"
+          [disabled]="isSavingStats"
+          (click)="saveCompanyStats()"
+        >
+          <span *ngIf="!isSavingStats">💾 Save Changes</span>
+          <span *ngIf="isSavingStats" class="saving-spinner">⏳ Saving...</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Live Preview Banner -->
+    <div class="stats-preview-wrapper">
+      <div class="preview-badge">
+        <span class="badge-dot"></span> Live Website Preview ({{ getCurrentYear() }})
+      </div>
+      <div class="preview-cards-grid">
+        <!-- Stat 1 Preview -->
+        <div class="preview-stat-card">
+          <div class="preview-num">
+            {{ getEffectiveYearsPreview() }}<span class="preview-suffix">{{ statsForm.experienceSuffix }}</span>
+          </div>
+          <div class="preview-divider"></div>
+          <div class="preview-label">{{ statsForm.experienceLabel }}</div>
+          <div class="preview-note" *ngIf="statsForm.autoCalculateYears">
+            ✓ Auto-calculates: {{ getCurrentYear() }} - {{ statsForm.foundingYear }} = {{ getEffectiveYearsPreview() }} yrs
+          </div>
+        </div>
+
+        <!-- Stat 2 Preview -->
+        <div class="preview-stat-card">
+          <div class="preview-num">
+            {{ statsForm.projectsDelivered }}<span class="preview-suffix">{{ statsForm.projectsSuffix }}</span>
+          </div>
+          <div class="preview-divider"></div>
+          <div class="preview-label">{{ statsForm.projectsLabel }}</div>
+        </div>
+
+        <!-- Stat 3 Preview -->
+        <div class="preview-stat-card">
+          <div class="preview-num">
+            {{ statsForm.sftDeveloped }}<span class="preview-suffix">{{ statsForm.sftSuffix }}</span>
+          </div>
+          <div class="preview-divider"></div>
+          <div class="preview-label">{{ statsForm.sftLabel }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Configuration Form Cards -->
+    <div class="stats-form-grid">
+      <!-- Card 1: Years of Experience -->
+      <div class="stat-config-card">
+        <div class="card-header-row">
+          <div class="card-icon">⏳</div>
+          <div class="card-headings">
+            <h3>Years of Experience</h3>
+            <p>Configure founding timeline and auto-increment</p>
+          </div>
+        </div>
+
+        <div class="config-toggle-box">
+          <label class="toggle-switch-label">
+            <input
+              type="checkbox"
+              [(ngModel)]="statsForm.autoCalculateYears"
+              name="autoCalculateYears"
+            />
+            <span class="toggle-slider"></span>
+            <span class="toggle-text">
+              <strong>Auto-Increment Every New Year</strong>
+              <small>Automatically advances the years when a new year begins (e.g. 2026 = 35+, 2027 = 36+)</small>
+            </span>
+          </label>
+        </div>
+
+        <div class="card-inputs-grid">
+          <div class="form-field" *ngIf="statsForm.autoCalculateYears">
+            <label>Founding Year *</label>
+            <input
+              type="number"
+              [(ngModel)]="statsForm.foundingYear"
+              name="foundingYear"
+              min="1950"
+              max="2050"
+              placeholder="e.g. 1991"
+            />
+            <span class="field-hint">
+              Founded in {{ statsForm.foundingYear }}. In {{ getCurrentYear() }}, shows <strong>{{ getEffectiveYearsPreview() }}+</strong>. In {{ getCurrentYear() + 1 }}, it will automatically show <strong>{{ getEffectiveYearsPreview() + 1 }}+</strong>!
+            </span>
+          </div>
+
+          <div class="form-field" *ngIf="!statsForm.autoCalculateYears">
+            <label>Manual Years Count *</label>
+            <input
+              type="number"
+              [(ngModel)]="statsForm.yearsOfExperience"
+              name="yearsOfExperience"
+              min="1"
+              placeholder="e.g. 35"
+            />
+            <span class="field-hint">Set the static number of years to display</span>
+          </div>
+
+          <div class="form-field">
+            <label>Suffix</label>
+            <input
+              type="text"
+              [(ngModel)]="statsForm.experienceSuffix"
+              name="experienceSuffix"
+              placeholder="e.g. +"
+            />
+          </div>
+
+          <div class="form-field full-width">
+            <label>Card Label</label>
+            <input
+              type="text"
+              [(ngModel)]="statsForm.experienceLabel"
+              name="experienceLabel"
+              placeholder="e.g. Years of Experience"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Projects Delivered -->
+      <div class="stat-config-card">
+        <div class="card-header-row">
+          <div class="card-icon">🏗️</div>
+          <div class="card-headings">
+            <h3>Projects Delivered</h3>
+            <p>Milestone of completed developments</p>
+          </div>
+        </div>
+
+        <div class="card-inputs-grid">
+          <div class="form-field">
+            <label>Target Number *</label>
+            <input
+              type="number"
+              [(ngModel)]="statsForm.projectsDelivered"
+              name="projectsDelivered"
+              min="1"
+              placeholder="e.g. 50"
+            />
+            <span class="field-hint">Number of completed iconic projects</span>
+          </div>
+
+          <div class="form-field">
+            <label>Suffix</label>
+            <input
+              type="text"
+              [(ngModel)]="statsForm.projectsSuffix"
+              name="projectsSuffix"
+              placeholder="e.g. +"
+            />
+          </div>
+
+          <div class="form-field full-width">
+            <label>Card Label</label>
+            <input
+              type="text"
+              [(ngModel)]="statsForm.projectsLabel"
+              name="projectsLabel"
+              placeholder="e.g. Projects Delivered"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Sft Developed -->
+      <div class="stat-config-card">
+        <div class="card-header-row">
+          <div class="card-icon">📐</div>
+          <div class="card-headings">
+            <h3>Volume / Sft Developed</h3>
+            <p>Total square footage developed</p>
+          </div>
+        </div>
+
+        <div class="card-inputs-grid">
+          <div class="form-field">
+            <label>Target Number *</label>
+            <input
+              type="number"
+              [(ngModel)]="statsForm.sftDeveloped"
+              name="sftDeveloped"
+              min="1"
+              placeholder="e.g. 25"
+            />
+            <span class="field-hint">Square footage figure in Lakhs</span>
+          </div>
+
+          <div class="form-field">
+            <label>Suffix</label>
+            <input
+              type="text"
+              [(ngModel)]="statsForm.sftSuffix"
+              name="sftSuffix"
+              placeholder="e.g.  Lakh+"
+            />
+          </div>
+
+          <div class="form-field full-width">
+            <label>Card Label</label>
+            <input
+              type="text"
+              [(ngModel)]="statsForm.sftLabel"
+              name="sftLabel"
+              placeholder="e.g. Sft Developed"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Save Button Row -->
+    <div class="stats-bottom-save-bar">
+      <div class="save-bar-info">
+        <span *ngIf="statsSaveSuccess" class="save-success-msg">
+          ✓ Changes saved successfully! Updated across the entire website.
+        </span>
+        <span *ngIf="!statsSaveSuccess" class="save-status-msg">
+          Changes will reflect immediately on the live homepage.
+        </span>
+      </div>
+
+      <button
+        type="button"
+        class="admin-btn primary-btn save-stats-btn"
+        [disabled]="isSavingStats"
+        (click)="saveCompanyStats()"
+      >
+        <span *ngIf="!isSavingStats">💾 Save Statistics</span>
+        <span *ngIf="isSavingStats" class="saving-spinner">⏳ Saving...</span>
+      </button>
+    </div>
   </main>
 </div>
 

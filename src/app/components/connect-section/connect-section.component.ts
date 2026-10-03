@@ -72,10 +72,14 @@ export class ConnectSectionComponent implements OnInit {
       },
       error: (err) => {
         console.error('Failed to submit connect section inquiry:', err);
-        alert('Unable to submit your inquiry at this moment. Please check your connection or reach us directly at +91 85999 36363.');
+        alert('Unable to submit your inquiry at this moment. Please check your connection or reach us directly at +91 92579 25788.');
         this.cdr.detectChanges();
       }
     });
+  }
+
+  getDirectWhatsAppUrl(): string {
+    return this.inquiryService.getDirectWhatsAppUrl();
   }
 }
 

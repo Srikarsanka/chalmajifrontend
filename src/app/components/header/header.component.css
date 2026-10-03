@@ -32,8 +32,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1400px;
-  margin: 0 auto;
+  width: 100%;
 }
 
 .nav-logo {
@@ -75,6 +74,13 @@
 
 .navbar.fixed-top .menu-toggle .bar {
   background-color: #fff;
+}
+
+/* Dark nav for light-background pages (e.g. Connect, Projects) */
+.navbar.dark-nav .menu-toggle .bar,
+.navbar.projects-nav:not(.fixed-top) .menu-toggle .bar,
+.projects-header .navbar:not(.fixed-top) .menu-toggle .bar {
+  background-color: #000000 !important;
 }
 
 .menu-toggle.active .bar:nth-child(1) {

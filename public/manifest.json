@@ -1,0 +1,21 @@
+{
+  "name": "Chalamaji Infra Projects Pvt Ltd",
+  "short_name": "Chalamaji Infra",
+  "description": "Premier real estate developer in Visakhapatnam delivering luxury coastal residences and plotted sanctuaries.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FCFBF7",
+  "theme_color": "#231F20",
+  "icons": [
+    {
+      "src": "https://res.cloudinary.com/djha4r2ys/image/upload/v1791024228/40a10a2f-fd5e-4c7a-b566-fc05f259df78.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://res.cloudinary.com/djha4r2ys/image/upload/v1791024228/40a10a2f-fd5e-4c7a-b566-fc05f259df78.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

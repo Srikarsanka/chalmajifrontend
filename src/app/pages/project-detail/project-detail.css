@@ -1042,6 +1042,26 @@
   font-size: 13px;
 }
 
+.concierge-whatsapp {
+  font-size: 14px;
+  color: #25D366;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.concierge-whatsapp:hover {
+  color: #1ea950;
+}
+
+.concierge-whatsapp i {
+  color: #25D366;
+  font-size: 15px;
+}
+
 /* Form Card */
 .luxury-form-card {
   background: var(--lux-bg-obsidian);
@@ -1231,6 +1251,35 @@
   font-size: 14px;
   color: var(--lux-text-muted-light);
   line-height: 1.7;
+}
+
+.success-wa-action {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.luxe-wa-direct-btn {
+  background: #25D366;
+  color: #FFFFFF;
+  text-decoration: none;
+  padding: 12px 26px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+}
+
+.luxe-wa-direct-btn:hover {
+  background: #1ea950;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
 }
 
 /* --------------------------------------------------------------------------
@@ -1593,22 +1642,105 @@
   }
 
   .luxe-spec-bar-wrapper {
-    margin-top: -25px;
-    padding: 0 20px;
+    margin-top: 18px;
+    margin-bottom: 10px;
+    padding: 0 16px;
+    position: relative;
+    z-index: 15;
   }
 
   .luxe-spec-bar {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    gap: 0;
+    padding: 0;
   }
 
   .spec-cell {
-    border-right: none;
-    border-bottom: 1px solid var(--lux-border-dark);
-    padding: 18px 20px;
+    padding: 14px 16px;
+    border-right: 1px solid rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    background: #FFFFFF;
   }
 
-  .spec-cell:last-child {
+  .spec-cell:nth-child(2n) {
+    border-right: none;
+  }
+
+  /* When no RERA is present, row 2 (cells 3 and 4) doesn't need bottom border */
+  .luxe-spec-bar:not(.has-rera) .spec-cell:nth-child(3),
+  .luxe-spec-bar:not(.has-rera) .spec-cell:nth-child(4) {
     border-bottom: none;
+  }
+
+  /* RERA cell spans full width across both columns */
+  .spec-cell.rera-cell {
+    grid-column: span 2;
+    border-right: none;
+    border-bottom: none;
+    background: #FAF8F5;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 11px 16px;
+    gap: 12px;
+  }
+
+  .spec-label {
+    font-size: 9px;
+    letter-spacing: 1.4px;
+    font-weight: 600;
+    color: #8C827A;
+    text-transform: uppercase;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .spec-value {
+    font-size: 13.5px;
+    line-height: 1.35;
+    color: #071B49;
+    font-weight: 600;
+    font-family: var(--font-body, 'Inter', sans-serif);
+    letter-spacing: -0.01em;
+    gap: 6px;
+  }
+
+  .spec-value.highlight-status {
+    color: #059669;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .mini-bullet {
+    width: 6px;
+    height: 6px;
+    background-color: #10B981;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 6px rgba(16, 185, 129, 0.4);
+    flex-shrink: 0;
+  }
+
+  .spec-value.rera-value {
+    font-size: 12px;
+    color: #8B0015;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+
+  .spec-value.rera-value i {
+    color: #8B0015;
+    font-size: 12px;
   }
 
   .luxe-overview-section,
@@ -1651,6 +1783,63 @@
     gap: 12px;
     align-items: center;
     text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-project-title {
+    font-size: 28px;
+    letter-spacing: -0.01em;
+  }
+
+  .luxe-spec-bar-wrapper {
+    margin-top: 14px;
+    margin-bottom: 8px;
+    padding: 0 14px;
+  }
+
+  .luxe-spec-bar {
+    padding: 0;
+  }
+
+  .spec-cell {
+    padding: 12px 14px;
+    gap: 3px;
+  }
+
+  .spec-label {
+    font-size: 8.5px;
+    letter-spacing: 1.2px;
+  }
+
+  .spec-value {
+    font-size: 12.5px;
+  }
+
+  .spec-value.highlight-status {
+    font-size: 12.5px;
+  }
+
+  .spec-cell.rera-cell {
+    padding: 10px 14px;
+  }
+
+  .spec-value.rera-value {
+    font-size: 11px;
+  }
+
+  .luxury-form-card {
+    padding: 24px 16px;
+  }
+
+  .brochure-modal-card {
+    padding: 26px 18px;
+  }
+
+  .overview-display-heading,
+  .section-display-title,
+  .enquiry-display-title {
+    font-size: 26px;
   }
 }
 
@@ -1874,4 +2063,109 @@
   font-size: 13.5px;
   color: var(--lux-text-muted-light);
   line-height: 1.6;
+}
+
+/* ==========================================================================
+   ILLUSTRATION PURPOSE DISCLAIMERS & BADGES
+   ========================================================================== */
+
+/* Hero Illustration Tag */
+.hero-illustration-tag {
+  position: absolute;
+  bottom: 24px;
+  right: 32px;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(10, 15, 24, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 5px 12px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Gallery Card Illustration Tag */
+.card-illustration-tag {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(10, 15, 24, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* Legal Footnote Disclaimer Bar under Gallery */
+.gallery-disclaimer-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 30px;
+  padding: 14px 20px;
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  color: #000000;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+}
+
+.gallery-disclaimer-bar span {
+  color: #000000;
+}
+
+.gallery-disclaimer-bar i {
+  color: var(--primary, #EC1C24);
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+/* Lightbox caption group & disclaimer pill */
+.lightbox-caption-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.lightbox-disclaimer-pill {
+  font-size: 10px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+@media (max-width: 767px) {
+  .hero-illustration-tag {
+    bottom: 16px;
+    right: 16px;
+    font-size: 9.5px;
+    padding: 4px 8px;
+  }
+
+  .gallery-disclaimer-bar {
+    padding: 12px 14px;
+    font-size: 11px;
+    align-items: flex-start;
+  }
 }

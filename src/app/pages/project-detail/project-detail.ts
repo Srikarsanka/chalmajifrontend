@@ -4,6 +4,7 @@ import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { InquiryService, InquiryPayload } from '../../services/inquiry.service';
 import { ProjectService, Project } from '../../services/project.service';
+import { SeoService } from '../../services/seo.service';
 
 @Component({
   selector: 'app-project-detail',
@@ -44,7 +45,8 @@ export class ProjectDetailComponent implements OnInit {
     private router: Router,
     private cdr: ChangeDetectorRef,
     private inquiryService: InquiryService,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private seoService: SeoService
   ) {}
 
   /**
@@ -84,6 +86,61 @@ export class ProjectDetailComponent implements OnInit {
       next: (proj) => {
         if (proj) {
           this.project = proj;
+          const canonical = `https://chalamaji.com/projects/${proj.projectId || id}`;
+          const cleanName = proj.name;
+          const projDesc = proj.description || proj.fullDescription || `Luxury ${proj.type} development in ${proj.location} by Chalamaji Infra Projects.`;
+
+          this.seoService.updateSeo({
+            title: `${cleanName} | ${proj.type} in ${proj.location} | Chalamaji Infra`,
+            description: projDesc,
+            keywords: `${cleanName}, ${cleanName} ${proj.location}, ${proj.type}, Chalamaji Infra, real estate Visakhapatnam, property Vizag${proj.reraNumber ? ', ' + proj.reraNumber : ''}`,
+            canonicalUrl: canonical,
+            ogImage: proj.mainImage || proj.carouselImage,
+            ogType: 'article',
+            jsonLd: [
+              {
+                '@context': 'https://schema.org',
+                '@type': 'BreadcrumbList',
+                'itemListElement': [
+                  {
+                    '@type': 'ListItem',
+                    'position': 1,
+                    'name': 'Home',
+                    'item': 'https://chalamaji.com/'
+                  },
+                  {
+                    '@type': 'ListItem',
+                    'position': 2,
+                    'name': 'Projects',
+                    'item': 'https://chalamaji.com/projects'
+                  },
+                  {
+                    '@type': 'ListItem',
+                    'position': 3,
+                    'name': cleanName,
+                    'item': canonical
+                  }
+                ]
+              },
+              {
+                '@context': 'https://schema.org',
+                '@type': 'Place',
+                'name': cleanName,
+                'description': projDesc,
+                'image': proj.mainImage || proj.carouselImage,
+                'address': {
+                  '@type': 'PostalAddress',
+                  'addressLocality': proj.location,
+                  'addressCountry': 'IN'
+                },
+                'amenityFeature': (proj.amenities || []).map(a => ({
+                  '@type': 'LocationFeatureSpecification',
+                  'name': a,
+                  'value': true
+                }))
+              }
+            ]
+          });
         }
         this.isLoading = false;
 
@@ -313,6 +370,12 @@ export class ProjectDetailComponent implements OnInit {
         console.error('Failed to save project inquiry:', err);
         this.cdr.detectChanges();
       }
+    });
+  }
+
+  getProjectWhatsAppUrl(): string {
+    return this.inquiryService.getDirectWhatsAppUrl({
+      projectName: this.project?.name || this.cleanProjectName
     });
   }
 }

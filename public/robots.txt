@@ -1,0 +1,11 @@
+# robots.txt for Chalamaji Infra Projects Pvt Ltd
+# https://chalamaji.com
+
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+# Host & Sitemap specification
+Host: https://chalamaji.com
+Sitemap: https://chalamaji.com/sitemap.xml

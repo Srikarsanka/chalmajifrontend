@@ -27,9 +27,10 @@ export const PROJECTS: Project[] = [
     description: 'A premium residential project featuring world-class amenities, modern architecture, and thoughtful design in the heart of Visakhapatnam.',
     fullDescription: 'Chalamaji Signature redefines luxury living in Visakhapatnam. Located in the prestigious neighborhood of Pandurangapuram, this project offers an unparalleled lifestyle with breathtaking coastal views, meticulously designed interiors, and top-tier amenities.',
     gallery: [
-      'assets/images/projects/signature-1.jpg',
-      'assets/images/projects/signature-2.jpg',
-      'assets/images/projects/signature-3.jpg'
+      'https://res.cloudinary.com/djha4r2ys/image/upload/v1789407538/69e8968e-b89c-469d-b52b-0548a47d65f9.png',
+      'https://res.cloudinary.com/djha4r2ys/image/upload/v1789408023/c5b92da8-b6b6-4a53-b441-732018fc782a.png',
+      'https://res.cloudinary.com/djha4r2ys/image/upload/v1789407942/be88ad04-8d92-48d3-a060-d96b32314cad.png',
+      'https://res.cloudinary.com/djha4r2ys/image/upload/v1789407942/be88ad04-8d92-48d3-a060-d96b32314cad.png'
     ],
     amenities: ['Swimming Pool', 'Gymnasium', 'Clubhouse', '24/7 Security', 'Landscaped Gardens', 'Power Backup'],
     mainImage: 'https://res.cloudinary.com/djha4r2ys/image/upload/v1789407538/69e8968e-b89c-469d-b52b-0548a47d65f9.png',
@@ -46,10 +47,10 @@ export const PROJECTS: Project[] = [
     description: '36 Divine residential plots across 2.6 acres situated opposite the sacred Ramanarayanam Temple in Vizianagaram.',
     fullDescription: 'Ayodhara represents a sacred way of living — rooted in Dharma, enriched by heritage, and inspired by peace. Developed in collaboration with SVN Shivajyothi Group, featuring Shanti Vanam park, tennis court, avenue trees, 100% Vaastu compliance, and immediate registration.',
     gallery: [
-      'assets/images/ayodhara/entrance-gate.jpg',
-      'assets/images/ayodhara/shanti-vanam.jpg',
-      'assets/images/ayodhara/master-plan.jpg',
-      'assets/images/ayodhara/lifestyle-collage.jpg'
+      'https://res.cloudinary.com/djha4r2ys/image/upload/v1789992275/2a170a8f-05c9-4c7c-9490-15de16b3bf12.png',
+      'https://res.cloudinary.com/djha4r2ys/image/upload/v1789992275/2a170a8f-05c9-4c7c-9490-15de16b3bf12.png',
+      'https://res.cloudinary.com/djha4r2ys/image/upload/v1789992275/2a170a8f-05c9-4c7c-9490-15de16b3bf12.png',
+      'https://res.cloudinary.com/djha4r2ys/image/upload/v1789992275/2a170a8f-05c9-4c7c-9490-15de16b3bf12.png'
     ],
     amenities: ['Grand Entrance Arch', 'Shanti Vanam Park', 'Tennis Court', 'Children\'s Play Park', 'Avenue Plantation', '100% Vaastu Compliant', 'Street Lighting'],
     mainImage: 'https://res.cloudinary.com/djha4r2ys/image/upload/v1789992275/2a170a8f-05c9-4c7c-9490-15de16b3bf12.png',

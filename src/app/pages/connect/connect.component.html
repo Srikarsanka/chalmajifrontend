@@ -1,497 +1,356 @@
 <!-- =========================================================
-     CHALAMAJI INFRA — PRIVATE CONCIERGE & EXECUTIVE DIALOGUE
+     CHALAMAJI INFRA — CONNECT PAGE (MINIMAL REDESIGN)
      ========================================================= -->
 
-<div class="connect-page-wrapper" [class.is-ready]="isVisible">
+<div class="connect-page" [class.is-ready]="isVisible">
 
-  <!-- =========================================================
-       HERO BANNER: EXECUTIVE CONCIERGE GALLERY
-       ========================================================= -->
-  <section class="connect-hero" [style.backgroundImage]="'url(' + heroImageUrl + ')'">
-    <div class="hero-backdrop-scrim"></div>
-    <div class="hero-radial-glow"></div>
-
-    <div class="container hero-content-container">
-      
-      <!-- Geodetic Coordinate Badge -->
-      <div class="hero-top-badge">
-        <span class="badge-dot"></span>
-        <span class="badge-text">EXECUTIVE CONCIERGE · 17.7214° N, 83.3150° E</span>
-        <span class="badge-sep">/</span>
-        <span class="badge-sub">VISAKHAPATNAM HQ</span>
-      </div>
-
-      <div class="hero-title-wrap">
-        <p class="hero-script-lead">Direct Dialogue &amp; Private Consultations</p>
-        <h1 class="hero-main-title">
-          Connect With<br>
-          <span class="title-serif-italic">Chalamaji Infra.</span>
-        </h1>
-      </div>
-
-      <p class="hero-description">
-        Whether you are seeking your signature coastal residence, securing generational plotted wealth at Ayodhara, or initiating joint developments—our executive leadership desk welcomes your inquiry.
+  <!-- HERO: Clean minimal text hero -->
+  <section class="connect-hero">
+    <div class="container">
+      <span class="hero-label">CONNECT</span>
+      <h1 class="hero-title">
+        Get in Touch<span class="dot">.</span>
+      </h1>
+      <p class="hero-sub">
+        Have a question about our projects or want to schedule a site visit? We'd love to hear from you.
       </p>
     </div>
-
-    <!-- Fine Grid Bottom Accent Line -->
-    <div class="hero-bottom-rule"></div>
   </section>
 
-  <!-- =========================================================
-       MAIN INTERACTION GRID (LEFT: HQ DOSSIER | RIGHT: LUXURY FORM)
-       ========================================================= -->
-  <section class="connect-main-section" id="consultation-form-block">
+  <!-- MAIN: Contact Info + Form -->
+  <section class="connect-main" id="consultation-form-block">
     <div class="container">
-      <div class="main-interaction-grid">
+      <div class="main-grid">
 
-        <!-- LEFT COLUMN: CORPORATE HEADQUARTERS & DIRECT ACTIONS -->
-        <aside class="concierge-dossier-column">
-          
-          <div class="dossier-card">
-            
-            <!-- Dossier Header -->
-            <div class="dossier-header">
-              <div class="dossier-monogram">CI</div>
-              <div class="dossier-header-text">
-                <h4 class="dossier-title">Corporate Headquarters</h4>
-                <span class="dossier-sub">Pandurangapuram · Visakhapatnam</span>
-              </div>
+        <!-- LEFT: Contact Details -->
+        <div class="contact-info">
+
+          <!-- WhatsApp -->
+          <a
+            [href]="getDirectWhatsAppUrl()"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="info-card wa-card"
+          >
+            <div class="info-icon">
+              <i class="fa-brands fa-whatsapp"></i>
             </div>
-
-            <!-- Instant One-Click WhatsApp Hotline -->
-            <div class="whatsapp-direct-box">
-              <div class="wa-left">
-                <div class="wa-icon-pulse">
-                  <i class="fa-brands fa-whatsapp"></i>
-                  <span class="live-dot"></span>
-                </div>
-                <div class="wa-info">
-                  <span class="wa-label">INSTANT WHATSAPP DESK</span>
-                  <span class="wa-status">Online &amp; Active</span>
-                </div>
-              </div>
-              <a
-                href="https://wa.me/919257925788?text=Hello%20Chalamaji%20Infra,%20I%20would%20like%20to%20inquire%20about%20your%20projects."
-                target="_blank"
-                rel="noopener noreferrer"
-                class="wa-action-btn"
-              >
-                <span>Chat Now</span>
-                <i class="fa-solid fa-arrow-right"></i>
-              </a>
+            <div class="info-text">
+              <span class="info-label">WhatsApp</span>
+              <span class="info-value">Chat with us instantly</span>
             </div>
+            <i class="fa-solid fa-arrow-right info-arrow"></i>
+          </a>
 
-            <!-- Contact Channels List -->
-            <div class="dossier-channels-list">
-              
-              <!-- Address Block -->
-              <div class="channel-item">
-                <div class="channel-icon">
-                  <i class="fa-solid fa-location-dot"></i>
-                </div>
-                <div class="channel-body">
-                  <span class="channel-label">OFFICE LOCATION</span>
-                  <address class="channel-address">
-                    Door No. 7-5-18, Plot No. 37,<br>
-                    Pandurangapuram,<br>
-                    Visakhapatnam, AP - 530003
-                  </address>
-                  <div class="channel-actions">
-                    <button type="button" class="btn-text-action" (click)="copyAddress()">
-                      <i class="fa-regular fa-copy"></i> Copy Address
-                    </button>
-                    <a
-                      href="https://maps.google.com/?q=Pandurangapuram+Visakhapatnam+Chalamaji"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="btn-text-action"
-                    >
-                      <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Maps
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Phone Call Channels -->
-              <div class="channel-item">
-                <div class="channel-icon">
-                  <i class="fa-solid fa-phone-volume"></i>
-                </div>
-                <div class="channel-body">
-                  <span class="channel-label">DIRECT CONCIERGE LINES</span>
-                  <div class="phone-links-group">
-                    <a href="tel:+919257925788" class="phone-link">+91 92579 25788 <span class="phone-tag">Main Line</span></a>
-                    <a href="tel:+918885888388" class="phone-link">+91 88858 88388 <span class="phone-tag">Ayodhara Desk</span></a>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Official Email -->
-              <div class="channel-item">
-                <div class="channel-icon">
-                  <i class="fa-solid fa-envelope-open-text"></i>
-                </div>
-                <div class="channel-body">
-                  <span class="channel-label">EXECUTIVE CORRESPONDENCE</span>
-                  <a href="mailto:info@chalamaji.com" class="email-link">info&#64;chalamaji.com</a>
-                </div>
-              </div>
-
-              <!-- VIP Lounge Hours -->
-              <div class="channel-item">
-                <div class="channel-icon">
-                  <i class="fa-solid fa-clock"></i>
-                </div>
-                <div class="channel-body">
-                  <span class="channel-label">GALLERY &amp; LOUNGE TIMINGS</span>
-                  <p class="timing-text">
-                    <strong>Monday – Saturday:</strong> 9:00 AM – 6:30 PM<br>
-                    <strong>Sunday:</strong> Private appointments by prior booking
-                  </p>
-                </div>
-              </div>
-
+          <!-- Phone -->
+          <div class="info-card">
+            <div class="info-icon">
+              <i class="fa-solid fa-phone"></i>
             </div>
-
-            <!-- Corporate Trust Seal Footer -->
-            <div class="dossier-trust-footer">
-              <div class="trust-pill">
-                <i class="fa-solid fa-certificate"></i>
-                <span>CIN: U45200AP2014PTC094736</span>
-              </div>
-              <div class="trust-pill">
-                <i class="fa-solid fa-landmark-flag"></i>
-                <span>100% AP RERA Registered</span>
-              </div>
+            <div class="info-text">
+              <span class="info-label">Phone</span>
+              <a href="tel:+919257925788" class="info-value link">+91 92579 25788</a>
+              <a href="tel:+918885888388" class="info-value link sub">+91 88858 88388</a>
             </div>
-
           </div>
 
-        </aside>
-
-        <!-- RIGHT COLUMN: BESPOKE CONSULTATION FORM -->
-        <main class="concierge-form-column">
-          <div class="form-container-card">
-
-            <!-- NORMAL FORM STATE -->
-            <div *ngIf="!isSubmitted">
-              
-              <div class="form-card-header">
-                <h3 class="form-card-title">Connect With Us</h3>
-                <p class="form-card-subtitle">
-                  Have a project in mind or want to explore our developments? Share your details and we'll get back to you promptly.
-                </p>
-              </div>
-
-              <form class="bespoke-form" (ngSubmit)="onSubmit()" #consultForm="ngForm">
-                
-                <!-- Row 1: Full Name & Phone -->
-                <div class="form-split-row">
-                  <div class="form-field-group">
-                    <label for="c-name">Full Name <span class="req-star">*</span></label>
-                    <div class="input-with-icon">
-                      <i class="fa-regular fa-user field-icon"></i>
-                      <input
-                        type="text"
-                        id="c-name"
-                        name="name"
-                        [(ngModel)]="formData.name"
-                        required
-                        placeholder="e.g. Mattapalli Siddhartha"
-                        class="luxury-input"
-                      />
-                    </div>
-                  </div>
-
-                  <div class="form-field-group">
-                    <label for="c-phone">Phone Number <span class="req-star">*</span></label>
-                    <div class="input-with-icon">
-                      <i class="fa-solid fa-phone field-icon"></i>
-                      <input
-                        type="tel"
-                        id="c-phone"
-                        name="phone"
-                        [(ngModel)]="formData.phone"
-                        required
-                        placeholder="e.g. +91 98480 12345"
-                        class="luxury-input"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Row 2: Email -->
-                <div class="form-field-group">
-                  <label for="c-email">Email Address <span class="req-star">*</span></label>
-                  <div class="input-with-icon">
-                    <i class="fa-regular fa-envelope field-icon"></i>
-                    <input
-                      type="email"
-                      id="c-email"
-                      name="email"
-                      [(ngModel)]="formData.email"
-                      required
-                      placeholder="e.g. name@domain.com"
-                      class="luxury-input"
-                    />
-                  </div>
-                </div>
-
-                <!-- Row 3: Message -->
-                <div class="form-field-group">
-                  <label for="c-message">Your Message</label>
-                  <textarea
-                    id="c-message"
-                    name="message"
-                    rows="4"
-                    [(ngModel)]="formData.message"
-                    placeholder="Your message or requirement..."
-                    class="luxury-input luxury-textarea"
-                  ></textarea>
-                </div>
-
-                <!-- Error Notice -->
-                <div *ngIf="submitError" class="form-error-banner" style="background: rgba(220, 53, 69, 0.15); border: 1px solid rgba(220, 53, 69, 0.4); color: #ff6b6b; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; font-size: 14px;">
-                  <i class="fa-solid fa-circle-exclamation" style="font-size: 18px;"></i>
-                  <span>{{ submitError }}</span>
-                </div>
-
-                <!-- Submit Action Block -->
-                <div class="form-submit-row">
-                  <button
-                    type="submit"
-                    class="luxury-submit-btn"
-                    [disabled]="!consultForm.valid || isSubmitting"
-                  >
-                    <span *ngIf="!isSubmitting" class="btn-inner">
-                      <span>Send Message</span>
-                      <i class="fa-solid fa-arrow-right"></i>
-                    </span>
-                    <span *ngIf="isSubmitting" class="btn-inner">
-                      <i class="fa-solid fa-circle-notch fa-spin"></i>
-                      <span>Transmitting Inquiry...</span>
-                    </span>
-                  </button>
-
-                  <div class="privacy-note">
-                    <i class="fa-solid fa-lock"></i>
-                    <span>Your privacy is paramount. Zero spam guarantee.</span>
-                  </div>
-                </div>
-
-              </form>
+          <!-- Email -->
+          <div class="info-card">
+            <div class="info-icon">
+              <i class="fa-solid fa-envelope"></i>
             </div>
+            <div class="info-text">
+              <span class="info-label">Email</span>
+              <a href="mailto:info@chalamaji.com" class="info-value link">info&#64;chalamaji.com</a>
+            </div>
+          </div>
 
-            <!-- SUCCESS CONFIRMATION STATE -->
-            <div *ngIf="isSubmitted" class="submission-confirmation-card">
-              <div class="conf-seal-wrap">
-                <div class="conf-seal">
-                  <i class="fa-solid fa-check"></i>
-                </div>
-              </div>
-
-              <span class="conf-eyebrow">INQUIRY TRANSMITTED</span>
-              <h3 class="conf-heading">Thank You, {{ formData.name }}.</h3>
-              <p class="conf-desc">
-                Your inquiry has been received. Our team will connect with you shortly.
-              </p>
-
-              <div class="conf-dossier-box">
-                <div class="conf-row">
-                  <span class="c-label">REFERENCE CODE:</span>
-                  <strong class="c-val ref-code">{{ referenceCode }}</strong>
-                </div>
-                <div class="conf-row">
-                  <span class="c-label">STATUS:</span>
-                  <span class="c-val status-badge"><i class="fa-solid fa-circle-check"></i> RECEIVED</span>
-                </div>
-              </div>
-
-              <div class="conf-actions-group">
+          <!-- Office -->
+          <div class="info-card">
+            <div class="info-icon">
+              <i class="fa-solid fa-location-dot"></i>
+            </div>
+            <div class="info-text">
+              <span class="info-label">Office</span>
+              <address class="info-value address">
+                Door No. 7-5-18, Plot No. 37,<br>
+                Pandurangapuram,<br>
+                Visakhapatnam, AP - 530003
+              </address>
+              <div class="address-actions">
+                <button type="button" class="text-btn" (click)="copyAddress()">
+                  <i class="fa-regular fa-copy"></i> Copy
+                </button>
                 <a
-                  [href]="'https://wa.me/919257925788?text=Hello%20Chalamaji,%20I%20have%20submitted%20inquiry%20' + referenceCode"
+                  href="https://maps.app.goo.gl/91M6n4AgEXM9zENi6"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="conf-wa-btn"
+                  class="text-btn"
                 >
-                  <i class="fa-brands fa-whatsapp"></i>
-                  <span>Connect via WhatsApp</span>
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i> Maps
                 </a>
-                <button type="button" class="conf-reset-btn" (click)="resetForm()">
-                  <span>Submit Another Inquiry</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hours -->
+          <div class="info-card">
+            <div class="info-icon">
+              <i class="fa-solid fa-clock"></i>
+            </div>
+            <div class="info-text">
+              <span class="info-label">Hours</span>
+              <span class="info-value">Mon – Sat: 9:00 AM – 6:30 PM</span>
+              <span class="info-value sub">Sun: By appointment</span>
+            </div>
+          </div>
+
+          <!-- Trust badges -->
+          <div class="trust-row">
+            <span class="trust-tag"><i class="fa-solid fa-certificate"></i> CIN: U45200AP2014PTC094736</span>
+            <span class="trust-tag"><i class="fa-solid fa-landmark-flag"></i> 100% AP RERA Registered</span>
+          </div>
+
+        </div>
+
+        <!-- RIGHT: Form -->
+        <div class="form-wrap">
+
+          <!-- Normal form state -->
+          <div *ngIf="!isSubmitted">
+            <h2 class="form-title">Send us a message</h2>
+            <p class="form-sub">Share your details and we'll get back to you promptly.</p>
+
+            <form class="contact-form" (ngSubmit)="onSubmit()" #consultForm="ngForm">
+
+              <div class="form-row-2">
+                <div class="field">
+                  <label for="c-name">Full Name <span class="req">*</span></label>
+                  <input
+                    type="text"
+                    id="c-name"
+                    name="name"
+                    [(ngModel)]="formData.name"
+                    required
+                    placeholder="Your name"
+                  />
+                </div>
+
+                <div class="field">
+                  <label for="c-phone">Phone <span class="req">*</span></label>
+                  <input
+                    type="tel"
+                    id="c-phone"
+                    name="phone"
+                    [(ngModel)]="formData.phone"
+                    required
+                    placeholder="+91 98480 12345"
+                  />
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="c-email">Email <span class="req">*</span></label>
+                <input
+                  type="email"
+                  id="c-email"
+                  name="email"
+                  [(ngModel)]="formData.email"
+                  required
+                  placeholder="name&#64;domain.com"
+                />
+              </div>
+
+              <div class="field">
+                <label for="c-message">Message</label>
+                <textarea
+                  id="c-message"
+                  name="message"
+                  rows="5"
+                  [(ngModel)]="formData.message"
+                  placeholder="Your message or requirement..."
+                ></textarea>
+              </div>
+
+              <!-- Error -->
+              <div *ngIf="submitError" class="form-error">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <span>{{ submitError }}</span>
+              </div>
+
+              <div class="form-footer">
+                <button
+                  type="submit"
+                  class="submit-btn"
+                  [disabled]="!consultForm.valid || isSubmitting"
+                >
+                  <span *ngIf="!isSubmitting">Send Message <i class="fa-solid fa-arrow-right"></i></span>
+                  <span *ngIf="isSubmitting"><i class="fa-solid fa-circle-notch fa-spin"></i> Sending...</span>
                 </button>
+                <span class="privacy-note"><i class="fa-solid fa-lock"></i> Your data is secure. Zero spam.</span>
+              </div>
+
+            </form>
+          </div>
+
+          <!-- Success state -->
+          <div *ngIf="isSubmitted" class="success-state">
+            <div class="success-icon-wrap">
+              <i class="fa-solid fa-check"></i>
+            </div>
+            <span class="success-label">INQUIRY RECEIVED</span>
+            <h3 class="success-heading">Thank you, {{ formData.name }}.</h3>
+            <p class="success-desc">Our team will connect with you shortly.</p>
+
+            <div class="success-ref">
+              <div class="ref-row">
+                <span class="ref-label">REFERENCE</span>
+                <strong class="ref-value">{{ referenceCode }}</strong>
+              </div>
+              <div class="ref-row">
+                <span class="ref-label">STATUS</span>
+                <span class="ref-status"><i class="fa-solid fa-circle-check"></i> RECEIVED</span>
               </div>
             </div>
 
-          </div>
-        </main>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================================================
-       INTERACTIVE WAYFINDING & PROXIMITY HUB
-       ========================================================= -->
-  <section class="wayfinding-section">
-    <div class="container">
-      
-      <div class="wayfinding-header text-center">
-        <span class="section-eyebrow">HEADQUARTERS &amp; ACCESS CORRIDOR</span>
-        <h2 class="section-main-title">
-          Visit Our Pandurangapuram<br>
-          <span class="title-serif-italic">Client Consultation Gallery.</span>
-        </h2>
-        <p class="section-subtitle">
-          Located in the prestigious Waltair Uplands / Pandurangapuram district, just moments from the serene shores of RK Beach.
-        </p>
-      </div>
-
-      <!-- Map & Landmark Proximity Split -->
-      <div class="wayfinding-split-grid">
-        
-        <!-- Interactive Google Map Frame -->
-        <div class="map-frame-card">
-          <iframe
-            title="Chalamaji Infra Headquarters Location"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3799.8229864273574!2d83.3150244!3d17.7214154!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a3943343bc407b9%3A0x64f891b2c453c072!2sPandurangapuram%2C%20Visakhapatnam%2C%20Andhra%20Pradesh!5e0!3m2!1sen!2sin!4v1718000000000!5m2!1sen!2sin"
-            width="100%"
-            height="100%"
-            style="border:0;"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            class="styled-map-iframe"
-          ></iframe>
-          
-          <div class="map-overlay-badge">
-            <i class="fa-solid fa-location-dot"></i>
-            <span>CHALAMAJI HQ · WALTAIR SECTOR</span>
-          </div>
-        </div>
-
-        <!-- Proximity Landmark Metrics Grid -->
-        <div class="proximity-cards-col">
-          
-          <div class="prox-card">
-            <div class="prox-icon-box"><i class="fa-solid fa-water"></i></div>
-            <div class="prox-text">
-              <div class="prox-time-row">
-                <span class="prox-name">RK Beach Promenade</span>
-                <span class="prox-badge">2 MINS</span>
-              </div>
-              <p class="prox-dist">800 Meters · Scenic Coastal Boulevard</p>
-            </div>
-          </div>
-
-          <div class="prox-card">
-            <div class="prox-icon-box"><i class="fa-solid fa-tree-city"></i></div>
-            <div class="prox-text">
-              <div class="prox-time-row">
-                <span class="prox-name">Siripuram Business Hub</span>
-                <span class="prox-badge">4 MINS</span>
-              </div>
-              <p class="prox-dist">1.8 Kilometers · Central Commercial District</p>
-            </div>
-          </div>
-
-          <div class="prox-card">
-            <div class="prox-icon-box"><i class="fa-solid fa-hotel"></i></div>
-            <div class="prox-text">
-              <div class="prox-time-row">
-                <span class="prox-name">Novotel Varun Beach</span>
-                <span class="prox-badge">3 MINS</span>
-              </div>
-              <p class="prox-dist">1.2 Kilometers · Luxury Hospitality</p>
-            </div>
-          </div>
-
-          <div class="prox-card">
-            <div class="prox-icon-box"><i class="fa-solid fa-plane-departure"></i></div>
-            <div class="prox-text">
-              <div class="prox-time-row">
-                <span class="prox-name">Visakhapatnam Int'l Airport</span>
-                <span class="prox-badge">25 MINS</span>
-              </div>
-              <p class="prox-dist">14 Kilometers · Direct Highway Transit</p>
+            <div class="success-actions">
+              <a
+                [href]="getSuccessWhatsAppUrl()"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="wa-btn"
+              >
+                <i class="fa-brands fa-whatsapp"></i> WhatsApp Us
+              </a>
+              <button type="button" class="reset-btn" (click)="resetForm()">
+                Submit Another
+              </button>
             </div>
           </div>
 
         </div>
 
       </div>
-
     </div>
   </section>
 
-  <!-- =========================================================
-       FREQUENTLY ASKED QUESTIONS (CONCIERGE ACCORDION)
-       ========================================================= -->
-  <section class="concierge-faq-section">
+  <!-- MAP: Location & Interactive Map -->
+  <section class="map-section">
     <div class="container">
-      
-      <div class="faq-header text-center">
-        <span class="section-eyebrow">FREQUENT INQUIRIES</span>
-        <h2 class="section-main-title">
-          Client Advisory &amp; FAQ.<br>
-          <span class="title-serif-italic">Clarity on every milestone.</span>
-        </h2>
+      <div class="map-header">
+        <div class="map-header-text">
+          <span class="section-label">OUR LOCATION</span>
+          <h2 class="section-title">Visit Our Office</h2>
+          <p class="map-desc">
+            Door No. 7-5-18, Plot No. 37, Pandurangapuram, Visakhapatnam, AP – 530003
+          </p>
+        </div>
+        <a
+          href="https://maps.app.goo.gl/91M6n4AgEXM9zENi6"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="directions-btn"
+        >
+          <i class="fa-solid fa-location-arrow"></i> Get Directions
+        </a>
       </div>
 
-      <div class="faq-accordion-container">
+      <div class="map-container">
+        <iframe
+          title="Chalamaji Infra Projects Pvt Ltd Office Location"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3799.986063626359!2d83.3179478!3d17.7159245!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a3943d3b7763f57%3A0x584b8af0938e6afc!2sCHALAMAJI%20INFRA%20PROJECTS%20PVT%20LTD!5e0!3m2!1sen!2sin!4v1727954000000!5m2!1sen!2sin"
+          width="100%"
+          height="420"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          class="map-iframe"
+        ></iframe>
+      </div>
+
+      <!-- Quick Landmark Highlights -->
+      <div class="map-landmarks">
+        <div class="landmark-item">
+          <div class="landmark-icon"><i class="fa-solid fa-water"></i></div>
+          <div class="landmark-info">
+            <span class="landmark-name">RK Beach Promenade</span>
+            <span class="landmark-dist">2 mins · 800m</span>
+          </div>
+        </div>
+        <div class="landmark-item">
+          <div class="landmark-icon"><i class="fa-solid fa-tree-city"></i></div>
+          <div class="landmark-info">
+            <span class="landmark-name">Siripuram Business Hub</span>
+            <span class="landmark-dist">4 mins · 1.8km</span>
+          </div>
+        </div>
+        <div class="landmark-item">
+          <div class="landmark-icon"><i class="fa-solid fa-hotel"></i></div>
+          <div class="landmark-info">
+            <span class="landmark-name">Novotel Varun Beach</span>
+            <span class="landmark-dist">3 mins · 1.2km</span>
+          </div>
+        </div>
+        <div class="landmark-item">
+          <div class="landmark-icon"><i class="fa-solid fa-plane-departure"></i></div>
+          <div class="landmark-info">
+            <span class="landmark-name">Visakhapatnam Airport</span>
+            <span class="landmark-dist">25 mins · 14km</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section">
+    <div class="container">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+
+      <div class="faq-list">
         <div
           *ngFor="let faq of faqList; let fIdx = index"
-          class="faq-accordion-item"
-          [class.is-expanded]="activeFaqIndex === fIdx"
+          class="faq-item"
+          [class.open]="activeFaqIndex === fIdx"
         >
           <button
             type="button"
-            class="faq-question-btn"
+            class="faq-q"
             (click)="toggleFaq(fIdx)"
             [attr.aria-expanded]="activeFaqIndex === fIdx"
           >
-            <div class="faq-q-left">
-              <span class="faq-cat-tag">{{ faq.category }}</span>
-              <span class="faq-q-text">{{ faq.question }}</span>
+            <div class="faq-q-content">
+              <span class="faq-tag">{{ faq.category }}</span>
+              <span class="faq-question">{{ faq.question }}</span>
             </div>
-            <div class="faq-toggle-icon">
-              <i class="fa-solid" [ngClass]="activeFaqIndex === fIdx ? 'fa-minus' : 'fa-plus'"></i>
-            </div>
+            <i class="fa-solid" [ngClass]="activeFaqIndex === fIdx ? 'fa-minus' : 'fa-plus'"></i>
           </button>
 
-          <div class="faq-answer-panel" *ngIf="activeFaqIndex === fIdx">
-            <p class="faq-answer-text">{{ faq.answer }}</p>
+          <div class="faq-a" *ngIf="activeFaqIndex === fIdx">
+            <p>{{ faq.answer }}</p>
           </div>
         </div>
       </div>
-
     </div>
   </section>
 
-  <!-- =========================================================
-       CLOSING WAYFINDING & ACTION BAR
-       ========================================================= -->
-  <section class="connect-closing-bar">
-    <div class="container">
-      <div class="closing-inner-wrap">
-        <div class="closing-left">
-          <span class="closing-eyebrow">CHALAMAJI INFRA PROJECTS</span>
-          <h4 class="closing-title">Explore Our Living Portfolio</h4>
-          <p class="closing-desc">Discover our ongoing coastal high-rises and plotted sanctuaries across Visakhapatnam.</p>
-        </div>
-        <div class="closing-right">
-          <a routerLink="/projects" class="closing-nav-btn primary">
-            <span>View All Projects</span>
-            <i class="fa-solid fa-arrow-right-long"></i>
-          </a>
-          <a routerLink="/projects/ayodhara-plotting" class="closing-nav-btn secondary">
-            <span>Discover Ayodhara</span>
-            <i class="fa-solid fa-compass"></i>
-          </a>
-        </div>
+  <!-- Closing bar -->
+  <section class="closing-bar">
+    <div class="container closing-inner">
+      <div class="closing-text">
+        <h4>Explore Our Projects</h4>
+        <p>Discover our ongoing developments across Visakhapatnam.</p>
+      </div>
+      <div class="closing-actions">
+        <a routerLink="/projects" class="closing-btn primary">
+          View All Projects <i class="fa-solid fa-arrow-right-long"></i>
+        </a>
+        <a routerLink="/projects/ayodhara-plotting" class="closing-btn outline">
+          Discover Ayodhara <i class="fa-solid fa-compass"></i>
+        </a>
       </div>
     </div>
   </section>
-</div>
 
+</div>

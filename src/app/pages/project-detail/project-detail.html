@@ -9,10 +9,11 @@
       <img
         *ngIf="project.mainImage || project.carouselImage"
         [src]="project.mainImage || project.carouselImage"
-        [alt]="project.name"
+        [alt]="cleanProjectName + ' - ' + (project.type || 'Development') + ' in ' + project.location + ' by Chalamaji Infra'"
         class="hero-media-img" />
       <div *ngIf="!project.mainImage && !project.carouselImage" class="hero-media-fallback"></div>
       <div class="hero-vignette-overlay"></div>
+      <span class="hero-illustration-tag">*Artistic impression &bull; For illustration purpose only</span>
     </div>
 
     <!-- Hero Content Container -->
@@ -49,7 +50,7 @@
        2. FLOATING ARCHITECTURAL METADATA BAR
        ========================================== -->
   <section class="luxe-spec-bar-wrapper">
-    <div class="luxe-spec-bar">
+    <div class="luxe-spec-bar" [class.has-rera]="!!project.reraNumber">
       <div class="spec-cell">
         <span class="spec-label">Development Status</span>
         <strong class="spec-value highlight-status">
@@ -213,15 +214,27 @@
           [class.card-tall]="idx === 1"
           (click)="openLightbox(img, idx)">
           <div class="gallery-image-wrap">
-            <img [src]="img" [alt]="project.name + ' - Perspective ' + (idx + 1)" class="gallery-photo" />
+            <img
+              [src]="img"
+              [alt]="cleanProjectName + ' - ' + (project.location ? project.location + ' - ' : '') + 'Perspective ' + (idx + 1)"
+              loading="lazy"
+              class="gallery-photo"
+              (error)="$any($event.target).src = (project.mainImage || project.carouselImage)" />
             <div class="gallery-hover-scrim">
               <span class="perspective-tag">Perspective 0{{ idx + 1 }}</span>
               <div class="expand-icon-wrap">
                 <i class="fa-solid fa-expand"></i>
               </div>
             </div>
+            <span class="card-illustration-tag">*For illustration purpose only</span>
           </div>
         </div>
+      </div>
+
+      <!-- Legal Footnote Disclaimer below the Gallery -->
+      <div class="gallery-disclaimer-bar">
+        <i class="fa-solid fa-circle-info"></i>
+        <span>*Disclaimer: All perspectives, photographs, renders, and visual representations are artist's impressions for illustration purpose only. Specifications and finishes are subject to change during development.</span>
       </div>
     </div>
   </section>
@@ -308,6 +321,16 @@
               <a [href]="'tel:' + projectPhoneRaw" class="concierge-phone">
                 <i class="fa-solid fa-phone"></i>
                 {{ projectPhone }}
+              </a>
+              <a
+                [href]="getProjectWhatsAppUrl()"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="concierge-whatsapp"
+                aria-label="Enquire on WhatsApp about this project"
+              >
+                <i class="fa-brands fa-whatsapp"></i>
+                <span>WhatsApp Enquiry</span>
               </a>
               <a href="mailto:info@chalamaji.com" class="concierge-email">
                 <i class="fa-solid fa-envelope"></i>
@@ -412,6 +435,17 @@
                 Your consultation request for <strong>{{ project.name }}</strong> has been confirmed.
                 Our senior client advisor will connect with you immediately via phone and WhatsApp.
               </p>
+              <div class="success-wa-action">
+                <a
+                  [href]="getProjectWhatsAppUrl()"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="luxe-wa-direct-btn"
+                >
+                  <i class="fa-brands fa-whatsapp"></i>
+                  <span>Continue on WhatsApp</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -446,8 +480,10 @@
               <img
                 *ngIf="other.mainImage"
                 [src]="other.mainImage"
-                [alt]="other.name"
-                class="related-img" />
+                [alt]="other.name + ' - ' + (other.type || 'Residential Development') + ' in ' + (other.location || 'Visakhapatnam')"
+                loading="lazy"
+                class="related-img"
+                (error)="$any($event.target).src = (other.carouselImage || other.mainImage)" />
               <div *ngIf="!other.mainImage" class="related-fallback">
                 <i class="fa-solid fa-city"></i>
               </div>
@@ -493,9 +529,12 @@
       </div>
 
       <div class="lightbox-footer-bar">
-        <span class="lightbox-caption">
-          {{ project.name }} &mdash; Perspective {{ activeGalleryIndex + 1 }} of {{ project.gallery.length }}
-        </span>
+        <div class="lightbox-caption-group">
+          <span class="lightbox-caption">
+            {{ project.name }} &mdash; Perspective {{ activeGalleryIndex + 1 }} of {{ project.gallery.length }}
+          </span>
+          <span class="lightbox-disclaimer-pill">*Artistic impression &bull; For illustration purpose only</span>
+        </div>
         <div class="lightbox-nav-buttons">
           <button class="lbox-btn" (click)="prevImage($event)" aria-label="Previous Perspective">
             <i class="fa-solid fa-chevron-left"></i>

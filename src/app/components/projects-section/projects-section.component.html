@@ -20,11 +20,16 @@
         [class.far-right]="getSlidePosition(i) === 'far-right'">
         <a [routerLink]="['/projects', project.id]" class="slide-inner">
           <div class="slide-image">
-            <img *ngIf="project.carouselImage || project.mainImage" [src]="project.carouselImage || project.mainImage" [alt]="project.name" class="slide-img-real">
+            <img *ngIf="project.carouselImage || project.mainImage" 
+                 [src]="project.carouselImage || project.mainImage" 
+                 [alt]="project.name + ' - ' + (project.type || 'Residential Project') + (project.location ? ' in ' + project.location : '')" 
+                 loading="lazy"
+                 class="slide-img-real">
             <div *ngIf="!project.carouselImage && !project.mainImage" class="slide-img-placeholder">
               <i class="fa-solid fa-city"></i>
             </div>
             <div class="slide-overlay"></div>
+            <span class="slide-illustration-tag">*For illustration purpose only</span>
           </div>
           <div class="slide-info">
             <span class="slide-name">{{ getDisplayName(project.name) }}</span>
@@ -61,6 +66,13 @@
     <button class="nav-arrow next" (click)="next()" aria-label="Next slide">
       <i class="fa-solid fa-arrow-right"></i>
     </button>
+  </div>
+
+  <!-- Footnote Disclaimer -->
+  <div class="projects-disclaimer-wrap">
+    <p class="projects-disclaimer-text">
+      *All project visuals, perspectives, and architectural renders are artist's impressions for illustration purpose only.
+    </p>
   </div>
 
 </section>

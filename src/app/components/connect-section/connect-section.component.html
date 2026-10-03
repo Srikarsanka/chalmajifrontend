@@ -43,6 +43,15 @@
               <a href="mailto:info&#64;chalamaji.com">info&#64;chalamaji.com</a>
             </div>
           </div>
+          <div class="contact-item">
+            <div class="contact-icon" style="color: #25D366;">
+              <i class="fa-brands fa-whatsapp"></i>
+            </div>
+            <div>
+              <h5>WhatsApp</h5>
+              <a [href]="getDirectWhatsAppUrl()" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -51,15 +60,19 @@
         <form class="connect-form" (ngSubmit)="onSubmit()">
           <h3 class="form-title">Enquire Now</h3>
           <div class="form-group">
+            <label for="connect-name" class="sr-only">Your Name</label>
             <input type="text" id="connect-name" placeholder="Your Name *" [(ngModel)]="formData.name" name="name" required>
           </div>
           <div class="form-group">
+            <label for="connect-email" class="sr-only">Email Address</label>
             <input type="email" id="connect-email" placeholder="Email Address *" [(ngModel)]="formData.email" name="email" required>
           </div>
           <div class="form-group">
+            <label for="connect-phone" class="sr-only">Phone Number</label>
             <input type="tel" id="connect-phone" placeholder="Phone Number *" [(ngModel)]="formData.phone" name="phone" required>
           </div>
           <div class="form-group">
+            <label for="connect-message" class="sr-only">Your Message</label>
             <textarea id="connect-message" placeholder="Your Message" rows="4" [(ngModel)]="formData.message" name="message"></textarea>
           </div>
           <button type="submit" class="submit-btn">

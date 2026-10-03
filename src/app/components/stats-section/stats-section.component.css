@@ -20,7 +20,7 @@
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 40px;
   position: relative;
   z-index: 1;
@@ -30,27 +30,66 @@
   text-align: center;
   opacity: 0;
   transform: translateY(30px);
-  transition: all 0.8s ease;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .stats-section.visible .stat-item {
   opacity: 1;
   transform: translateY(0);
-  animation: fadeInUp 0.8s ease forwards;
 }
 
+/* Number Container & Scrolling Reel */
 .stat-number {
   font-family: var(--font-body);
   font-size: 60px;
   font-weight: 800;
   color: #fff;
-  line-height: 1;
+  line-height: 1.15;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+}
+
+.digit-reels {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.digit-col {
+  display: inline-block;
+  height: 1.15em;
+  line-height: 1.15em;
+  overflow: hidden;
+  position: relative;
+  vertical-align: baseline;
+}
+
+.digit-strip {
+  display: flex;
+  flex-direction: column;
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.12, 0.85, 0.25, 1);
+  will-change: transform;
+}
+
+.digit-cell {
+  height: 1.15em;
+  line-height: 1.15em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
 }
 
 .stat-suffix {
   font-size: 36px;
   font-weight: 400;
   color: var(--primary);
+  white-space: pre;
+  display: inline-block;
+  line-height: 1;
+  margin-left: 1px;
 }
 
 .stat-divider {
@@ -71,11 +110,14 @@
 /* Responsive */
 @media (max-width: 991px) {
   .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 50px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
   }
   .stat-number {
     font-size: 48px;
+  }
+  .stat-suffix {
+    font-size: 30px;
   }
 }
 
@@ -84,10 +126,13 @@
     padding: 60px 0;
   }
   .stats-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 40px;
   }
   .stat-number {
-    font-size: 40px;
+    font-size: 42px;
+  }
+  .stat-suffix {
+    font-size: 26px;
   }
 }

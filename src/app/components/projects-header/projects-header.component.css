@@ -6,7 +6,7 @@
 
 .projects-intro {
   background-color: #ffff;
-  padding: 100px 0 80px;
+  padding: 160px 0 80px;
   overflow: hidden;
   opacity: 0;
   transform: translateY(24px);
@@ -40,10 +40,11 @@
 .intro-eyebrow {
   font-family: var(--font-body);
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 4px;
   text-transform: uppercase;
   color: #a08050;
+  margin-top: 12px;
   margin-bottom: 20px;
 }
 
@@ -223,6 +224,15 @@
   transform: scale(1.2);
 }
 
+.strip-disclaimer {
+  text-align: center;
+  font-size: 10.5px;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.03em;
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
 /* ===========================
    RESPONSIVE
    =========================== */
@@ -249,7 +259,7 @@
   }
 
   .projects-intro {
-    padding: 70px 0 60px;
+    padding: 140px 0 60px;
   }
 
   .intro-headline {
@@ -267,7 +277,12 @@
 
 @media (max-width: 767px) {
   .projects-intro {
-    padding: 50px 0 40px;
+    padding: 120px 0 40px;
+  }
+
+  .intro-eyebrow {
+    margin-top: 8px;
+    margin-bottom: 16px;
   }
 
   .intro-container {
@@ -302,6 +317,10 @@
 }
 
 @media (max-width: 480px) {
+  .projects-intro {
+    padding-top: 112px;
+  }
+
   .visual-strip {
     grid-template-columns: 1fr;
     height: auto;

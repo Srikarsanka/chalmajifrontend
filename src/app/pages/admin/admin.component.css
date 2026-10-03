@@ -1608,3 +1608,319 @@
 .zoom-actions {
   margin-top: 16px;
 }
+
+/* ==========================================================================
+   TAB 4: STATS & MILESTONES STYLES
+   ========================================================================== */
+.stats-admin-view {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.stats-admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  background: #131926;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 24px 28px;
+  border-radius: 12px;
+}
+
+.stats-title-block .stats-kicker {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--primary, #EC1C24);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.stats-title-block h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 26px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 6px;
+  letter-spacing: -0.01em;
+}
+
+.stats-title-block .stats-desc {
+  font-size: 13px;
+  color: #94a3b8;
+  max-width: 680px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Live Preview Panel */
+.stats-preview-wrapper {
+  background: radial-gradient(circle at top, #0f2b3e 0%, #071a26 100%);
+  border: 1px solid rgba(197, 118, 66, 0.35);
+  border-radius: 14px;
+  padding: 24px 30px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.preview-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #C57642;
+  font-weight: 600;
+  margin-bottom: 20px;
+  background: rgba(197, 118, 66, 0.12);
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(197, 118, 66, 0.25);
+}
+
+.preview-badge .badge-dot {
+  width: 7px;
+  height: 7px;
+  background: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #10b981;
+  display: inline-block;
+}
+
+.preview-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.preview-stat-card {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 24px 16px;
+  transition: all 0.3s ease;
+}
+
+.preview-stat-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.preview-num {
+  font-size: 42px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+  font-family: var(--font-body, 'Inter', sans-serif);
+}
+
+.preview-suffix {
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--primary, #EC1C24);
+  white-space: pre;
+}
+
+.preview-divider {
+  width: 32px;
+  height: 1px;
+  background: rgba(197, 118, 66, 0.5);
+  margin: 12px auto;
+}
+
+.preview-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 400;
+}
+
+.preview-note {
+  margin-top: 10px;
+  font-size: 11px;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.08);
+  padding: 4px 8px;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+/* Config Cards Grid */
+.stats-form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.stat-config-card {
+  background: #131926;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card-header-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.card-header-row .card-icon {
+  font-size: 26px;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.card-headings h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 3px;
+}
+
+.card-headings p {
+  font-size: 12px;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Auto-calc toggle box */
+.config-toggle-box {
+  background: #0d121c;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+.toggle-switch-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle-switch-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary, #EC1C24);
+  cursor: pointer;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.toggle-text strong {
+  display: block;
+  font-size: 13px;
+  color: #e2e8f0;
+  font-weight: 600;
+}
+
+.toggle-text small {
+  display: block;
+  font-size: 11px;
+  color: #94a3b8;
+  margin-top: 2px;
+  line-height: 1.4;
+}
+
+.card-inputs-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card-inputs-grid .form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.card-inputs-grid .form-field label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #cbd5e1;
+  font-weight: 600;
+}
+
+.card-inputs-grid .form-field input {
+  padding: 10px 14px;
+  background: #0d121c;
+  border: 1px solid #2d3748;
+  border-radius: 6px;
+  color: #ffffff;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.card-inputs-grid .form-field input:focus {
+  outline: none;
+  border-color: #C57642;
+  box-shadow: 0 0 0 2px rgba(197, 118, 66, 0.15);
+}
+
+.field-hint {
+  font-size: 11px;
+  color: #94a3b8;
+  line-height: 1.4;
+}
+
+.field-hint strong {
+  color: #38bdf8;
+}
+
+/* Bottom Save Row */
+.stats-bottom-save-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  background: #131926;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 18px 24px;
+  border-radius: 12px;
+}
+
+.save-bar-info .save-success-msg {
+  color: #10b981;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.save-bar-info .save-status-msg {
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+.save-stats-btn {
+  padding: 11px 24px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .stats-form-grid,
+  .preview-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

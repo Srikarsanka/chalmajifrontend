@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { SeoService } from '../../services/seo.service';
 
 export interface JourneyMilestone {
   era: string;
@@ -97,8 +98,8 @@ export class AboutComponent implements OnInit, AfterViewInit, OnDestroy {
       location: 'Visakhapatnam',
       type: 'Sacred Landscape & Luxury Living',
       details: 'Plotted Community',
-      image: 'assets/images/ayodhara/entrance-gate.jpg',
-      fallbackImage: 'assets/images/ayodhara/entrance-gate.jpg',
+      image: 'https://res.cloudinary.com/djha4r2ys/image/upload/v1789992275/2a170a8f-05c9-4c7c-9490-15de16b3bf12.png',
+      fallbackImage: 'https://res.cloudinary.com/djha4r2ys/image/upload/v1789992275/2a170a8f-05c9-4c7c-9490-15de16b3bf12.png',
       link: '/projects/ayodhara-plotting'
     },
     {
@@ -157,10 +158,43 @@ export class AboutComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private el: ElementRef,
     private cdr: ChangeDetectorRef,
+    private seoService: SeoService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) { }
 
   ngOnInit(): void {
+    this.seoService.updateSeo({
+      title: 'About Us | 35+ Years of Architectural Excellence | Chalamaji Infra',
+      description: 'Founded by Late Sri Mattapalli Chalamayya, Chalamaji Infra Projects has delivered over 25 Lakh+ sft of distinguished residential, commercial, healthcare, and plotted developments across Visakhapatnam and coastal AP.',
+      keywords: 'about Chalamaji Infra, Mattapalli Chalamayya, real estate history Visakhapatnam, quality construction Vizag, infrastructure developer Andhra Pradesh, trusted builders Vizag',
+      canonicalUrl: 'https://chalamaji.com/about',
+      ogImage: 'https://res.cloudinary.com/djha4r2ys/image/upload/v1791024228/40a10a2f-fd5e-4c7a-b566-fc05f259df78.png',
+      ogType: 'website',
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@type': 'AboutPage',
+        'name': 'About Chalamaji Infra Projects',
+        'url': 'https://chalamaji.com/about',
+        'description': 'History, vision, leadership, and architectural milestones of Chalamaji Infra Projects Pvt Ltd.',
+        'mainEntity': {
+          '@type': 'Organization',
+          'name': 'Chalamaji Infra Projects Pvt Ltd',
+          'founder': {
+            '@type': 'Person',
+            'name': 'Late Sri Mattapalli Chalamayya'
+          },
+          'address': {
+            '@type': 'PostalAddress',
+            'streetAddress': 'Door No. 7-5-18, Plot No. 37, Pandurangapuram',
+            'addressLocality': 'Visakhapatnam',
+            'addressRegion': 'Andhra Pradesh',
+            'postalCode': '530003',
+            'addressCountry': 'IN'
+          }
+        }
+      }
+    });
+
     if (isPlatformBrowser(this.platformId)) {
       window.scrollTo(0, 0);
     }

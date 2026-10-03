@@ -47,9 +47,12 @@
         <div class="founder-portrait-col">
           <div class="portrait-card">
             <div class="portrait-frame">
-              <img src="assets/images/about/founder-chalamayya.jpg"
+              <img
+                src="https://res.cloudinary.com/djha4r2ys/image/upload/v1791026396/5ac30107-9fa2-4970-94cd-04a65232ed48.png"
                 (error)="onImageError($event, 'assets/images/about/founder-challamayya.jpg')"
-                alt="Late Sri Mattapalli Chalamayya" class="founder-portrait-img" />
+                alt="Late Sri Mattapalli Chalamayya - Founder & Chairman, Chalamaji Infra Projects Pvt. Ltd." 
+                loading="lazy"
+                class="founder-portrait-img" />
             </div>
             <div class="founder-quote-box">
               <span class="quote-mark">“</span>
@@ -169,8 +172,11 @@
       <div class="projects-grid">
         <div class="project-item-card" *ngFor="let p of featuredProjects">
           <div class="project-thumb-box">
-            <img [src]="p.image" (error)="onImageError($event, p.fallbackImage)" [alt]="p.name"
-              class="project-thumb-img" />
+            <img [src]="p.image" (error)="onImageError($event, p.fallbackImage)" 
+                 [alt]="p.name + ' - ' + (p.type || 'Infrastructure Project') + (p.location ? ' in ' + p.location : '')"
+                 loading="lazy"
+                 class="project-thumb-img" />
+            <span class="project-illustration-tag">*For illustration purpose only</span>
           </div>
           <div class="project-item-footer">
             <div class="project-details-meta">
@@ -181,12 +187,14 @@
                 <span *ngIf="p.details"> &nbsp;|&nbsp; {{ p.details }}</span>
               </p>
             </div>
-            <a [routerLink]="p.link" class="project-arrow-btn" [attr.aria-label]="p.name">
+            <a [routerLink]="p.link" class="project-arrow-btn" [attr.aria-label]="'Explore details for ' + p.name">
               <i class="fa-solid fa-arrow-right"></i>
             </a>
           </div>
         </div>
       </div>
+      <p class="about-projects-disclaimer">*Images and perspectives are artist's impressions for illustration purpose
+        only.</p>
     </div>
   </section>
 
@@ -211,7 +219,10 @@
       <div class="directors-grid-three">
         <div class="director-profile-card" *ngFor="let director of directors">
           <div class="director-photo-container">
-            <img *ngIf="director.image" [src]="director.image" [alt]="director.name" class="director-img" />
+            <img *ngIf="director.image" [src]="director.image" 
+                 [alt]="director.name + ' - ' + director.designation + ' at Chalamaji Infra Projects'" 
+                 loading="lazy"
+                 class="director-img" />
             <!-- Clean luxury monogram placeholder awaiting user's provided photos -->
             <div *ngIf="!director.image" class="director-placeholder-monogram">
               <div class="monogram-circle">

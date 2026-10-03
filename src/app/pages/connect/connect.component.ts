@@ -3,6 +3,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { InquiryService, ConnectInquiryPayload } from '../../services/inquiry.service';
+import { SeoService } from '../../services/seo.service';
 
 export interface FaqItem {
   question: string;
@@ -64,10 +65,47 @@ export class ConnectComponent implements OnInit {
   constructor(
     private cdr: ChangeDetectorRef,
     private inquiryService: InquiryService,
+    private seoService: SeoService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit(): void {
+    this.seoService.updateSeo({
+      title: 'Connect & Inquire | Pandurangapuram Headquarters | Chalamaji Infra',
+      description: 'Schedule a private site visit or consult with Chalamaji Infra\'s advisory desk at our Pandurangapuram headquarters, Visakhapatnam. Connect via phone, WhatsApp, or consultation form.',
+      keywords: 'contact Chalamaji Infra, Chalamaji office Pandurangapuram, site visit booking Vizag, real estate enquiry Visakhapatnam, buy property Vizag, Chalamaji address',
+      canonicalUrl: 'https://chalamaji.com/connect',
+      ogImage: 'https://res.cloudinary.com/djha4r2ys/image/upload/v1791024228/40a10a2f-fd5e-4c7a-b566-fc05f259df78.png',
+      ogType: 'website',
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@type': 'ContactPage',
+        'name': 'Connect with Chalamaji Infra Projects',
+        'url': 'https://chalamaji.com/connect',
+        'description': 'Headquarters and private client advisory desk for Chalamaji Infra Projects in Pandurangapuram, Visakhapatnam.',
+        'mainEntity': {
+          '@type': 'RealEstateAgent',
+          'name': 'Chalamaji Infra Projects Pvt Ltd',
+          'telephone': '+919257925788',
+          'email': 'info@chalamaji.com',
+          'address': {
+            '@type': 'PostalAddress',
+            'streetAddress': 'Door No. 7-5-18, Plot No. 37, Pandurangapuram',
+            'addressLocality': 'Visakhapatnam',
+            'addressRegion': 'Andhra Pradesh',
+            'postalCode': '530003',
+            'addressCountry': 'IN'
+          },
+          'geo': {
+            '@type': 'GeoCoordinates',
+            'latitude': 17.7159245,
+            'longitude': 83.3205227
+          },
+          'hasMap': 'https://maps.app.goo.gl/91M6n4AgEXM9zENi6'
+        }
+      }
+    });
+
     if (isPlatformBrowser(this.platformId)) {
       window.scrollTo(0, 0);
     }
@@ -137,10 +175,18 @@ export class ConnectComponent implements OnInit {
         console.error('Failed to submit connect form:', err);
         this.isSubmitting = false;
         this.isSubmitted = false;
-        this.submitError = 'We were unable to transmit your inquiry. Please check your network connection or reach our senior desk directly at +91 85999 36363.';
+        this.submitError = 'We were unable to transmit your inquiry. Please check your network connection or reach our senior desk directly at +91 92579 25788.';
         this.cdr.detectChanges();
       }
     });
+  }
+
+  getDirectWhatsAppUrl(): string {
+    return this.inquiryService.getDirectWhatsAppUrl();
+  }
+
+  getSuccessWhatsAppUrl(): string {
+    return this.inquiryService.getDirectWhatsAppUrl({ referenceCode: this.referenceCode });
   }
 
   resetForm(): void {

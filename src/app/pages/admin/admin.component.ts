@@ -3,6 +3,8 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ProjectService, Project } from '../../services/project.service';
+import { StatsService, CompanyStatsData } from '../../services/stats.service';
+import { SeoService } from '../../services/seo.service';
 
 @Component({
   selector: 'app-admin',
@@ -20,7 +22,7 @@ export class AdminComponent implements OnInit {
   private readonly STORAGE_KEY = 'chalmaji_admin_auth_v1';
 
   // Navigation & Tabs
-  activeTab: 'projects' | 'plots' | 'inquiries' = 'projects';
+  activeTab: 'projects' | 'plots' | 'inquiries' | 'stats' = 'projects';
 
   // Projects State
   projects: Project[] = [];
@@ -98,13 +100,34 @@ export class AdminComponent implements OnInit {
     'Rooftop Lounge'
   ];
 
+  // Stats Management State
+  statsForm: CompanyStatsData = {
+    yearsOfExperience: 35,
+    foundingYear: 1991,
+    autoCalculateYears: true,
+    experienceSuffix: '+',
+    experienceLabel: 'Years of Experience',
+    projectsDelivered: 50,
+    projectsSuffix: '+',
+    projectsLabel: 'Projects Delivered',
+    sftDeveloped: 25,
+    sftSuffix: ' Lakh+',
+    sftLabel: 'Sft Developed'
+  };
+  isSavingStats = false;
+  statsSaveSuccess = false;
+
   constructor(
     private projectService: ProjectService,
+    private statsService: StatsService,
+    private seoService: SeoService,
     private cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit(): void {
+    this.seoService.setNoIndex('Admin Management Portal | Chalamaji Infra');
+
     if (isPlatformBrowser(this.platformId)) {
       const stored = localStorage.getItem(this.STORAGE_KEY);
       if (stored === 'true') {
@@ -141,6 +164,7 @@ export class AdminComponent implements OnInit {
   loadInitialData(): void {
     this.loadProjects();
     this.loadInquiries();
+    this.loadStats();
   }
 
   // ================= PROJECTS =================
@@ -525,5 +549,47 @@ export class AdminComponent implements OnInit {
       this.toast = null;
       this.cdr.detectChanges();
     }, 4000);
+  }
+
+  // ================= COMPANY STATS MANAGEMENT =================
+
+  loadStats(): void {
+    this.statsForm = { ...this.statsService.currentStats };
+    this.statsService.stats$.subscribe((data) => {
+      if (!this.isSavingStats) {
+        this.statsForm = { ...data };
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  getEffectiveYearsPreview(): number {
+    return this.statsService.getEffectiveYears(this.statsForm);
+  }
+
+  getCurrentYear(): number {
+    return new Date().getFullYear();
+  }
+
+  saveCompanyStats(): void {
+    this.isSavingStats = true;
+    this.statsSaveSuccess = false;
+    this.statsService.updateStats(this.statsForm).subscribe({
+      next: (updated) => {
+        this.isSavingStats = false;
+        this.statsSaveSuccess = true;
+        this.showToast('Company milestones and stats updated successfully!', 'success');
+        this.cdr.detectChanges();
+        setTimeout(() => {
+          this.statsSaveSuccess = false;
+          this.cdr.detectChanges();
+        }, 4000);
+      },
+      error: (err) => {
+        this.isSavingStats = false;
+        this.showToast('Stats saved locally. Backend will sync when connected.', 'info');
+        this.cdr.detectChanges();
+      }
+    });
   }
 }

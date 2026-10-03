@@ -74,50 +74,62 @@ export class InquiryService {
   }
 
   /**
-   * Universal WhatsApp redirect helper.
-   * Routes Ayodhara inquiries to 88858 88388 (918885888388)
-   * Routes all other inquiries to 92579 25788 (919257925788)
+   * Cleans phone number by removing +, spaces, brackets, and hyphens.
+   * Ensures the standard country code (91) is present.
+   */
+  cleanPhoneNumber(phone: string): string {
+    const digits = (phone || '').replace(/[^0-9]/g, '');
+    if (!digits) return '919257925788';
+    return digits.startsWith('91') ? digits : `91${digits}`;
+  }
+
+  /**
+   * Generates the official direct WhatsApp click-to-chat URL:
+   * https://wa.me/<PHONE_NUMBER>?text=<ENCODED_MESSAGE>
+   */
+  getDirectWhatsAppUrl(options?: {
+    projectName?: string;
+    customMessage?: string;
+    isAyodhara?: boolean;
+    referenceCode?: string;
+  }): string {
+    const isAyodhara = options?.isAyodhara ||
+      (options?.projectName && options.projectName.toLowerCase().includes('ayodhara'));
+
+    const rawNumber = isAyodhara
+      ? (environment.ayodharaWhatsappNumber || '918885888388')
+      : (environment.whatsappBusinessNumber || '919257925788');
+
+    const cleanPhone = this.cleanPhoneNumber(rawNumber);
+
+    let messageText = '';
+    if (options?.customMessage) {
+      messageText = options.customMessage;
+    } else if (options?.referenceCode) {
+      messageText = `Hi, I have submitted inquiry ${options.referenceCode} on your website. I would like to know more about your projects.`;
+    } else if (options?.projectName && options.projectName !== 'General' && options.projectName !== 'General Inquiry') {
+      messageText = `Hi, I am interested in ${options.projectName}. I would like to know more about this project.`;
+    } else {
+      messageText = 'Hi, I would like to know more about your projects.';
+    }
+
+    return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(messageText)}`;
+  }
+
+  /**
+   * Universal WhatsApp direct click-to-chat helper.
+   * Uses WhatsApp official direct click-to-chat URL:
+   * https://wa.me/<PHONE_NUMBER>?text=<ENCODED_MESSAGE>
    */
   redirectToWhatsApp(payload: WhatsAppRedirectPayload): void {
     if (typeof window === 'undefined') return;
 
-    // Check if the inquiry is for Ayodhara
-    const isAyodhara = (payload.projectName && payload.projectName.toLowerCase().includes('ayodhara')) ||
-                       (payload.sourcePage && payload.sourcePage.toLowerCase().includes('ayodhara'));
+    const waUrl = this.getDirectWhatsAppUrl({
+      projectName: payload.projectName,
+      customMessage: payload.message,
+      referenceCode: payload.referenceCode
+    });
 
-    const phoneNum = isAyodhara
-      ? (environment.ayodharaWhatsappNumber || '918885888388')
-      : (environment.whatsappBusinessNumber || '919257925788');
-
-    const lines: string[] = ['Hello Chalamaji Infra,', ''];
-
-    if (payload.referenceCode) {
-      lines.push('I have submitted a consultation dossier on your website:');
-      lines.push(`• Reference: ${payload.referenceCode}`);
-    } else if (payload.projectName) {
-      lines.push(`I have submitted an inquiry for ${payload.projectName} on your website:`);
-    } else {
-      lines.push('I have submitted an inquiry on your website:');
-    }
-
-    if (payload.name) lines.push(`• Name: ${payload.name}`);
-    if (payload.phone) lines.push(`• Phone: ${payload.phone}`);
-    if (payload.email) lines.push(`• Email: ${payload.email}`);
-    if (payload.projectName && payload.referenceCode) lines.push(`• Project: ${payload.projectName}`);
-    if (payload.inquiryType) lines.push(`• Inquiry Type: ${payload.inquiryType}`);
-    if (payload.categoryTrack) lines.push(`• Track / Scope: ${payload.categoryTrack}`);
-    if (payload.plotNo) lines.push(`• Plot No: Plot #${payload.plotNo}`);
-    if (payload.extentSqYds) lines.push(`• Site Extent: ${payload.extentSqYds} Sq.Yds`);
-    if (payload.preferredFacing) lines.push(`• Preferred Facing: ${payload.preferredFacing}`);
-    if (payload.siteVisitDate) lines.push(`• Preferred Visit Date: ${payload.siteVisitDate}`);
-    if (payload.message) lines.push(`• Message / Notes: ${payload.message}`);
-    if (payload.remarks) lines.push(`• Remarks: ${payload.remarks}`);
-
-    lines.push('');
-    lines.push('Please connect with me regarding this request.');
-
-    const encodedText = encodeURIComponent(lines.join('\n'));
-    const waUrl = `https://wa.me/${phoneNum}?text=${encodedText}`;
-    window.open(waUrl, '_blank');
+    window.open(waUrl, '_blank', 'noopener,noreferrer');
   }
 }

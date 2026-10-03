@@ -498,9 +498,39 @@
 }
 
 .project-thumb-box {
+  position: relative;
   aspect-ratio: 4 / 3;
   overflow: hidden;
   background: #F7F3EE;
+}
+
+.project-illustration-tag {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(10, 15, 24, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  padding: 2px 7px;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.about-projects-disclaimer {
+  text-align: center;
+  font-size: 11px;
+  color: #778090;
+  letter-spacing: 0.02em;
+  margin-top: 24px;
+  margin-bottom: 0;
 }
 
 .project-thumb-img {
@@ -1030,13 +1060,120 @@
 }
 
 @media (max-width: 768px) {
+  /* ========================================================
+     ABOUT HERO SECTION - MOBILE MINIMAL REDESIGN
+     ======================================================== */
   .about-hero-section {
-    min-height: 520px;
-    padding: 120px 0 60px;
+    min-height: auto;
+    padding: 115px 0 44px;
+    background-image: none !important;
+    background-color: #FCFBF7 !important;
+    background: linear-gradient(180deg, #FDFCF9 0%, #F5F1E8 100%) !important;
+    border-bottom: 1px solid #ECE7E0;
+    display: block;
+  }
+
+  .about-hero-section .container {
+    padding: 0 20px;
+  }
+
+  .hero-inner-wrapper {
+    display: block;
+    width: 100%;
+  }
+
+  .hero-content {
+    max-width: 100%;
+    transform: none;
+    text-align: left;
+  }
+
+  .hero-tag-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    padding: 4px 12px;
+    background: rgba(139, 0, 21, 0.05);
+    border: 1px solid rgba(139, 0, 21, 0.12);
+    border-radius: 100px;
+  }
+
+  .hero-tag {
+    font-size: 10.5px;
+    letter-spacing: 2px;
+    font-weight: 700;
+    color: #8B0015;
+    margin: 0;
+  }
+
+  .hero-tag-line {
+    display: none;
   }
 
   .hero-title {
-    font-size: 36px;
+    font-size: clamp(28px, 7.5vw, 34px);
+    line-height: 1.18;
+    font-weight: 800;
+    color: #071B49;
+    letter-spacing: -0.4px;
+    margin-bottom: 14px;
+  }
+
+  .hero-title .text-maroon {
+    color: #8B0015;
+  }
+
+  .hero-description {
+    font-size: 13.5px;
+    line-height: 1.68;
+    color: #555E6D;
+    margin-bottom: 22px;
+    max-width: 100%;
+    font-weight: 400;
+  }
+
+  .hero-buttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+    width: 100%;
+  }
+
+  .hero-buttons .btn-primary-maroon {
+    padding: 11px 22px;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 100px;
+    box-shadow: 0 4px 12px rgba(139, 0, 21, 0.2);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .hero-buttons .btn-secondary-outline {
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 100px;
+    border: 1.5px solid #8B0015;
+    color: #8B0015 !important;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .hero-timeline-tag {
+    font-size: 10px;
+    letter-spacing: 1.8px;
+    font-weight: 600;
+    color: #8C827A;
+    padding-top: 14px;
+    border-top: 1px solid #ECE7E0;
+    width: 100%;
+    display: block;
   }
 
   .section-header-split {
@@ -1105,13 +1242,29 @@
 }
 
 @media (max-width: 480px) {
-  .hero-buttons {
-    flex-direction: column;
-    align-items: stretch;
+  .section-title {
+    font-size: 26px;
   }
 
   .hero-title {
-    font-size: 32px;
+    font-size: 27px;
+    line-height: 1.2;
+  }
+
+  .hero-buttons {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .hero-buttons .btn-primary-maroon {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+
+  .hero-buttons .btn-secondary-outline {
+    flex: 1 1 auto;
+    justify-content: center;
   }
 
   .directors-grid-three {
@@ -1120,5 +1273,13 @@
 
   .trust-pillar-item {
     flex: 1 1 100%;
+  }
+
+  .project-thumb-box {
+    height: 220px;
+  }
+
+  .contact-headline {
+    font-size: 26px;
   }
 }

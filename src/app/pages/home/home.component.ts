@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { SeoService } from '../../services/seo.service';
 import { HeroComponent } from '../../components/hero/hero.component';
 import { VisionBannerComponent } from '../../components/vision-banner/vision-banner.component';
 import { AboutSectionComponent } from '../../components/about-section/about-section.component';
@@ -64,4 +65,43 @@ import { ConnectSectionComponent } from '../../components/connect-section/connec
     }
   `]
 })
-export class HomeComponent { }
+export class HomeComponent implements OnInit {
+  constructor(private seoService: SeoService) {}
+
+  ngOnInit(): void {
+    this.seoService.updateSeo({
+      title: 'Chalamaji Infra Projects | Luxury Real Estate & Plotted Developments in Visakhapatnam',
+      description: 'Chalamaji Infra Projects is a premier real estate developer in Visakhapatnam with 35+ years of excellence. Explore coastal luxury residences, gated plotted sanctuaries including Ayodhara, and landmark communities across Andhra Pradesh.',
+      keywords: 'Chalamaji Infra, Chalamaji Infra Projects, real estate Visakhapatnam, Vizag luxury apartments, Ayodhara Vizianagaram, Chalamaji Signature, residential plots Vizag, construction company Visakhapatnam, AP RERA registered builders',
+      canonicalUrl: 'https://chalamaji.com/',
+      ogImage: 'https://res.cloudinary.com/djha4r2ys/image/upload/v1791024228/40a10a2f-fd5e-4c7a-b566-fc05f259df78.png',
+      ogType: 'website',
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@type': 'RealEstateAgent',
+        'name': 'Chalamaji Infra Projects Pvt Ltd',
+        'alternateName': 'Chalamaji Infra',
+        'url': 'https://chalamaji.com/',
+        'logo': 'https://res.cloudinary.com/djha4r2ys/image/upload/v1791024228/40a10a2f-fd5e-4c7a-b566-fc05f259df78.png',
+        'image': 'https://res.cloudinary.com/djha4r2ys/image/upload/v1791024228/40a10a2f-fd5e-4c7a-b566-fc05f259df78.png',
+        'description': 'Premier real estate developer in Visakhapatnam with 35+ years of architectural excellence.',
+        'telephone': '+919257925788',
+        'email': 'info@chalamaji.com',
+        'address': {
+          '@type': 'PostalAddress',
+          'streetAddress': 'Door No. 7-5-18, Plot No. 37, Pandurangapuram',
+          'addressLocality': 'Visakhapatnam',
+          'addressRegion': 'Andhra Pradesh',
+          'postalCode': '530003',
+          'addressCountry': 'IN'
+        },
+        'geo': {
+          '@type': 'GeoCoordinates',
+          'latitude': 17.7159245,
+          'longitude': 83.3205227
+        },
+        'hasMap': 'https://maps.app.goo.gl/91M6n4AgEXM9zENi6'
+      }
+    });
+  }
+}
