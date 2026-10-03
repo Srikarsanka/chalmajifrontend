@@ -89,9 +89,9 @@
 }
 
 .testimonial-text {
-  font-family: var(--font-display);
-  font-size: 20px;
-  font-style: italic;
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-style: normal;
   color: var(--dark);
   line-height: 1.8;
   font-weight: 400;
@@ -127,9 +127,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .author-name {

@@ -1,6 +1,6 @@
 /* ==========================================
    CHALAMAJI INFRA - GLOBAL STYLES
-   Typography: Cormorant Garamond + DM Sans
+   Typography: Playfair Display (Headings) + Inter (Body/UI)
    Colors: myscape.in palette
    ========================================== */
 
@@ -13,10 +13,16 @@
   --light: #ffffff;
   --grey: #8a8a8a;
   --gold: #C57642;
+  --maroon: #8B0015;
+  --border-color: #E8E1D8;
 
   /* ---- TYPOGRAPHY ---- */
-  --font-display: 'Cormorant Garamond', 'Georgia', serif;
-  --font-body: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-tech: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'Inter', 'SF Mono', 'Cascadia Code', monospace;
 
   /* ---- FONT SIZES (Desktop) ---- */
   --fs-hero: 72px;
@@ -48,42 +54,46 @@ html, body {
 }
 
 body {
-  line-height: 1.8;
+  line-height: 1.7;
   font-size: var(--fs-body);
-  font-weight: 300;
+  font-weight: 400;
   font-family: var(--font-body);
   color: var(--dark);
   background-color: #fff;
   overflow-x: hidden;
-  letter-spacing: 0.2px;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   transition: var(--transition);
 }
 
 h1, h2, h3, h4, h5, h6 {
   color: var(--dark);
-  font-weight: 400;
-  font-family: var(--font-display);
-  text-transform: uppercase;
+  font-weight: 700;
+  font-family: var(--font-body);
+  letter-spacing: -0.02em;
 }
 
 h1 {
   font-size: var(--fs-hero);
-  font-weight: 300;
+  font-weight: 800;
   line-height: 1.05;
-  letter-spacing: 8px;
+  letter-spacing: -0.03em;
 }
 
 h2 {
   font-size: var(--fs-h2);
+  font-weight: 700;
   line-height: 1.2;
-  letter-spacing: 4px;
+  letter-spacing: -0.02em;
 }
 
 h3 {
   font-size: var(--fs-h3);
-  font-weight: 500;
+  font-weight: 700;
   line-height: 1.3;
-  letter-spacing: 3px;
+  letter-spacing: -0.01em;
 }
 
 a {
@@ -172,27 +182,26 @@ img {
 .section-title .main-title {
   font-size: var(--fs-h2);
   line-height: 1.2;
-  font-weight: 300;
-  text-transform: uppercase;
-  font-style: italic;
-  font-family: var(--font-display);
-  letter-spacing: 4px;
+  font-weight: 700;
+  font-style: normal;
+  font-family: var(--font-body);
+  letter-spacing: -0.02em;
 }
 
 .section-title .main-title span {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-weight: 300;
+  font-family: var(--font-body);
+  font-style: normal;
+  font-weight: 700;
 }
 
 .section-title .sub-title {
-  font-family: var(--font-display);
-  font-size: var(--fs-subtitle);
-  font-weight: 300;
-  font-style: italic;
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  text-transform: uppercase;
   color: var(--primary);
   margin-bottom: 8px;
-  letter-spacing: 1px;
+  letter-spacing: 0.12em;
 }
 
 /* ---- THEME BUTTON ---- */
@@ -201,7 +210,7 @@ img {
   background-color: transparent;
   border: 1.2px solid #fff;
   padding: 12px 50px 12px 40px;
-  font-weight: 400;
+  font-weight: 500;
   font-size: var(--fs-small);
   display: inline-flex;
   align-items: center;
@@ -209,7 +218,7 @@ img {
   position: relative;
   overflow: hidden;
   font-family: var(--font-body);
-  letter-spacing: 2px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   cursor: pointer;
   transition: background-color 300ms ease-out;

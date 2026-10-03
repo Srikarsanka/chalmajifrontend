@@ -24,27 +24,25 @@ export class ProjectsHeaderComponent implements OnInit, OnDestroy {
 
   filters = [
     { label: 'All', value: 'all' },
-    { label: 'Plots', value: 'plotting' },
-    { label: 'Apartments', value: 'apartments' },
-    { label: 'Villas', value: 'villas' },
-    { label: 'Commercial', value: 'commercial' }
+    { label: 'Residential', value: 'residential' },
+    { label: 'Plotting', value: 'plotting' }
   ];
 
   images: HeaderImage[] = [
     {
-      src: '/assets/images/projects-header/plots.jpg',
-      alt: 'Plotted residential community with tree-lined roads at golden hour',
-      label: 'Plotted Communities'
+      src: '/assets/images/projects-header/apartment.jpg',
+      alt: 'Modern residential apartments and luxury homes',
+      label: 'Residential'
     },
     {
-      src: '/assets/images/projects-header/apartment.jpg',
-      alt: 'Modern apartment facade with wood-and-stone cladding and hanging plants',
-      label: 'Contemporary Apartments'
+      src: '/assets/images/projects-header/plots.jpg',
+      alt: 'Plotted residential community with tree-lined roads at golden hour',
+      label: 'Plotting'
     },
     {
       src: '/assets/images/projects-header/villa.jpg',
-      alt: 'Standalone luxury villa with private garden and evening landscape lighting',
-      label: 'Standalone Villas'
+      alt: 'Standalone luxury residential villas with private gardens',
+      label: 'Luxury Residential'
     }
   ];
 

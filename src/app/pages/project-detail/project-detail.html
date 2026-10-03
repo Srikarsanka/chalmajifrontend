@@ -7,61 +7,31 @@
     <!-- Background Media with Parallax/Scale -->
     <div class="hero-media-wrapper">
       <img
-        *ngIf="project.mainImage"
-        [src]="project.mainImage"
+        *ngIf="project.mainImage || project.carouselImage"
+        [src]="project.mainImage || project.carouselImage"
         [alt]="project.name"
         class="hero-media-img" />
-      <div *ngIf="!project.mainImage" class="hero-media-fallback"></div>
+      <div *ngIf="!project.mainImage && !project.carouselImage" class="hero-media-fallback"></div>
       <div class="hero-vignette-overlay"></div>
     </div>
 
     <!-- Hero Content Container -->
     <div class="hero-inner-container">
-      <!-- Breadcrumb -->
-      <nav class="luxe-breadcrumb" aria-label="Breadcrumb">
-        <a routerLink="/">Home</a>
-        <span class="bc-sep">/</span>
-        <a routerLink="/projects">Portfolio</a>
-        <span class="bc-sep">/</span>
-        <span class="bc-active">{{ project.name }}</span>
-      </nav>
-
-      <!-- Hero Header Stack -->
+      <!-- Hero Header Stack: Simplified with Name, Location, and Download Brochure -->
       <div class="hero-header-stack">
-        <div class="hero-meta-strip">
-          <span class="luxe-pill status-pill" [class.completed]="project.status === 'Completed'">
-            <span class="pulse-dot" *ngIf="project.status !== 'Completed'"></span>
-            {{ project.status | uppercase }}
-          </span>
-
-          <span class="luxe-pill type-pill">
-            {{ project.type }}
-          </span>
-
-          <span class="luxe-pill rera-pill" *ngIf="project.reraNumber">
-            <i class="fa-solid fa-shield-halved"></i>
-            RERA REGISTERED
-          </span>
-        </div>
-
-        <h1 class="hero-project-title">{{ project.name }}</h1>
+        <h1 class="hero-project-title">{{ cleanProjectName }}</h1>
 
         <p class="hero-location-row">
           <i class="fa-solid fa-location-dot"></i>
           <span>{{ project.location }}</span>
         </p>
 
-        <!-- Primary Hero Actions -->
+        <!-- Primary Hero Action: Download Brochure -->
         <div class="hero-cta-group">
-          <button (click)="scrollToEnquiry()" class="hero-primary-btn">
-            <span>Schedule Private Tour</span>
-            <i class="fa-solid fa-arrow-right"></i>
-          </button>
-
           <button
             (click)="openBrochureModal()"
-            class="hero-secondary-btn">
-            <i class="fa-regular fa-file-pdf"></i>
+            class="hero-primary-btn">
+            <i class="fa-solid fa-file-arrow-down"></i>
             <span>Download Brochure</span>
           </button>
         </div>
@@ -335,9 +305,9 @@
           <div class="concierge-box">
             <div class="concierge-label">DIRECT PROPERTY DESK</div>
             <div class="concierge-links">
-              <a href="tel:+918599936363" class="concierge-phone">
+              <a [href]="'tel:' + projectPhoneRaw" class="concierge-phone">
                 <i class="fa-solid fa-phone"></i>
-                +91 85999 36363
+                {{ projectPhone }}
               </a>
               <a href="mailto:info@chalamaji.com" class="concierge-email">
                 <i class="fa-solid fa-envelope"></i>

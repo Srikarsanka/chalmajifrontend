@@ -55,12 +55,12 @@
 
 .center-text {
     text-align: center;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 0.9rem;
     letter-spacing: 2px;
     color: #333;
     text-transform: uppercase;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-family: var(--font-body);
     margin: 5px 0;
     opacity: 0;
 }
@@ -71,10 +71,9 @@
 
 .projname {
     text-align: center;
-    font-weight: 400;
+    font-weight: 600;
     font-size: 1.8rem;
-    font-style: italic;
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: var(--font-body);
     color: #333;
     margin: 5px 0;
     opacity: 0;
@@ -87,9 +86,10 @@
 .para {
     text-align: center;
     color: #fff;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-family: var(--font-body);
+    font-weight: 500;
     font-size: 0.95rem;
-    line-height: 1.5;
+    line-height: 1.6;
     max-width: 80%;
     margin-top: 20px;
     opacity: 0;
@@ -106,9 +106,10 @@
     border: 1px solid rgba(255, 255, 255, 0.6);
     color: #fff;
     padding: 10px 40px;
-    font-family: 'Playfair Display', Georgia, serif;
-    font-style: italic;
-    font-size: 1rem;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
     margin-top: 20px;
     cursor: pointer;
     transition: background 0.3s, color 0.3s, transform 0.3s;

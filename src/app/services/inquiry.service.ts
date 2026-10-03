@@ -41,6 +41,7 @@ export interface WhatsAppRedirectPayload {
   categoryTrack?: string;
   referenceCode?: string;
   message?: string;
+  sourcePage?: string;
 }
 
 export interface InquiryResponse {
@@ -74,13 +75,20 @@ export class InquiryService {
 
   /**
    * Universal WhatsApp redirect helper.
-   * Opens WhatsApp in a new tab addressed to 918599936363 with a pre-filled,
-   * formatted inquiry message.
+   * Routes Ayodhara inquiries to 88858 88388 (918885888388)
+   * Routes all other inquiries to 92579 25788 (919257925788)
    */
   redirectToWhatsApp(payload: WhatsAppRedirectPayload): void {
     if (typeof window === 'undefined') return;
 
-    const phoneNum = environment.whatsappBusinessNumber || '918599936363';
+    // Check if the inquiry is for Ayodhara
+    const isAyodhara = (payload.projectName && payload.projectName.toLowerCase().includes('ayodhara')) ||
+                       (payload.sourcePage && payload.sourcePage.toLowerCase().includes('ayodhara'));
+
+    const phoneNum = isAyodhara
+      ? (environment.ayodharaWhatsappNumber || '918885888388')
+      : (environment.whatsappBusinessNumber || '919257925788');
+
     const lines: string[] = ['Hello Chalamaji Infra,', ''];
 
     if (payload.referenceCode) {

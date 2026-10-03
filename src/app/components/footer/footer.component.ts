@@ -24,6 +24,6 @@ export class FooterComponent implements OnInit {
   }
 
   private checkRoute(url: string): void {
-    this.hideOnPage = url.includes('ayodhara');
+    this.hideOnPage = (url || '').startsWith('/admin');
   }
 }

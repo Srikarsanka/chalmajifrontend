@@ -27,7 +27,7 @@
 
   --font-serif: 'Playfair Display', Georgia, serif;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: 'IBM Plex Mono', monospace;
+  --font-mono: 'Inter', 'SF Mono', 'Cascadia Code', monospace;
 
   --transition-smooth: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
   --transition-bounce: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -502,8 +502,8 @@
   font-size: 19px;
   line-height: 1.7;
   color: #263238;
-  font-weight: 400;
-  font-style: italic;
+  font-weight: 500;
+  font-style: normal;
 }
 
 /* Compliance Trust Panel */

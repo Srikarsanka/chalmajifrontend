@@ -15,15 +15,13 @@ export const routes: Routes = [
   },
   {
     path: 'projects/ayodhara',
-    loadComponent: () => import('./pages/ayodhara/ayodhara.component').then(m => m.AyodharaComponent)
-  },
-  {
-    path: 'projects/ayodhara-plotting',
-    loadComponent: () => import('./pages/ayodhara/ayodhara.component').then(m => m.AyodharaComponent)
+    redirectTo: 'projects/ayodhara-plotting',
+    pathMatch: 'full'
   },
   {
     path: 'ayodhara',
-    loadComponent: () => import('./pages/ayodhara/ayodhara.component').then(m => m.AyodharaComponent)
+    redirectTo: 'projects/ayodhara-plotting',
+    pathMatch: 'full'
   },
   {
     path: 'projects/:id',
@@ -32,6 +30,10 @@ export const routes: Routes = [
   {
     path: 'connect',
     loadComponent: () => import('./pages/connect/connect.component').then(m => m.ConnectComponent)
+  },
+  {
+    path: 'admin',
+    loadComponent: () => import('./pages/admin/admin.component').then(m => m.AdminComponent)
   },
   {
     path: '**',

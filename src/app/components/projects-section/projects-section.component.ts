@@ -24,10 +24,8 @@ export class ProjectsSectionComponent implements OnInit {
 
   filters: FilterTab[] = [
     { label: 'All', value: 'all' },
-    { label: 'Apartments', value: 'apartments' },
-    { label: 'Villas', value: 'villas' },
-    { label: 'Plotting', value: 'plotting' },
-    { label: 'Residential', value: 'residential' }
+    { label: 'Residential', value: 'residential' },
+    { label: 'Plotting', value: 'plotting' }
   ];
 
   constructor(
@@ -70,6 +68,10 @@ export class ProjectsSectionComponent implements OnInit {
     this.activeFilter = value;
     if (value === 'all') {
       this.filteredProjects = this.projects;
+    } else if (value === 'residential') {
+      this.filteredProjects = this.projects.filter(p => 
+        p.category === 'residential' || p.category === 'apartments' || p.category === 'villas'
+      );
     } else {
       this.filteredProjects = this.projects.filter(p => p.category === value);
     }
@@ -110,5 +112,10 @@ export class ProjectsSectionComponent implements OnInit {
     if (diff === -1 || diff === this.totalSlides - 1) return 'left';
     if (diff > 1) return 'far-right';
     return 'far-left';
+  }
+
+  getDisplayName(name: string): string {
+    if (!name) return '';
+    return name.replace(/^chalama?ji(?:'s)?\s+/i, '').trim();
   }
 }

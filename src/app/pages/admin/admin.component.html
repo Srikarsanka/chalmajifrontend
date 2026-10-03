@@ -1,0 +1,949 @@
+<!-- Toast Notification -->
+<div *ngIf="toast" class="toast-notification" [ngClass]="'toast-' + toast.type">
+  <span class="toast-icon">
+    <ng-container *ngIf="toast.type === 'success'">✓</ng-container>
+    <ng-container *ngIf="toast.type === 'error'">✕</ng-container>
+    <ng-container *ngIf="toast.type === 'info'">ℹ</ng-container>
+  </span>
+  <span class="toast-text">{{ toast.message }}</span>
+</div>
+
+<!-- ================= AUTHENTICATION GATE ================= -->
+<div *ngIf="!isAuthenticated" class="auth-gate-screen">
+  <div class="auth-card">
+    <div class="auth-brand">
+      <div class="brand-monogram">C</div>
+      <h1 class="auth-title">Chalamaji Infra</h1>
+      <p class="auth-subtitle">Content Management & Photo Studio Portal</p>
+    </div>
+
+    <form (ngSubmit)="login()" class="auth-form">
+      <div class="form-group">
+        <label for="passcode">Admin Passcode</label>
+        <div class="input-wrapper">
+          <input
+            type="password"
+            id="passcode"
+            name="passcode"
+            [(ngModel)]="passcode"
+            placeholder="Enter security passcode..."
+            autocomplete="current-password"
+            autofocus
+          />
+        </div>
+        <p *ngIf="authError" class="auth-error">{{ authError }}</p>
+      </div>
+
+      <button type="submit" class="admin-btn primary-btn full-width">
+        Unlock Studio
+      </button>
+
+      <div class="auth-quick-hint">
+        <button type="button" class="text-link-btn" (click)="login('chalmaji2026')">
+          Quick Unlock (chalmaji2026)
+        </button>
+      </div>
+    </form>
+
+    <div class="auth-footer">
+      <a routerLink="/" class="back-link">← Return to Public Website</a>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MAIN ADMIN DASHBOARD ================= -->
+<div *ngIf="isAuthenticated" class="admin-layout">
+  <!-- Top Bar -->
+  <header class="admin-header">
+    <div class="header-left">
+      <div class="brand-badge">
+        <span class="badge-letter">C</span>
+        <div class="badge-text">
+          <span class="title">CHALAMAJI INFRA</span>
+          <span class="sub">MANAGEMENT STUDIO</span>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="admin-tabs">
+        <button
+          type="button"
+          class="tab-btn"
+          [class.active]="activeTab === 'projects'"
+          (click)="activeTab = 'projects'"
+        >
+          <span class="tab-icon">📁</span>
+          Projects & Photos
+          <span class="count-pill">{{ projects.length }}</span>
+        </button>
+
+        <button
+          type="button"
+          class="tab-btn"
+          [class.active]="activeTab === 'plots'"
+          (click)="activeTab = 'plots'"
+        >
+          <span class="tab-icon">📍</span>
+          Ayodhara Plots
+          <span class="count-pill" *ngIf="ayodharaProject?.plots">{{ ayodharaProject?.plots?.length }}</span>
+        </button>
+
+        <button
+          type="button"
+          class="tab-btn"
+          [class.active]="activeTab === 'inquiries'"
+          (click)="activeTab = 'inquiries'"
+        >
+          <span class="tab-icon">📬</span>
+          Customer Leads
+          <span class="count-pill">{{ allInquiriesCombined.length }}</span>
+        </button>
+      </nav>
+    </div>
+
+    <div class="header-right">
+      <a routerLink="/" target="_blank" class="admin-btn secondary-btn header-action">
+        <span>🌐</span> Live Site
+      </a>
+      <button type="button" class="admin-btn outline-btn header-action" (click)="logout()">
+        <span>🔒</span> Sign Out
+      </button>
+    </div>
+  </header>
+
+  <!-- ================= TAB 1: PROJECTS & PHOTOS ================= -->
+  <main *ngIf="activeTab === 'projects'" class="admin-main">
+    
+    <!-- 1A: Project List View (When no project is opened for edit) -->
+    <section *ngIf="!selectedProject" class="projects-list-section">
+      <!-- Toolbar -->
+      <div class="section-toolbar">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input
+            type="text"
+            [(ngModel)]="searchQuery"
+            placeholder="Search projects by name, location, type..."
+          />
+          <button *ngIf="searchQuery" (click)="searchQuery = ''" class="clear-btn">✕</button>
+        </div>
+
+        <div class="filters-cluster">
+          <!-- Status Filter -->
+          <div class="filter-group">
+            <span class="filter-label">Status:</span>
+            <div class="pill-group">
+              <button
+                type="button"
+                [class.active]="statusFilter === 'all'"
+                (click)="statusFilter = 'all'"
+              >All</button>
+              <button
+                type="button"
+                [class.active]="statusFilter === 'Ongoing'"
+                (click)="statusFilter = 'Ongoing'"
+              >Ongoing</button>
+              <button
+                type="button"
+                [class.active]="statusFilter === 'Completed'"
+                (click)="statusFilter = 'Completed'"
+              >Completed</button>
+              <button
+                type="button"
+                [class.active]="statusFilter === 'Upcoming'"
+                (click)="statusFilter = 'Upcoming'"
+              >Upcoming</button>
+            </div>
+          </div>
+
+          <!-- Category Filter -->
+          <div class="filter-group">
+            <span class="filter-label">Category:</span>
+            <div class="pill-group">
+              <button
+                type="button"
+                [class.active]="categoryFilter === 'all'"
+                (click)="categoryFilter = 'all'"
+              >All</button>
+              <button
+                type="button"
+                [class.active]="categoryFilter === 'residential'"
+                (click)="categoryFilter = 'residential'"
+              >Residential</button>
+              <button
+                type="button"
+                [class.active]="categoryFilter === 'plotting'"
+                (click)="categoryFilter = 'plotting'"
+              >Plots</button>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="admin-btn primary-btn create-btn" (click)="openCreateModal()">
+          <span>+</span> Add New Project
+        </button>
+      </div>
+
+      <!-- Loading State -->
+      <div *ngIf="isLoadingProjects" class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading projects from database...</p>
+      </div>
+
+      <!-- Project Cards Grid -->
+      <div *ngIf="!isLoadingProjects" class="project-cards-grid">
+        <div
+          *ngFor="let p of filteredProjects"
+          class="project-card"
+          (click)="selectProject(p)"
+        >
+          <!-- Thumbnail & Badges -->
+          <div class="card-media">
+            <img
+              [src]="p.mainImage || 'assets/images/projects/plots-main.jpg'"
+              [alt]="p.name"
+              (error)="$any($event.target).src = 'assets/images/projects/plots-main.jpg'"
+            />
+            <div class="media-badges">
+              <span class="status-badge" [ngClass]="p.status.toLowerCase()">
+                {{ p.status }}
+              </span>
+              <span class="category-badge">
+                {{ p.category }}
+              </span>
+            </div>
+            <div class="photo-count-pill">
+              📷 {{ (p.gallery?.length || 0) + (p.mainImage ? 1 : 0) }} photos
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div class="card-body">
+            <div class="card-title-row">
+              <h3 class="card-title">{{ p.name }}</h3>
+              <span class="project-id-tag">#{{ p.projectId }}</span>
+            </div>
+            <p class="card-location">📍 {{ p.location }}</p>
+            <p class="card-type">🏛 {{ p.type }}</p>
+            <p class="card-desc">{{ p.description }}</p>
+          </div>
+
+          <!-- Actions -->
+          <div class="card-footer">
+            <button type="button" class="admin-btn edit-btn">
+              ✏️ Edit Photos & Details
+            </button>
+            <a
+              [routerLink]="['/projects', p.projectId]"
+              target="_blank"
+              class="admin-btn view-btn"
+              (click)="$event.stopPropagation()"
+            >
+              👁 Live Page
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1B: Comprehensive Project & Photo Studio Editor (When a project is selected) -->
+    <section *ngIf="selectedProject" class="project-editor-section">
+      <!-- Editor Top Bar -->
+      <div class="editor-header-bar">
+        <div class="editor-header-left">
+          <button type="button" class="back-to-list-btn" (click)="closeEditor()">
+            ← Back to All Projects
+          </button>
+          <div class="editor-title-wrap">
+            <h2 class="editor-project-name">{{ editForm.name }}</h2>
+            <span class="editor-project-id">{{ editForm.projectId }}</span>
+            <span class="status-badge" [ngClass]="editForm.status?.toLowerCase() || ''">
+              {{ editForm.status }}
+            </span>
+          </div>
+        </div>
+
+        <div class="editor-header-right">
+          <a
+            [routerLink]="['/projects', editForm.projectId]"
+            target="_blank"
+            class="admin-btn secondary-btn"
+          >
+            👁 View Live Page
+          </a>
+          <button
+            type="button"
+            class="admin-btn danger-btn"
+            (click)="deleteProject(selectedProject)"
+          >
+            🗑 Delete
+          </button>
+          <button
+            type="button"
+            class="admin-btn primary-btn save-btn"
+            [disabled]="isSaving"
+            (click)="saveProject()"
+          >
+            <span *ngIf="!isSaving">💾 Save All Changes</span>
+            <span *ngIf="isSaving" class="saving-spinner">Saving...</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="editor-grid">
+        <!-- LEFT COLUMN: PHOTOS & MEDIA STUDIO (CORE FEATURE) -->
+        <div class="editor-col media-col">
+          
+          <!-- 1. Main Cover Image -->
+          <div class="studio-card main-image-card">
+            <div class="card-header">
+              <div class="header-titles">
+                <h3>🖼️ Main Cover Photo</h3>
+                <p>This image is displayed on the homepage cards, projects catalogue, and social shares.</p>
+              </div>
+            </div>
+
+            <div class="cover-preview-container">
+              <img
+                [src]="editForm.mainImage || 'assets/images/projects/plots-main.jpg'"
+                alt="Main Cover"
+                class="cover-image"
+                (click)="openZoom(editForm.mainImage || '')"
+                (error)="$any($event.target).src = 'assets/images/projects/plots-main.jpg'"
+              />
+              <div class="image-overlay-actions">
+                <button
+                  type="button"
+                  class="action-pill"
+                  *ngIf="editForm.mainImage"
+                  (click)="openZoom(editForm.mainImage)"
+                >
+                  🔍 View Full Size
+                </button>
+              </div>
+            </div>
+
+            <!-- Upload Controls for Main Image -->
+            <div class="image-uploader-controls">
+              <label class="file-upload-btn">
+                <span>📁 Upload New Photo from Device</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  (change)="onFileUpload($event, 'mainImage')"
+                />
+              </label>
+              <div class="url-input-wrap">
+                <span class="url-label">Or Image URL:</span>
+                <input
+                  type="text"
+                  [(ngModel)]="editForm.mainImage"
+                  placeholder="https://res.cloudinary.com/... or /assets/..."
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Hero Carousel Banner Image -->
+          <div class="studio-card banner-image-card">
+            <div class="card-header">
+              <div class="header-titles">
+                <h3>🌄 Hero Carousel Banner</h3>
+                <p>Wide high-resolution banner displayed at the top of the project detail page.</p>
+              </div>
+            </div>
+
+            <div class="banner-preview-container">
+              <img
+                [src]="editForm.carouselImage || editForm.mainImage || 'assets/images/projects/plots-main.jpg'"
+                alt="Banner Image"
+                class="banner-image"
+                (click)="openZoom(editForm.carouselImage || editForm.mainImage || '')"
+                (error)="$any($event.target).src = 'assets/images/projects/plots-main.jpg'"
+              />
+            </div>
+
+            <div class="image-uploader-controls">
+              <label class="file-upload-btn">
+                <span>📁 Upload Banner from Device</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  (change)="onFileUpload($event, 'carouselImage')"
+                />
+              </label>
+              <div class="url-input-wrap">
+                <span class="url-label">Or Banner URL:</span>
+                <input
+                  type="text"
+                  [(ngModel)]="editForm.carouselImage"
+                  placeholder="https://... or /assets/..."
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Multi-Photo Gallery Studio -->
+          <div class="studio-card gallery-studio-card">
+            <div class="card-header">
+              <div class="header-titles">
+                <h3>📸 Project Photo Gallery</h3>
+                <p>Add, replace, and organize walkthrough and architecture photos ({{ editForm.gallery?.length || 0 }} photos in gallery).</p>
+              </div>
+            </div>
+
+            <!-- Add Photo Toolbar -->
+            <div class="gallery-add-toolbar">
+              <!-- Upload multiple files -->
+              <label class="file-upload-btn primary-upload">
+                <span *ngIf="!isUploading || uploadTarget !== 'gallery'">+ Upload Photos from Computer</span>
+                <span *ngIf="isUploading && uploadTarget === 'gallery'">⏳ Uploading...</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  [disabled]="isUploading"
+                  (change)="onFileUpload($event, 'gallery')"
+                />
+              </label>
+
+              <!-- Add via URL -->
+              <div class="gallery-url-add">
+                <input
+                  type="text"
+                  [(ngModel)]="newGalleryUrl"
+                  placeholder="Or paste external / Cloudinary image URL..."
+                  (keyup.enter)="addGalleryUrl()"
+                />
+                <button
+                  type="button"
+                  class="admin-btn secondary-btn"
+                  [disabled]="!newGalleryUrl"
+                  (click)="addGalleryUrl()"
+                >
+                  Add URL
+                </button>
+              </div>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div *ngIf="editForm.gallery && editForm.gallery.length > 0" class="gallery-masonry-grid">
+              <div
+                *ngFor="let photo of editForm.gallery; let i = index"
+                class="gallery-tile"
+              >
+                <img
+                  [src]="photo"
+                  [alt]="'Gallery photo ' + (i + 1)"
+                  (click)="openZoom(photo)"
+                  (error)="$any($event.target).src = 'assets/images/projects/plots-main.jpg'"
+                />
+                <div class="tile-overlay">
+                  <button
+                    type="button"
+                    class="tile-btn zoom-btn"
+                    title="Zoom Full Size"
+                    (click)="openZoom(photo)"
+                  >
+                    🔍
+                  </button>
+                  <button
+                    type="button"
+                    class="tile-btn cover-btn"
+                    title="Set as Main Cover"
+                    (click)="setAsMainImage(photo)"
+                  >
+                    ⭐ Cover
+                  </button>
+                  <button
+                    type="button"
+                    class="tile-btn delete-btn"
+                    title="Remove from Gallery"
+                    (click)="removeGalleryPhoto(i)"
+                  >
+                    🗑
+                  </button>
+                </div>
+                <div class="tile-number">#{{ i + 1 }}</div>
+              </div>
+            </div>
+
+            <!-- Empty gallery placeholder -->
+            <div *ngIf="!editForm.gallery || editForm.gallery.length === 0" class="empty-gallery-state">
+              <div class="empty-icon">📷</div>
+              <p>No gallery photos added yet.</p>
+              <p class="empty-sub">Click "+ Upload Photos from Computer" or paste an image URL above to populate this project's gallery.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: PROJECT DETAILS & SPECIFICATIONS -->
+        <div class="editor-col details-col">
+          
+          <!-- General Details Card -->
+          <div class="studio-card">
+            <div class="card-header">
+              <h3>📋 Project Identity & Status</h3>
+            </div>
+
+            <div class="form-fields-grid">
+              <!-- Name -->
+              <div class="form-field">
+                <label>Project Name</label>
+                <input
+                  type="text"
+                  [(ngModel)]="editForm.name"
+                  placeholder="e.g. Chalamaji The Collective"
+                />
+              </div>
+
+              <!-- Location -->
+              <div class="form-field">
+                <label>Location</label>
+                <input
+                  type="text"
+                  [(ngModel)]="editForm.location"
+                  placeholder="e.g. Yendada, Visakhapatnam"
+                />
+              </div>
+
+              <!-- Status -->
+              <div class="form-field">
+                <label>Status</label>
+                <select [(ngModel)]="editForm.status">
+                  <option value="Ongoing">Ongoing</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Upcoming">Upcoming</option>
+                  <option value="Ready to Move">Ready to Move</option>
+                </select>
+              </div>
+
+              <!-- Category -->
+              <div class="form-field">
+                <label>Category</label>
+                <select [(ngModel)]="editForm.category">
+                  <option value="residential">Residential (Apartments & Villas)</option>
+                  <option value="plotting">Plotting Layouts</option>
+                </select>
+              </div>
+
+              <!-- Type / Units -->
+              <div class="form-field">
+                <label>Type / Configuration</label>
+                <input
+                  type="text"
+                  [(ngModel)]="editForm.type"
+                  placeholder="e.g. Boutique Apartments (10 Flats) or Residential Apartments (99 Flats)"
+                />
+              </div>
+
+              <!-- RERA Number -->
+              <div class="form-field">
+                <label>RERA Number</label>
+                <input
+                  type="text"
+                  [(ngModel)]="editForm.reraNumber"
+                  placeholder="e.g. P03280052306"
+                />
+              </div>
+
+              <!-- Brochure URL -->
+              <div class="form-field full-col">
+                <label>Brochure URL / Asset Path</label>
+                <input
+                  type="text"
+                  [(ngModel)]="editForm.brochureUrl"
+                  placeholder="assets/Chalamaji_Signature_Brochure.pdf or https://..."
+                />
+              </div>
+
+              <!-- Published Toggle -->
+              <div class="form-field full-col toggle-field">
+                <label class="switch-wrap">
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="editForm.isPublished"
+                  />
+                  <span class="slider"></span>
+                  <span class="switch-label">Published (Visible to public visitors on live site)</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Descriptions Card -->
+          <div class="studio-card">
+            <div class="card-header">
+              <h3>✍️ Descriptions & Copy</h3>
+            </div>
+
+            <div class="form-fields-grid">
+              <!-- Short Description -->
+              <div class="form-field full-col">
+                <label>Short Summary (Used for cards and listing teasers)</label>
+                <textarea
+                  rows="3"
+                  [(ngModel)]="editForm.description"
+                  placeholder="Brief 1-2 sentence overview..."
+                ></textarea>
+              </div>
+
+              <!-- Full Description -->
+              <div class="form-field full-col">
+                <label>Full Architectural Overview (Used on project detail page)</label>
+                <textarea
+                  rows="5"
+                  [(ngModel)]="editForm.fullDescription"
+                  placeholder="Detailed architectural description, lifestyle highlights, and neighborhood context..."
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Amenities Card -->
+          <div class="studio-card">
+            <div class="card-header">
+              <h3>🏊 Amenities & Features</h3>
+            </div>
+
+            <!-- Current Amenities Chips -->
+            <div class="amenities-chips-wrap">
+              <span
+                *ngFor="let am of editForm.amenities; let i = index"
+                class="amenity-chip"
+              >
+                {{ am }}
+                <button type="button" class="remove-chip-btn" (click)="removeAmenity(i)">×</button>
+              </span>
+              <span *ngIf="!editForm.amenities || editForm.amenities.length === 0" class="no-amenities">
+                No amenities listed. Add from presets below.
+              </span>
+            </div>
+
+            <!-- Add Custom Amenity -->
+            <div class="add-amenity-row">
+              <input
+                type="text"
+                [(ngModel)]="newAmenity"
+                placeholder="Add custom amenity..."
+                (keyup.enter)="addAmenity()"
+              />
+              <button
+                type="button"
+                class="admin-btn secondary-btn"
+                [disabled]="!newAmenity"
+                (click)="addAmenity()"
+              >
+                + Add
+              </button>
+            </div>
+
+            <!-- Presets -->
+            <div class="preset-amenities-section">
+              <span class="presets-title">Quick Add Presets:</span>
+              <div class="preset-buttons-wrap">
+                <button
+                  type="button"
+                  *ngFor="let preset of commonAmenities"
+                  class="preset-chip-btn"
+                  [disabled]="editForm.amenities?.includes(preset)"
+                  (click)="addAmenity(preset)"
+                >
+                  + {{ preset }}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Floating Bottom Save Bar -->
+          <div class="editor-bottom-save-bar">
+            <div class="save-status-info">
+              <span>Editing: <strong>{{ editForm.name }}</strong></span>
+            </div>
+            <div class="save-bar-actions">
+              <button type="button" class="admin-btn secondary-btn" (click)="closeEditor()">
+                Cancel
+              </button>
+              <button
+                type="button"
+                class="admin-btn primary-btn save-btn"
+                [disabled]="isSaving"
+                (click)="saveProject()"
+              >
+                <span *ngIf="!isSaving">💾 Save All Changes</span>
+                <span *ngIf="isSaving">Saving to Database...</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= TAB 2: AYODHARA PLOTS MANAGER ================= -->
+  <main *ngIf="activeTab === 'plots'" class="admin-main">
+    <section class="plots-manager-section">
+      <div class="plots-header-bar">
+        <div class="plots-titles">
+          <h2>Ayodhara Plotted Layout (36 Plots)</h2>
+          <p>Real-time plot status management opposite Ramanarayanam Temple, Vizianagaram.</p>
+        </div>
+
+        <!-- Filter -->
+        <div class="plot-status-filters">
+          <button
+            type="button"
+            [class.active]="plotFilter === 'all'"
+            (click)="plotFilter = 'all'"
+          >All ({{ ayodharaProject?.plots?.length || 0 }})</button>
+          <button
+            type="button"
+            class="status-pill-avail"
+            [class.active]="plotFilter === 'Available'"
+            (click)="plotFilter = 'Available'"
+          >Available</button>
+          <button
+            type="button"
+            class="status-pill-booked"
+            [class.active]="plotFilter === 'Booked'"
+            (click)="plotFilter = 'Booked'"
+          >Booked</button>
+          <button
+            type="button"
+            class="status-pill-sold"
+            [class.active]="plotFilter === 'Sold'"
+            (click)="plotFilter = 'Sold'"
+          >Sold</button>
+        </div>
+      </div>
+
+      <!-- Plots Grid -->
+      <div *ngIf="ayodharaProject?.plots" class="plots-interactive-grid">
+        <div
+          *ngFor="let plot of filteredPlots"
+          class="plot-interactive-card"
+          [ngClass]="'status-' + (plot.status || 'Available').toLowerCase()"
+        >
+          <div class="plot-number-badge">Plot #{{ plot.plotNo }}</div>
+          <div class="plot-meta">
+            <span class="plot-extent">{{ plot.extentSqYds }} Sq.Yds</span>
+            <span class="plot-facing">{{ plot.facing }} Facing</span>
+          </div>
+
+          <!-- Status Selector -->
+          <div class="plot-actions">
+            <label class="status-label">Status:</label>
+            <select
+              [ngModel]="plot.status"
+              (ngModelChange)="updatePlot(plot.plotNo, $event)"
+              [disabled]="isUpdatingPlot"
+              class="plot-select"
+            >
+              <option value="Available">Available</option>
+              <option value="Booked">Booked</option>
+              <option value="Sold">Sold</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="!ayodharaProject?.plots" class="loading-state">
+        <p>No plot data found for Ayodhara. Ensure ayodhara-plotting project is seeded.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= TAB 3: CUSTOMER INQUIRIES & LEADS ================= -->
+  <main *ngIf="activeTab === 'inquiries'" class="admin-main">
+    <section class="inquiries-section">
+      <div class="inquiries-header-bar">
+        <div class="inquiries-titles">
+          <h2>Customer Leads & Brochure Inquiries</h2>
+          <p>Real-time customer inquiries submitted through website forms.</p>
+        </div>
+
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input
+            type="text"
+            [(ngModel)]="inquirySearchQuery"
+            placeholder="Search leads by name, phone, project..."
+          />
+        </div>
+      </div>
+
+      <!-- Table View -->
+      <div class="inquiries-table-card">
+        <table class="leads-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Customer</th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th>Interested In</th>
+              <th>Message</th>
+              <th>Quick Contact</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of allInquiriesCombined">
+              <td class="lead-date">{{ item.createdAt | date:'short' }}</td>
+              <td class="lead-name">
+                <strong>{{ item.name }}</strong>
+                <span class="lead-source-tag">{{ item.source }}</span>
+              </td>
+              <td class="lead-phone">
+                <a [href]="'tel:' + item.phone">{{ item.phone }}</a>
+              </td>
+              <td class="lead-email">
+                <a [href]="'mailto:' + item.email">{{ item.email || '-' }}</a>
+              </td>
+              <td class="lead-project">
+                <span class="project-pill">{{ item.projectName || item.project || 'General Inquiry' }}</span>
+              </td>
+              <td class="lead-message">{{ item.message || '-' }}</td>
+              <td class="lead-contact-action">
+                <a
+                  [href]="getWhatsAppLink(item.phone, item.name)"
+                  target="_blank"
+                  class="whatsapp-quick-btn"
+                  title="Chat on WhatsApp"
+                >
+                  💬 WhatsApp
+                </a>
+              </td>
+            </tr>
+
+            <tr *ngIf="allInquiriesCombined.length === 0">
+              <td colspan="7" class="empty-table-cell">
+                No customer inquiries received yet.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ================= CREATE NEW PROJECT MODAL ================= -->
+<div *ngIf="isCreateModalOpen" class="modal-backdrop" (click)="closeCreateModal()">
+  <div class="modal-card" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Add New Project</h3>
+      <button type="button" class="modal-close-btn" (click)="closeCreateModal()">×</button>
+    </div>
+
+    <form (ngSubmit)="createNewProject()" class="modal-form">
+      <div class="form-field">
+        <label>Project Name *</label>
+        <input
+          type="text"
+          [(ngModel)]="newProjectForm.name"
+          name="projectName"
+          placeholder="e.g. Chalamaji Ocean Heights"
+          (input)="onNewProjectNameChange()"
+          required
+        />
+      </div>
+
+      <div class="form-field">
+        <label>Project ID (Slug) *</label>
+        <input
+          type="text"
+          [(ngModel)]="newProjectForm.projectId"
+          name="projectId"
+          placeholder="e.g. chalamaji-ocean-heights"
+          required
+        />
+      </div>
+
+      <div class="form-field">
+        <label>Location *</label>
+        <input
+          type="text"
+          [(ngModel)]="newProjectForm.location"
+          name="location"
+          placeholder="e.g. Rushikonda, Visakhapatnam"
+          required
+        />
+      </div>
+
+      <div class="form-field">
+        <label>Type / Configuration *</label>
+        <input
+          type="text"
+          [(ngModel)]="newProjectForm.type"
+          name="type"
+          placeholder="e.g. Ultra-Luxury Sea View Residences"
+          required
+        />
+      </div>
+
+      <div class="form-field">
+        <label>Status</label>
+        <select [(ngModel)]="newProjectForm.status" name="status">
+          <option value="Ongoing">Ongoing</option>
+          <option value="Upcoming">Upcoming</option>
+          <option value="Completed">Completed</option>
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label>Category</label>
+        <select [(ngModel)]="newProjectForm.category" name="category">
+          <option value="residential">Residential</option>
+          <option value="plotting">Plotting</option>
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label>Cover Image URL (Optional)</label>
+        <input
+          type="text"
+          [(ngModel)]="newProjectForm.mainImage"
+          name="mainImage"
+          placeholder="https://... or /assets/..."
+        />
+      </div>
+
+      <div class="form-field full-col">
+        <label>Short Description</label>
+        <textarea
+          rows="2"
+          [(ngModel)]="newProjectForm.description"
+          name="description"
+          placeholder="Brief overview..."
+        ></textarea>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="admin-btn secondary-btn" (click)="closeCreateModal()">
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="admin-btn primary-btn"
+          [disabled]="isCreating || !newProjectForm.name || !newProjectForm.projectId"
+        >
+          <span *ngIf="!isCreating">Create Project</span>
+          <span *ngIf="isCreating">Creating...</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ================= IMAGE ZOOM LIGHTBOX MODAL ================= -->
+<div *ngIf="zoomImageUrl" class="modal-backdrop zoom-backdrop" (click)="closeZoom()">
+  <div class="zoom-modal-container" (click)="$event.stopPropagation()">
+    <button type="button" class="zoom-close-btn" (click)="closeZoom()">×</button>
+    <img [src]="zoomImageUrl" alt="Enlarged preview" class="zoom-image" />
+    <div class="zoom-actions">
+      <a [href]="zoomImageUrl" target="_blank" class="admin-btn secondary-btn">
+        Open Original in New Tab ↗
+      </a>
+    </div>
+  </div>
+</div>

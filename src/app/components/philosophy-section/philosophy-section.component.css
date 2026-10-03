@@ -1,181 +1,309 @@
+/* ==========================================================================
+   PHILOSOPHY & ETHOS SECTION — MINIMAL LUXURY ARCHITECTURAL REDESIGN
+   ========================================================================== */
+
 .philosophy-section {
   position: relative;
-  min-height: 700px;
-  display: flex;
-  align-items: center;
+  background-color: #080D14;
+  color: #FFFFFF;
+  padding: 130px 0 140px;
   overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.philosophy-bg {
+/* Subtle ambient atmospheric radial glow */
+.ph-ambient-glow {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark) 100%);
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 900px;
+  height: 500px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(197, 139, 89, 0.07) 0%,
+    rgba(139, 0, 21, 0.04) 40%,
+    transparent 75%
+  );
+  pointer-events: none;
   z-index: 0;
 }
 
-.philosophy-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(ellipse at 30% 50%, rgba(236, 28, 36, 0.08) 0%, transparent 70%);
-  z-index: 1;
-}
-
-.philosophy-content {
+.ph-container {
   position: relative;
-  z-index: 2;
-  width: 100%;
-  padding: 100px 0;
-}
-
-.philosophy-inner {
-  max-width: 800px;
+  z-index: 1;
+  max-width: 1280px;
   margin: 0 auto;
-  text-align: center;
+  padding: 0 40px;
 }
 
-.philosophy-script {
-  font-family: 'Oooh Baby', cursive;
-  font-size: 26px;
-  color: var(--gold, #C57642);
-  margin-bottom: 15px;
+/* --------------------------------------------------------------------------
+   1. EDITORIAL HEADER GRID
+   -------------------------------------------------------------------------- */
+.ph-header-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 60px;
+  align-items: flex-end;
   opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.8s ease;
+  transform: translateY(30px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.philosophy-section.visible .philosophy-script {
+.philosophy-section.visible .ph-header-grid {
   opacity: 1;
   transform: translateY(0);
 }
 
-.philosophy-title {
-  font-family: var(--font-display);
-  font-size: 50px;
-  font-weight: 400;
-  color: #fff;
+/* Left Column */
+.ph-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.ph-eyebrow-dash {
+  width: 24px;
+  height: 1.5px;
+  background: #C58B59;
+}
+
+.ph-eyebrow-text {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3.5px;
   text-transform: uppercase;
-  letter-spacing: 4px;
-  line-height: 1.2;
-  margin-bottom: 30px;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s ease 0.2s;
+  color: #C58B59;
 }
 
-.philosophy-section.visible .philosophy-title {
-  opacity: 1;
-  transform: translateY(0);
+.ph-display-title {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: clamp(36px, 4.4vw, 54px);
+  font-weight: 800;
+  line-height: 1.14;
+  letter-spacing: -0.5px;
+  color: #FFFFFF;
+  margin: 0;
 }
 
-.philosophy-title span {
-  font-style: italic;
-  font-weight: 400;
+.ph-title-accent {
+  font-style: normal;
+  font-weight: 800;
+  color: #E2BC92;
+  letter-spacing: 0;
 }
 
-.philosophy-text {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 16px;
-  line-height: 1.9;
+/* Right Column */
+.ph-lead-quote {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 16.5px;
+  line-height: 1.85;
+  color: rgba(255, 255, 255, 0.72);
   font-weight: 300;
-  margin-bottom: 60px;
+  margin: 0 0 24px 0;
+  letter-spacing: 0.15px;
+}
+
+.ph-tagline-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 10.5px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.ph-tagline-badge {
+  color: #C58B59;
+  font-weight: 600;
+}
+
+.ph-tagline-sep {
+  opacity: 0.3;
+}
+
+/* --------------------------------------------------------------------------
+   2. HAIRLINE DIVIDER
+   -------------------------------------------------------------------------- */
+.ph-hairline-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(197, 139, 89, 0.35) 0%,
+    rgba(255, 255, 255, 0.1) 45%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  margin: 60px 0 55px;
   opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s ease 0.4s;
+  transform: scaleX(0.95);
+  transition: opacity 1s ease 0.2s, transform 1s ease 0.2s;
 }
 
-.philosophy-section.visible .philosophy-text {
+.philosophy-section.visible .ph-hairline-divider {
   opacity: 1;
-  transform: translateY(0);
+  transform: scaleX(1);
 }
 
-.philosophy-pillars {
+/* --------------------------------------------------------------------------
+   3. MINIMALIST ARCHITECTURAL CARDS
+   -------------------------------------------------------------------------- */
+.ph-pillars-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s ease 0.6s;
+  gap: 30px;
 }
 
-.philosophy-section.visible .philosophy-pillars {
+.ph-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.022);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  padding: 42px 34px 38px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  transform: translateY(35px);
+  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  transition-delay: calc(var(--stagger, 1) * 0.12s + 0.3s);
+}
+
+.philosophy-section.visible .ph-card {
   opacity: 1;
   transform: translateY(0);
 }
 
-.pillar {
-  text-align: center;
-  padding: 30px 20px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  transition: all 0.4s ease;
+.ph-card:hover {
+  background: rgba(255, 255, 255, 0.045);
+  border-color: rgba(197, 139, 89, 0.35);
+  transform: translateY(-8px);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.45), 0 0 35px rgba(197, 139, 89, 0.08);
 }
 
-.pillar:hover {
-  border-color: rgba(236, 28, 36, 0.3);
-  background-color: rgba(255, 255, 255, 0.03);
-  transform: translateY(-5px);
+/* Card Top Strip */
+.ph-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
 }
 
-.pillar-icon {
-  width: 60px;
-  height: 60px;
-  border: 1px solid rgba(197, 118, 66, 0.4);
+.ph-card-index {
+  font-family: var(--font-body, 'Inter', monospace);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  color: #C58B59;
+}
+
+.ph-card-icon-wrap {
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 20px;
-  color: var(--gold, #C57642);
-  font-size: 20px;
-  transition: all 0.3s ease;
+  color: #FFFFFF;
+  font-size: 15px;
+  transition: all 0.4s ease;
 }
 
-.pillar:hover .pillar-icon {
-  background-color: var(--primary);
-  border-color: var(--primary);
-  color: #fff;
+.ph-card:hover .ph-card-icon-wrap {
+  background: #C58B59;
+  border-color: #C58B59;
+  color: #080D14;
+  transform: rotate(10deg) scale(1.05);
 }
 
-.pillar h4 {
-  color: #fff;
-  font-family: var(--font-body);
-  font-size: 16px;
-  font-weight: 500;
-  margin-bottom: 10px;
-  letter-spacing: 1px;
+/* Card Content */
+.ph-card-title {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  color: #FFFFFF;
+  margin: 0 0 14px 0;
+  line-height: 1.25;
 }
 
-.pillar p {
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 13px;
-  line-height: 1.6;
+.ph-card-desc {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 300;
+  margin: 0;
+  letter-spacing: 0.1px;
 }
 
-/* Responsive */
-@media (max-width: 991px) {
-  .philosophy-title {
-    font-size: 38px;
-  }
+/* Accent expanding baseline on hover */
+.ph-card-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #C58B59 0%, #8B0015 100%);
+  transition: width 0.45s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-@media (max-width: 767px) {
+.ph-card:hover .ph-card-line {
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   4. RESPONSIVE BREAKPOINTS
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
   .philosophy-section {
-    min-height: auto;
+    padding: 100px 0 110px;
   }
-  .philosophy-content {
-    padding: 60px 0;
+
+  .ph-header-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
   }
-  .philosophy-title {
-    font-size: 30px;
-    letter-spacing: 2px;
-  }
-  .philosophy-pillars {
+
+  .ph-pillars-grid {
     grid-template-columns: 1fr;
     gap: 20px;
+  }
+
+  .ph-card {
+    padding: 34px 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  .philosophy-section {
+    padding: 80px 0 90px;
+  }
+
+  .ph-container {
+    padding: 0 24px;
+  }
+
+  .ph-display-title {
+    font-size: 34px;
+  }
+
+  .ph-lead-quote {
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .ph-hairline-divider {
+    margin: 40px 0 35px;
   }
 }

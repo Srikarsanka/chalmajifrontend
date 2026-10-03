@@ -47,6 +47,28 @@ export class ProjectDetailComponent implements OnInit {
     private projectService: ProjectService
   ) {}
 
+  /**
+   * Returns project name stripped of brand prefixes (e.g. 'Chalamaji Signature' -> 'Signature')
+   */
+  get cleanProjectName(): string {
+    if (!this.project?.name) return '';
+    return this.project.name.replace(/^Chalamaji('s)?\s+/i, '').trim();
+  }
+
+  get isAyodhara(): boolean {
+    const id = (this.project?.projectId || this.project?.id || '').toLowerCase();
+    const name = (this.project?.name || '').toLowerCase();
+    return id.includes('ayodhara') || name.includes('ayodhara');
+  }
+
+  get projectPhone(): string {
+    return this.isAyodhara ? '+91 88858 88388' : '+91 92579 25788';
+  }
+
+  get projectPhoneRaw(): string {
+    return this.isAyodhara ? '+918885888388' : '+919257925788';
+  }
+
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
@@ -70,7 +92,7 @@ export class ProjectDetailComponent implements OnInit {
           next: (all) => {
             const currentId = this.project?.projectId || id;
             this.relatedProjects = all
-              .filter(p => p.projectId !== currentId && p.projectId !== 'ayodhara-plotting')
+              .filter(p => p.projectId !== currentId)
               .slice(0, 3);
             this.cdr.detectChanges();
           },

@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit {
   isMenuOpen = false;
   logoVisible = true;
   isAboutPage = false;
+  isAdminPage = false;
   ongoingProjects: Project[] = [];
 
   constructor(
@@ -25,11 +26,11 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadOngoingProjects();
-    this.checkIfAboutPage(this.router.url);
+    this.checkRoute(this.router.url);
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: any) => {
-        this.checkIfAboutPage(event.urlAfterRedirects || event.url);
+        this.checkRoute(event.urlAfterRedirects || event.url);
       });
   }
 
@@ -42,8 +43,9 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  private checkIfAboutPage(url: string): void {
-    this.isAboutPage = url.includes('ayodhara');
+  private checkRoute(url: string): void {
+    this.isAboutPage = false;
+    this.isAdminPage = (url || '').startsWith('/admin');
   }
 
   @HostListener('window:scroll')

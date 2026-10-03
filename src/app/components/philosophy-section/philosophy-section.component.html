@@ -1,43 +1,93 @@
-<section class="philosophy-section" [class.visible]="isVisible">
-  <div class="philosophy-bg"></div>
-  <div class="philosophy-overlay"></div>
-  <div class="philosophy-content">
-    <div class="container">
-      <div class="philosophy-inner">
-        <p class="philosophy-script">Our Philosophy</p>
-        <h2 class="philosophy-title">
+<section class="philosophy-section" [class.visible]="isVisible" id="philosophy">
+  <!-- Ambient Atmospheric Backing -->
+  <div class="ph-ambient-glow"></div>
+
+  <div class="ph-container">
+    
+    <!-- Top Editorial Header Grid -->
+    <div class="ph-header-grid">
+      <div class="ph-header-left">
+        <div class="ph-eyebrow">
+          <span class="ph-eyebrow-dash"></span>
+          <span class="ph-eyebrow-text">PHILOSOPHY &amp; ETHOS</span>
+        </div>
+        <h2 class="ph-display-title">
           Where Innovation<br>
-          <span>Meets Living</span>
+          <span class="ph-title-accent">Meets Living.</span>
         </h2>
-        <p class="philosophy-text">
-          We believe that architecture is more than just buildings — it's about creating environments 
-          that nurture life. Our design philosophy integrates nature, light, and space to craft homes 
-          that are as functional as they are beautiful.
+      </div>
+
+      <div class="ph-header-right">
+        <p class="ph-lead-quote">
+          “Architecture is more than structures and elevations. It is the art of 
+          sculpting sunlight, coastal breeze, and quiet human moments into enduring spaces.”
         </p>
-        <div class="philosophy-pillars">
-          <div class="pillar">
-            <div class="pillar-icon">
-              <i class="fa-solid fa-sun"></i>
-            </div>
-            <h4>Light & Ventilation</h4>
-            <p>Maximizing natural light and airflow in every space</p>
-          </div>
-          <div class="pillar">
-            <div class="pillar-icon">
-              <i class="fa-solid fa-seedling"></i>
-            </div>
-            <h4>Green Living</h4>
-            <p>Sustainable practices and eco-conscious materials</p>
-          </div>
-          <div class="pillar">
-            <div class="pillar-icon">
-              <i class="fa-solid fa-compass-drafting"></i>
-            </div>
-            <h4>Smart Design</h4>
-            <p>Thoughtful layouts that enhance daily living</p>
-          </div>
+        <div class="ph-tagline-bar">
+          <span class="ph-tagline-badge">SUSTAINED ELEGANCE</span>
+          <span class="ph-tagline-sep">/</span>
+          <span class="ph-tagline-text">CRAFTED FOR VISAKHAPATNAM</span>
         </div>
       </div>
     </div>
+
+    <!-- Fine Hairline Architectural Divider -->
+    <div class="ph-hairline-divider"></div>
+
+    <!-- 3 Minimalist Architectural Pillar Cards -->
+    <div class="ph-pillars-grid">
+      
+      <!-- Pillar 01: Light & Ventilation -->
+      <div class="ph-card" style="--stagger: 1">
+        <div class="ph-card-top">
+          <span class="ph-card-index">01</span>
+          <div class="ph-card-icon-wrap">
+            <i class="fa-solid fa-sun"></i>
+          </div>
+        </div>
+        <div class="ph-card-content">
+          <h3 class="ph-card-title">Light &amp; Ventilation</h3>
+          <p class="ph-card-desc">
+            Passive solar orientation and natural breezeway corridors that draw Vizag’s coastal currents, filling every corner with soft morning daylight.
+          </p>
+        </div>
+        <div class="ph-card-line"></div>
+      </div>
+
+      <!-- Pillar 02: Verdant Living -->
+      <div class="ph-card" style="--stagger: 2">
+        <div class="ph-card-top">
+          <span class="ph-card-index">02</span>
+          <div class="ph-card-icon-wrap">
+            <i class="fa-solid fa-leaf"></i>
+          </div>
+        </div>
+        <div class="ph-card-content">
+          <h3 class="ph-card-title">Verdant Living</h3>
+          <p class="ph-card-desc">
+            Native flora integration, stormwater recharging, and bio-sensitive landscaping that harmonize with regional ecology for future generations.
+          </p>
+        </div>
+        <div class="ph-card-line"></div>
+      </div>
+
+      <!-- Pillar 03: Spatial Honesty -->
+      <div class="ph-card" style="--stagger: 3">
+        <div class="ph-card-top">
+          <span class="ph-card-index">03</span>
+          <div class="ph-card-icon-wrap">
+            <i class="fa-solid fa-compass-drafting"></i>
+          </div>
+        </div>
+        <div class="ph-card-content">
+          <h3 class="ph-card-title">Spatial Honesty</h3>
+          <p class="ph-card-desc">
+            Uncluttered layouts engineered with purposeful human proportions, eliminating wasted corridors to deliver effortless freedom of movement.
+          </p>
+        </div>
+        <div class="ph-card-line"></div>
+      </div>
+
+    </div>
+
   </div>
 </section>

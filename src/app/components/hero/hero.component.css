@@ -20,7 +20,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 110%;
   z-index: 1;
 }
 
@@ -40,11 +40,9 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    180deg,
-    rgba(35, 31, 32, 0.4) 0%,
-    rgba(35, 31, 32, 0.7) 100%
-  );
+  background: linear-gradient(180deg,
+      rgba(35, 31, 32, 0.4) 0%,
+      rgba(35, 31, 32, 0.7) 100%);
   z-index: 2;
 }
 
@@ -71,12 +69,12 @@
 
 .hero-title {
   color: #fff;
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: var(--fs-hero);
-  font-weight: 300;
+  font-weight: 800;
   line-height: 1.1;
   text-transform: uppercase;
-  letter-spacing: 6px;
+  letter-spacing: 4px;
   margin-bottom: 25px;
 }
 
@@ -85,9 +83,9 @@
 }
 
 .hero-title .italic {
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: 8px;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: 4px;
 }
 
 .hero-desc {

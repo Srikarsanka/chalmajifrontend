@@ -7,7 +7,7 @@ import { StatsSectionComponent } from '../../components/stats-section/stats-sect
 import { PhilosophySectionComponent } from '../../components/philosophy-section/philosophy-section.component';
 import { TestimonialsSectionComponent } from '../../components/testimonials-section/testimonials-section.component';
 import { ConnectSectionComponent } from '../../components/connect-section/connect-section.component';
-import { Impproject } from '../../components/impproject/impproject.component';
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -19,15 +19,13 @@ import { Impproject } from '../../components/impproject/impproject.component';
     StatsSectionComponent,
     PhilosophySectionComponent,
     TestimonialsSectionComponent,
-    ConnectSectionComponent,
-    Impproject
+    ConnectSectionComponent
   ],
   template: `
     <main>
       <app-hero></app-hero>
       <app-vision-banner></app-vision-banner>
       <app-about-section></app-about-section>
-      <app-impproject></app-impproject>
       <app-projects-section></app-projects-section>
       <app-stats-section></app-stats-section>
       <app-philosophy-section></app-philosophy-section>
@@ -55,7 +53,6 @@ import { Impproject } from '../../components/impproject/impproject.component';
 
     /* All other sections stack ABOVE the vision banner */
     app-about-section,
-    app-impproject,
     app-projects-section,
     app-stats-section,
     app-philosophy-section,

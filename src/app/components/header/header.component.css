@@ -9,7 +9,7 @@
 
 .navbar {
   background: transparent;
-  padding: 20px 40px 25px;
+  padding: 20px 24px 25px;
   transition: all 0.5s ease;
 }
 
@@ -21,7 +21,7 @@
   background-color: rgba(27, 27, 27, 0.55);
   backdrop-filter: blur(20px) saturate(1.4);
   -webkit-backdrop-filter: blur(20px) saturate(1.4);
-  padding: 15px 40px 18px;
+  padding: 15px 24px 18px;
   animation: fadeInDown 0.8s ease;
   box-shadow: 0 1px 30px rgba(0, 0, 0, 0.25);
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
@@ -67,14 +67,14 @@
 
 .menu-toggle .bar {
   display: block;
-  width: 28px;
+  width: 26px;
   height: 1.5px;
-  background-color: #000;
+  background-color: #fff;
   transition: all 0.4s ease;
 }
 
 .navbar.fixed-top .menu-toggle .bar {
-  background-color: #000;
+  background-color: #fff;
 }
 
 .menu-toggle.active .bar:nth-child(1) {
@@ -168,36 +168,35 @@
 
 .nav-links li a {
   display: block;
-  color: #fff;
-  font-family: var(--font-display, 'Cormorant Garamond', serif);
-  font-size: 30px;
-  font-weight: 400;
-  font-style: italic;
-  padding: 8px 0;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 12px 0;
   position: relative;
-  transition: all 0.4s ease;
+  transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
   text-transform: uppercase;
-  letter-spacing: 3px;
+  letter-spacing: 0.2em;
 }
 
 .nav-links li a::after {
   content: '';
   position: absolute;
-  bottom: 6px;
+  bottom: 8px;
   left: 0;
   width: 0;
   height: 1px;
   background-color: var(--primary, #EC1C24);
-  transition: width 0.4s ease;
+  transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .nav-links li a:hover {
-  color: var(--primary, #EC1C24);
-  padding-left: 12px;
+  color: #fff;
+  padding-left: 8px;
 }
 
 .nav-links li a:hover::after {
-  width: 45px;
+  width: 32px;
 }
 
 /* ---- SIDEBAR ONGOING PROJECTS ---- */
@@ -207,11 +206,11 @@
 
 .section-label {
   color: #C57642;
-  font-family: var(--font-body, 'DM Sans', sans-serif);
-  font-size: 11px;
+  font-family: var(--font-body);
+  font-size: 10px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 3.5px;
+  letter-spacing: 0.18em;
   margin-bottom: 14px;
   display: flex;
   align-items: center;
@@ -266,16 +265,16 @@
 }
 
 .sidebar-project-item .project-name {
-  font-family: var(--font-display, 'Cormorant Garamond', serif);
-  font-size: 18px;
-  font-weight: 500;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
   color: #ffffff;
   margin-bottom: 3px;
-  letter-spacing: 0.5px;
+  letter-spacing: -0.01em;
 }
 
 .sidebar-project-item .project-loc {
-  font-family: var(--font-body, 'DM Sans', sans-serif);
+  font-family: var(--font-body);
   font-size: 11px;
   font-weight: 300;
   color: rgba(255, 255, 255, 0.55);
@@ -289,17 +288,35 @@
   font-size: 10px;
 }
 
+.offcanvas-contact {
+  padding-top: 25px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 30px;
+}
+
+.contact-label {
+  color: #C57642;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  margin-bottom: 14px;
+}
+
 .contact-link {
   display: block;
-  color: rgba(255, 255, 255, 0.8);
-  font-family: var(--font-body, 'DM Sans', sans-serif);
-  font-size: 15px;
-  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
   transition: color 0.3s ease;
 }
 
 .contact-link:hover {
-  color: var(--primary, #EC1C24);
+  color: #fff;
 }
 
 .offcanvas-social {
@@ -330,7 +347,7 @@
     height: 52px;
   }
   .nav-links li a {
-    font-size: 28px;
+    font-size: 13px;
   }
   .offcanvas-body {
     padding: 20px 30px;
