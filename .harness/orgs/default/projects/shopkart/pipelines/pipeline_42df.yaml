@@ -1,0 +1,48 @@
+pipeline:
+  stages:
+    - steps:
+        - run:
+            script: echo "hello world"
+    - id: nodeNpmBuildTestHostedLinuxStage_1
+      name: Node npm Build and Test on Harness Cloud (Linux)
+      clone:
+        enabled: true
+      cache:
+        enabled: true
+      steps:
+        - id: setupNode
+          name: Setup Node
+          template:
+            uses: setupNode@1.0.0
+        - id: installDependenciesLinux
+          name: Install Dependencies on Linux
+          run:
+            shell: bash
+            script: |-
+              npm ci
+        - id: buildLinux
+          name: Build on Linux
+          run:
+            shell: bash
+            script: |-
+              npm run build --if-present
+        - id: testLinux
+          name: Test on Linux
+          run-test:
+            shell: bash
+            script: |-
+              mkdir -p coverage reports
+              npx c8 --reporter=lcov --reports-dir=coverage node --test --test-reporter=spec --test-reporter-destination=stdout --test-reporter=junit --test-reporter-destination=reports/junit-raw.xml
+              # Node's junit reporter emits testcase nodes directly under testsuites
+              # with no testsuite wrapper; Harness's parser requires the nested form.
+              sed -e 's#<testsuites>#<testsuites><testsuite name="node-test">#' -e 's#</testsuites>#</testsuite></testsuites>#' reports/junit-raw.xml > reports/junit.xml
+            intelligence:
+              disabled: true
+        - id: coverage
+          name: Upload Coverage
+          run:
+            shell: bash
+            script: |-
+              hcli cov upload
+            env:
+              CI_ENABLE_HCLI_FOR_TESTS: "true"
